@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -96,29 +97,66 @@ public class MapView extends View {
     }
 
     private Rect[] makeCell(int[] colors, Rect rect0, int num){
+        if(colors[0] == GameActivity.gameData.getColors()[0] && colors[1] != 0){
+            return makeCell2(colors, rect0, num);
+        }else {
+            Rect[] rects = new Rect[num];
+            paints = new Paint[num];
+            int num_under = (num + 1) / 2;
+            int bottom = rect0.bottom;
+            boolean over3 = (num > 3);
+            if (over3) {
+                num = num / 2;
+                bottom -= rect0.height() / 2;
+            }
+            for (int i = 0; i < num; i++) {
+                Rect rect = new Rect(rect0.left + rect0.width() / num * i, rect0.top, rect0.left + rect0.width() / num * (i + 1), bottom);
+                rects[i] = rect;
+                paints[i] = new Paint();
+                paints[i].setColor(colors[i]);
+            }
+            if (over3) {
+                for (int i = num; i < num + num_under; i++) {
+                    Rect rect = new Rect(rect0.left + rect0.width() / num_under * (i - num), bottom, rect0.left + rect0.width() / num_under * (i + 1 - num), rect0.bottom);
+                    rects[i] = rect;
+                    paints[i] = new Paint();
+                    paints[i].setColor(colors[i]);
+                }
+            }
+            return rects;
+        }
+    }
+
+
+    private Rect[] makeCell2(int[] colors, Rect rect0, int num) {
         Rect[] rects = new Rect[num];
         paints = new Paint[num];
-        int num_under= (num+1) / 2;
+        num-=1;
+        int num_under= 0;
         int bottom = rect0.bottom;
         boolean over3 = (num > 3);
         if(over3){
             num = num/2;
+            num_under= (num+1) / 2;
             bottom -= rect0.height()/2;
         }
         for(int i = 0; i < num; i++){
-            Rect rect = new Rect(rect0.left+rect0.width()/num*i, rect0.top, rect0.left+rect0.width()/num*(i+1), bottom);
+            Rect rect = new Rect(rect0.left+rect0.width()/num*(i), rect0.top, rect0.left+rect0.width()/num*(i+1), bottom);
             rects[i] = rect;
             paints[i] = new Paint();
-            paints[i].setColor(colors[i]);
+            paints[i].setColor(colors[i+1]);
         }
         if(over3){
             for(int i = num; i < num+num_under; i++){
                 Rect rect = new Rect(rect0.left+rect0.width()/num_under*(i-num), bottom, rect0.left+rect0.width()/num_under*(i+1-num), rect0.bottom);
                 rects[i] = rect;
                 paints[i] = new Paint();
-                paints[i].setColor(colors[i]);
+                paints[i].setColor(colors[i+1]);
             }
         }
+        rects[num+num_under] = new Rect(rect0.left+rect0.width()/5, rect0.top+rect0.height()/5, rect0.right-rect0.width()/5, rect0.bottom-rect0.height()/5);
+        paints[num+num_under] = new Paint();
+        paints[num+num_under].setColor(colors[0]);
         return rects;
     }
 
@@ -145,7 +183,16 @@ public class MapView extends View {
                     int m = 0;
                     Rect[] rects = makeCell(colorsss[j][i], rect, k);
                     for(Rect r : rects){
+                        if(rects[m] == null){
+                            Log.d("rect" , "null");
+                            break;
+                        }
+                        if(paints[m] == null){
+                            Log.d("paint" , "null");
+                            break;
+                        }
                         canvas.drawRect(r,paints[m++]);
+                        Log.d("m" , "" + m);
                     }
                 }
                 rect.offset(width / num, 0);

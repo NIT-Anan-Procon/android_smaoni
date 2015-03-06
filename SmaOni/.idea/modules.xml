@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/SmaOni.iml" filepath="$PROJECT_DIR$/SmaOni.iml" />
       <module fileurl="file://$PROJECT_DIR$/SmaOni_elide.iml" filepath="$PROJECT_DIR$/SmaOni_elide.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
