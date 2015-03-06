@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="jp.ac.anan_nct.smaoni_elide" >
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".activity.HomeActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.SelectActivity"
+            android:label="@string/title_activity_select" >
+        </activity>
+        <activity
+            android:name=".activity.FieldSetActivity"
+            android:label="@string/title_activity_field_set" >
+        </activity>
+        <activity
+            android:name=".activity.GameActivity"
+            android:label="@string/title_activity_game" >
+        </activity>
+        <activity
+            android:name=".activity.FieldSelectActivity"
+            android:label="@string/title_activity_field_select" >
+        </activity>
+        <activity
+            android:name=".activity.ReceptionActivity"
+            android:label="@string/title_activity_reception" >
+        </activity>
+        <activity
+            android:name=".activity.OniGokkoActivity"
+            android:label="@string/title_activity_oni_gokko" >
+        </activity>
+    </application>
+
+</manifest>

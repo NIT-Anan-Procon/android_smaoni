@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MapView">
+        <attr name="mapViewStyle" format="reference" />
+    </declare-styleable>
+
+
+    <declare-styleable name="MemberView">
+        <attr name="memberViewStyle" format="reference" />
+    </declare-styleable>
+
+</resources>
