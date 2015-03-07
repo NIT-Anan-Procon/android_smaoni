@@ -2,6 +2,10 @@ package jp.ac.anan_nct.smaoni_elide.model;
 
 import android.graphics.Color;
 
+import java.util.Random;
+
+import jp.ac.anan_nct.smaoni_elide.activity.OniGokkoActivity;
+
 /**
  * Created by skriulle on 2015/03/02.
  */
@@ -11,7 +15,8 @@ public class GameData{
     private Player[] players;
     private int me;
     private int[] colors= {Color.BLUE, Color.RED,Color.YELLOW, Color.parseColor("#ff99ff"),Color.parseColor("#007000"), Color.BLACK,Color.CYAN,Color.DKGRAY};
-
+    private Position oniPosition;
+    private int oniIs;
 
     public GameData() {
         gridNum = 8;
@@ -23,6 +28,8 @@ public class GameData{
             p = new Player();
         }
         me = 0;
+        oniPosition = new Position();
+        oniIs = 0;
     }
 
     public GameData(int gridNum, int playerNum, int runnerNum, Field field, Player[] players, int me) {
@@ -116,14 +123,33 @@ public class GameData{
                 int k = 0, l = 0;
                 for(Player p : players){
                     if(p.getPos().getX() == i && p.getPos().getY() == j){
-                        colorsss[j][i][k++] = colors[l];
+                        colorsss[j][i][k] = colors[l];
+                        k++;
+                        if(players[l].getStatus() == Status.ONI){
+                            oniPosition = players[l].getPos();
+                            oniIs = l;
+                        }
                     }
                     l++;
                 }
+                int o = 0;
+                for(; colorsss[j][i][o] != 0; o++);
+                if(o > 1) {
+                    Random r = new Random();
+                    int next = r.nextInt(o - 1);
+                    next = (next >= oniIs) ? next + 1 : next;
 
-
+                    getPlayer(oniIs).setStatus(Status.RUNNER);
+                    getPlayer(next).setStatus(Status.ONI);
+                }
             }
 
+        }
+        for(int o = 0; o < playerNum; o++){
+            if(getPlayer(o).getStatus() == Status.ONI){
+                OniGokkoActivity.txLat.setText(oniPosition.getX()+" "+oniPosition.getY());
+                OniGokkoActivity.txLng.setText("ONI is " + o);
+            }
         }
 
         return colorsss;

@@ -18,7 +18,7 @@ public class GameActivity extends GPS {
 
     public static GameData gameData;
     MapView mapView;
-    TextView txLng, txLat;
+    public static TextView txLng, txLat;
 
     SubThread[] subThread;
 
@@ -63,8 +63,8 @@ public class GameActivity extends GPS {
         mapView.invalidate();
         Log.d("GPS","working");
 
-        txLat.setText("latitude:" + location.getLatitude());
-        txLng.setText("longitude:" + location.getLongitude());
+       // txLat.setText("latitude:" + location.getLatitude());
+       // txLng.setText("longitude:" + location.getLongitude());
         gameData.getPlayer(0).setPos(location);
     }
 
