@@ -120,34 +120,34 @@ public class GameData{
 
         for(int j = 0; j < gridNum; j++){
             for(int i = 0; i < gridNum; i++){
+                int[] values = new int[playerNum+1];
                 int k = 0, l = 0;
                 for(Player p : players){
                     if(p.getPos().getX() == i && p.getPos().getY() == j){
                         colorsss[j][i][k] = colors[l];
-                        k++;
+                        values[k] = l;
                         if(players[l].getStatus() == Status.ONI){
                             oniPosition = players[l].getPos();
-                            oniIs = l;
+                            oniIs = k;
                         }
+                        k++;
                     }
                     l++;
                 }
-                int o = 0;
-                for(; colorsss[j][i][o] != 0; o++);
-                if(o > 1) {
+                if(k > 1) {
                     Random r = new Random();
-                    int next = r.nextInt(o - 1);
+                    int next = r.nextInt(k - 1);
                     next = (next >= oniIs) ? next + 1 : next;
 
-                    getPlayer(oniIs).setStatus(Status.RUNNER);
-                    getPlayer(next).setStatus(Status.ONI);
+                    getPlayer(values[oniIs]).setStatus(Status.RUNNER);
+                    getPlayer(values[next]).setStatus(Status.ONI);
                 }
             }
 
         }
+        OniGokkoActivity.txLat.setText(oniPosition.getX()+" "+oniPosition.getY());
         for(int o = 0; o < playerNum; o++){
-            if(getPlayer(o).getStatus() == Status.ONI){
-                OniGokkoActivity.txLat.setText(oniPosition.getX()+" "+oniPosition.getY());
+            if(getPlayer(o).getPos().getX() == oniPosition.getX() && getPlayer(o).getPos().getY() == oniPosition.getY()){
                 OniGokkoActivity.txLng.setText("ONI is " + o);
             }
         }

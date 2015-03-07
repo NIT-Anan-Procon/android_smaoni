@@ -60,12 +60,13 @@ public class GameActivity extends GPS {
     public void onLocationChanged(Location location) {
         super.onLocationChanged(location);
 
+        gameData.getPlayer(0).setPos(location);
+
         mapView.invalidate();
         Log.d("GPS","working");
 
        // txLat.setText("latitude:" + location.getLatitude());
        // txLng.setText("longitude:" + location.getLongitude());
-        gameData.getPlayer(0).setPos(location);
     }
 
     @Override
