@@ -42,6 +42,8 @@ public class MapView extends View {
     int[] colors;
     Paint[] paints;
 
+    private Paint oniPaint;
+
     public MapView(Context context){
         this(context, null);
     }
@@ -66,6 +68,11 @@ public class MapView extends View {
         for(int i = 0; i < playerNum; i++) {
             colorsss[0][0][i] = colors[i];
         }
+
+        oniPaint = new Paint();
+        oniPaint.setColor(Color.GREEN);
+        oniPaint.setStyle(Paint.Style.STROKE);
+        oniPaint.setStrokeWidth(4f);
     }
 
 
@@ -194,6 +201,12 @@ public class MapView extends View {
                         canvas.drawRect(r,paints[m++]);
                         Log.d("m" , "" + m);
                     }
+                }
+
+                if(GameActivity.gameData.oniWhere().getX() == i && GameActivity.gameData.oniWhere().getY() == j){
+                    Rect oniRect = new Rect(rect);
+                    canvas.drawRect(oniRect, oniPaint);
+
                 }
                 rect.offset(width / num, 0);
             }

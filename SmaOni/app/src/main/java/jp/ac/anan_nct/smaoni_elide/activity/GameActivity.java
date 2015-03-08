@@ -17,7 +17,7 @@ public class GameActivity extends GPS {
 
 
     public static GameData gameData;
-    MapView mapView;
+    public static MapView mapView;
     public static TextView txLng, txLat;
 
     SubThread[] subThread;

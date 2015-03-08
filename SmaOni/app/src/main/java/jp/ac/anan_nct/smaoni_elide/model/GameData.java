@@ -93,6 +93,9 @@ public class GameData{
     public int getOniNum() {
         return oniNum;
     }
+    public Position oniWhere(){
+        return oniPosition;
+    }
 
 
 
@@ -134,14 +137,16 @@ public class GameData{
                     }
                     l++;
                 }
-                if(k > 1) {
+                if(k > 1 && oniIs != -1) {
                     Random r = new Random();
                     int next = r.nextInt(k - 1);
                     next = (next >= oniIs) ? next + 1 : next;
 
                     getPlayer(values[oniIs]).setStatus(Status.RUNNER);
                     getPlayer(values[next]).setStatus(Status.ONI);
+                    OniGokkoActivity.txLng.setText("ONI is " + values[next]);
                 }
+                oniIs = -1;
             }
 
         }
