@@ -3,10 +3,6 @@ package jp.ac.anan_nct.smaoni_elide.model;
 import android.graphics.Color;
 import android.util.Log;
 
-import java.util.Random;
-
-import jp.ac.anan_nct.smaoni_elide.activity.OniGokkoActivity;
-
 /**
  * Created by skriulle on 2015/03/02.
  */
@@ -125,7 +121,6 @@ public class GameData{
             for(int i = 0; i < gridNum; i++){
                 for(int k = 0; k < playerNum+1; k++){
                     colorsss[j][i][k] = -1;
-                    Log.d("jik", "" + colorsss[j][i][k]);
                 }
             }
         }
@@ -134,9 +129,12 @@ public class GameData{
             for(int i = 0; i < gridNum; i++){
                 int[] values = new int[playerNum+1];
                 int k = 0, l = 0;
+                //k->indicate how many people are in the cell
+                //l->id number
                 for(Player p : players){
                     if(p.getPos().getX() == i && p.getPos().getY() == j){
-                        colorsss[j][i][k] = colors[l];
+                        colorsss[j][i][k] = l;
+                        Log.d("l is", l+"");
                         values[k] = l;
                         if(players[l].getStatus() == Status.ONI){
                             oniPosition = players[l].getPos();
@@ -146,6 +144,7 @@ public class GameData{
                     }
                     l++;
                 }
+                /*
                 if(k > 1 && oniIs != -1) {
                     Random r = new Random();
                     int next = r.nextInt(k - 1);
@@ -156,16 +155,18 @@ public class GameData{
                     OniGokkoActivity.txLng.setText("ONI is " + values[next]);
                 }
                 oniIs = -1;
+                */
             }
 
         }
+        /*
         OniGokkoActivity.txLat.setText(oniPosition.getX()+" "+oniPosition.getY());
         for(int o = 0; o < playerNum; o++){
             if(getPlayer(o).getPos().getX() == oniPosition.getX() && getPlayer(o).getPos().getY() == oniPosition.getY()){
                 OniGokkoActivity.txLng.setText("ONI is " + o);
             }
         }
-
+*/
         return colorsss;
     }
 
