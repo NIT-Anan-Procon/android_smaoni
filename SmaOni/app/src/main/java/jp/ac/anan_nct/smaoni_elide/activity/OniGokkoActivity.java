@@ -31,6 +31,11 @@ public class OniGokkoActivity extends GameActivity {
     @Override
     public void onLocationChanged(Location location) {
         super.onLocationChanged(location);
+
+
+        //おくる
+
+
     }
 
     @Override

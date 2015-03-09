@@ -1,5 +1,6 @@
 package jp.ac.anan_nct.smaoni_elide.model;
 
+import android.graphics.Color;
 import android.location.Location;
 
 import java.util.Random;
@@ -14,10 +15,12 @@ public class Player {
     private Position myPos;
     private Status status;
     private boolean visiblity;
+    private int color;
 
     public Player(){
         this(0, "", new Position(0, 0), Status.RUNNER);
         name = makeName();
+        color = Color.BLUE;
     }
     public Player(int id, String name, Position position, Status status){
         this.id = id;
