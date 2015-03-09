@@ -64,6 +64,13 @@ public class MapView extends View {
             }
         }
         colorsss = new int[num][num][playerNum+1];
+        for(int j = 0; j < num; j++){
+            for(int i = 0; i < num; i++){
+                for(int k = 0; k <= playerNum; k++){
+                    colorsss[j][i][k] = -1;
+                }
+            }
+        }
 
         for(int i = 0; i < playerNum; i++) {
             colorsss[0][0][i] = colors[i];
@@ -183,7 +190,7 @@ public class MapView extends View {
         for(int j = 0; j < num; j++){           //y担当
             for(int i = 0; i < num; i++) {      //x担当
                 int k;                          //セルにいる人数
-                for(k = 0; colorsss[j][i][k] != 0; k++);
+                for(k = 0;  colorsss[j][i][k] != -1; k++);
                 if(k == 0){
                     canvas.drawRect(rect, paint);
                 }else{

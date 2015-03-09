@@ -1,6 +1,7 @@
 package jp.ac.anan_nct.smaoni_elide.model;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import java.util.Random;
 
@@ -120,7 +121,7 @@ public class GameData{
 
     public int[][][] getColorsss(){
         int[][][] colorsss = new int[gridNum][gridNum][playerNum+1];
-   /*     for(int j = 0; j < gridNum; j++){
+        for(int j = 0; j < gridNum; j++){
             for(int i = 0; i < gridNum; i++){
                 for(int k = 0; k < playerNum+1; k++){
                     colorsss[j][i][k] = -1;
@@ -128,7 +129,7 @@ public class GameData{
                 }
             }
         }
-*/
+
         for(int j = 0; j < gridNum; j++){
             for(int i = 0; i < gridNum; i++){
                 int[] values = new int[playerNum+1];
