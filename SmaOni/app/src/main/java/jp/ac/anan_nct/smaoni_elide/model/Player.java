@@ -88,6 +88,11 @@ public class Player {
     }
 
 
-
+    public void setColor(int color){
+        this.color = color;
+    }
+    public int getColor(){
+        return color;
+    }
 }
 

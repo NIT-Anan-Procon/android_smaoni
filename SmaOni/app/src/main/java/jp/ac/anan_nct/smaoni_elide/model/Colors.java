@@ -9,5 +9,4 @@ public class Colors {
 
     public static int[] colors = {Color.BLUE,Color.YELLOW, Color.parseColor("#ff99ff"),Color.parseColor("#007000"), Color.BLACK,Color.CYAN,Color.DKGRAY, Color.parseColor("#ffa500")};
 
-
 }
