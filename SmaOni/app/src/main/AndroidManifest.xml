@@ -44,6 +44,10 @@
             android:name=".activity.OniGokkoActivity"
             android:label="@string/title_activity_oni_gokko" >
         </activity>
+        <activity
+            android:name=".activity.CommentActivity"
+            android:label="@string/title_activity_comment" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,71 +1,46 @@
 package jp.ac.anan_nct.smaoni_elide.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import jp.ac.anan_nct.smaoni_elide.R;
 
+public class CommentActivity extends ActionBarActivity {
 
-public class HomeActivity extends ActionBarActivity {
+    EditText text1, text2;
 
-    Button bt1, bt2, goToComment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_comment);
 
-        bt1 = (Button)findViewById(R.id.button1);
-        bt2 = (Button)findViewById(R.id.button2);
-        goToComment = (Button)findViewById(R.id.goComment);
-
-
+        Button btn = (Button) findViewById(R.id.button1);
+        text1 = (EditText) findViewById(R.id.editText1);
+        text2 = (EditText) findViewById(R.id.editText2);
 
         setAction();
     }
 
-
-    private void setAction(){
-        bt1.setOnClickListener(new View.OnClickListener() {
+    void setAction(){
+        text1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, SelectActivity.class));
+
             }
         });
+        text2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        bt2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, FieldSetActivity.class));
-            }
-        });
-        goToComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, CommentActivity.class));
             }
         });
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -75,7 +50,7 @@ public class HomeActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
+        getMenuInflater().inflate(R.menu.menu_comment, menu);
         return true;
     }
 

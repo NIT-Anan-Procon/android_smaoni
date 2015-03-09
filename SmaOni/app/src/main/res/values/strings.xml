@@ -10,5 +10,6 @@
     <string name="title_activity_field_select">FieldSelectActivity</string>
     <string name="title_activity_reception">ReceptionActivity</string>
     <string name="title_activity_oni_gokko">OniGokko</string>
+    <string name="title_activity_comment">CommentActivity</string>
 
 </resources>

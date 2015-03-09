@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import jp.ac.anan_nct.smaoni_elide.activity.GameActivity;
+import jp.ac.anan_nct.smaoni_elide.model.Colors;
 import jp.ac.anan_nct.smaoni_elide.model.Condition;
 import jp.ac.anan_nct.smaoni_elide.model.Position;
 
@@ -23,6 +24,7 @@ import jp.ac.anan_nct.smaoni_elide.model.Position;
 
 public class MapView extends View {
 
+    boolean first = false;
 
     Condition[][] conditions;
     private int[][][] colorsss;
@@ -54,7 +56,7 @@ public class MapView extends View {
         num = GameActivity.gameData.getGridNum();
         conditions = new Condition[num][num];
 
-        colors = GameActivity.gameData.getColors();
+        colors = Colors.colors;
 
         playerNum = GameActivity.gameData.getPlayerNum();
 
@@ -64,9 +66,12 @@ public class MapView extends View {
             }
         }
         colorsss = new int[num][num][playerNum+1];
-
-        for(int i = 0; i < playerNum; i++) {
-            colorsss[0][0][i] = colors[i];
+        for(int j = 0; j < num; j++){
+            for(int i = 0; i < num; i++){
+                for(int k = 0; k <= playerNum; k++){
+                    colorsss[j][i][k] = -1;
+                }
+            }
         }
 
         oniPaint = new Paint();
@@ -104,7 +109,7 @@ public class MapView extends View {
     }
 
     private Rect[] makeCell(int[] colors, Rect rect0, int num){
-        if(colors[0] == GameActivity.gameData.getColors()[0] && colors[1] != 0){
+        if(colors[0] == GameActivity.gameData.getColors()[0] && colors[1] != -1){
             return makeCell2(colors, rect0, num);
         }else {
             Rect[] rects = new Rect[num];
@@ -120,14 +125,14 @@ public class MapView extends View {
                 Rect rect = new Rect(rect0.left + rect0.width() / num * i, rect0.top, rect0.left + rect0.width() / num * (i + 1), bottom);
                 rects[i] = rect;
                 paints[i] = new Paint();
-                paints[i].setColor(colors[i]);
+                paints[i].setColor(this.colors[colors[i]]);
             }
             if (over3) {
                 for (int i = num; i < num + num_under; i++) {
                     Rect rect = new Rect(rect0.left + rect0.width() / num_under * (i - num), bottom, rect0.left + rect0.width() / num_under * (i + 1 - num), rect0.bottom);
                     rects[i] = rect;
                     paints[i] = new Paint();
-                    paints[i].setColor(colors[i]);
+                    paints[i].setColor(this.colors[colors[i]]);
                 }
             }
             return rects;
@@ -151,24 +156,28 @@ public class MapView extends View {
             Rect rect = new Rect(rect0.left+rect0.width()/num*(i), rect0.top, rect0.left+rect0.width()/num*(i+1), bottom);
             rects[i] = rect;
             paints[i] = new Paint();
-            paints[i].setColor(colors[i+1]);
+            paints[i].setColor(this.colors[colors[i+1]]);
         }
         if(over3){
             for(int i = num; i < num+num_under; i++){
                 Rect rect = new Rect(rect0.left+rect0.width()/num_under*(i-num), bottom, rect0.left+rect0.width()/num_under*(i+1-num), rect0.bottom);
                 rects[i] = rect;
                 paints[i] = new Paint();
-                paints[i].setColor(colors[i+1]);
+                paints[i].setColor(this.colors[colors[i+1]]);
             }
         }
         rects[num+num_under] = new Rect(rect0.left+rect0.width()/5, rect0.top+rect0.height()/5, rect0.right-rect0.width()/5, rect0.bottom-rect0.height()/5);
         paints[num+num_under] = new Paint();
-        paints[num+num_under].setColor(colors[0]);
+        paints[num+num_under].setColor(this.colors[colors[0]]);
         return rects;
     }
 
     @Override
     public void onDraw(Canvas canvas){
+/*
+        for(int i = 0; i < 100; i ++){
+            Log.d("color "+ i, "" + colorsss[0][0][i]);
+        }*/
         super.onDraw(canvas);
 
         Paint paint = new Paint();
@@ -183,7 +192,7 @@ public class MapView extends View {
         for(int j = 0; j < num; j++){           //y担当
             for(int i = 0; i < num; i++) {      //x担当
                 int k;                          //セルにいる人数
-                for(k = 0; colorsss[j][i][k] != 0; k++);
+                for(k = 0;colorsss[j][i][k] != -1; k++);
                 if(k == 0){
                     canvas.drawRect(rect, paint);
                 }else{
@@ -199,7 +208,6 @@ public class MapView extends View {
                             break;
                         }
                         canvas.drawRect(r,paints[m++]);
-                        Log.d("m" , "" + m);
                     }
                 }
 

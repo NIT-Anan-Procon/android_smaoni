@@ -55,4 +55,8 @@ public class Position {
 
         y = gridNum-1-y;
     }
+
+    public boolean equals(Position position) {
+        return (x == position.getX() && y == position.getY());
+    }
 }
