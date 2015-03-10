@@ -115,6 +115,7 @@ public class MapView extends View {
 
         colorsss = gameData.getColorsss();
 
+
         super.invalidate();
     }
 

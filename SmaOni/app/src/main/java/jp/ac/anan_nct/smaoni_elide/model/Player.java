@@ -22,7 +22,7 @@ public class Player {
         this(0, "", new Position(0, 0), Status.RUNNER);
         name = makeName();
         color = Color.BLUE;
-        score = 0;
+        score = 100;
     }
     public Player(int id, String name, Position position, Status status){
         this.id = id;
@@ -30,6 +30,8 @@ public class Player {
         myPos = position;
         this.status = status;
         visiblity = true;
+        score = 100;
+        color = Color.BLUE;
     }
     public Player(Player player){
         id = player.getId();
@@ -95,6 +97,15 @@ public class Player {
     }
     public int getColor(){
         return color;
+    }
+
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getScore() {
+        return score;
     }
 }
 

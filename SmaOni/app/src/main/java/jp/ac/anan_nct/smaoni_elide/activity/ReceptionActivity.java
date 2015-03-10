@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import java.util.LinkedList;
 
 import jp.ac.anan_nct.smaoni_elide.R;
+import jp.ac.anan_nct.smaoni_elide.model.Colors;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.Player;
 import jp.ac.anan_nct.smaoni_elide.model.Position;
@@ -86,7 +87,9 @@ public class ReceptionActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if(i < gameData.getPlayerNum()) {
+                    int index = memberViews.size();
                     Player p = new Player();
+                    p.setColor(Colors.colors[index]);
                     gameData.resetPlayer(i, p);
                     MemberView m1 = new MemberView(ReceptionActivity.this, null);
                     m1.setInfo(i, p);
