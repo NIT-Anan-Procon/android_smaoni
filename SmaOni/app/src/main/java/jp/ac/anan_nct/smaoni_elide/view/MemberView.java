@@ -24,6 +24,7 @@ public class MemberView extends View {
     }
     public MemberView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        player = new Player();
     }
 
 

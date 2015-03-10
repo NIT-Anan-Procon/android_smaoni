@@ -1,6 +1,5 @@
 package jp.ac.anan_nct.smaoni_elide.model;
 
-import android.graphics.Color;
 import android.util.Log;
 
 /**
@@ -11,9 +10,8 @@ public class GameData{
     private Field field;
     private Player[] players;
     private int me;
-    private int[] colors= {Color.BLUE, Color.RED,Color.YELLOW, Color.parseColor("#ff99ff"),Color.parseColor("#007000"), Color.BLACK,Color.CYAN,Color.DKGRAY};
+    private int[] colors;
     private Position oniPosition;
-    private int oniIs;
 
     public GameData() {
         gridNum = 8;
@@ -25,8 +23,8 @@ public class GameData{
             p = new Player();
         }
         me = 0;
-        oniPosition = new Position();
-        oniIs = 0;
+        oniPosition = new Position(-1, -1);
+        colors = Colors.colors;
     }
 
     public GameData(int gridNum, int playerNum, int runnerNum, Field field, Player[] players, int me) {
@@ -138,7 +136,6 @@ public class GameData{
                         values[k] = l;
                         if(players[l].getStatus() == Status.ONI){
                             oniPosition = players[l].getPos();
-                            oniIs = k;
                         }
                         k++;
                     }
