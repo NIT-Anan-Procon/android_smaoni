@@ -14,7 +14,7 @@
     <ScrollView
         android:id="@+id/ScrollView"
         android:layout_below="@+id/mapRecieption"
-        android:layout_height="480dp"
+        android:layout_height="wrap_content"
         android:layout_width="300dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="37dp"

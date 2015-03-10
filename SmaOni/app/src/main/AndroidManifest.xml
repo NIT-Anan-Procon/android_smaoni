@@ -48,6 +48,10 @@
             android:name=".activity.CommentActivity"
             android:label="@string/title_activity_comment" >
         </activity>
+        <activity
+            android:name=".activity.ResultActivity"
+            android:label="@string/title_activity_result" >
+        </activity>
     </application>
 
 </manifest>

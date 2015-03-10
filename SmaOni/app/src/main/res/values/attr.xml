@@ -9,4 +9,7 @@
         <attr name="memberViewStyle" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="RankingView">
+        <attr name="rankingViewStyle" format="reference" />
+    </declare-styleable>
 </resources>

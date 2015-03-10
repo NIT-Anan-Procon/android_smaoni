@@ -16,11 +16,13 @@ public class Player {
     private Status status;
     private boolean visiblity;
     private int color;
+    private int score;
 
     public Player(){
         this(0, "", new Position(0, 0), Status.RUNNER);
         name = makeName();
         color = Color.BLUE;
+        score = 0;
     }
     public Player(int id, String name, Position position, Status status){
         this.id = id;
