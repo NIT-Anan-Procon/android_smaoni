@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,6 +39,8 @@ public class ReceptionActivity extends ActionBarActivity {
 
     public static GameData gameData;
 
+    JSONArray jsonArray;
+
     int i;
 
     @Override
@@ -49,17 +52,21 @@ public class ReceptionActivity extends ActionBarActivity {
         mapView.setTouchable(false);
 
         gameData = SelectActivity.gameData;
+        gameData.setPlayerNum(gameData.getPlayerNum());
         linearLayout = (LinearLayout) findViewById(R.id.linear1);
         memberViews = new LinkedList<MemberView>();
 
         Player p = new Player(3, "aさん", new Position(0, 0), Status.RUNNER, Color.BLUE);
+        //本来なら自分のIDと名前
+/**
         MemberView m1 = new MemberView(this, null);
         gameData.resetPlayer(0, p);
         m1.setInfo(0, gameData.getPlayer(0));
         memberViews.add(m1);
         linearLayout.addView(m1, new LinearLayout.LayoutParams(WC, WC));
         i = 1;
-
+*/
+        i = 0;
         JSONObject jsonObject = new JSONObject();
         try{
             jsonObject.put("name", p.getName());
@@ -73,27 +80,46 @@ public class ReceptionActivity extends ActionBarActivity {
         gotoGame = (Button) findViewById(R.id.button6);
         addMember = (Button) findViewById(R.id.button7);
 
-        mapView.invalidate();
+        gotoGame.setEnabled(false);
 
         setAction();
 
         jsonCame(jsonObject);
 
+        mapView.invalidate();
+
     }
 
-    void jsonCame(JSONObject jsonObject){
+    void jsonCame(JSONObject jsonObject){//JSONObject
         Player p = new Player();
         try {
-            p.setPos(new Position(jsonObject.getInt("posX"), jsonObject.getInt("posY")));
             p.setId(jsonObject.getInt("id"));
             p.setName(jsonObject.getString("name"));
         }catch(JSONException e) {
         }catch(Exception e){}
 
         Log.d("player", p.getName() + " " + p.getId());
+        p.setColor(Colors.colors[i]);
+        gameData.resetPlayer(i, p);
 
-        ////pをプレイヤーの配列に追加
+        MemberView memberView = new MemberView(this, null);
+        memberView.setInfo(i++, p);
+        memberViews.add(memberView);
+        linearLayout.addView(memberView, new LinearLayout.LayoutParams(WC, WC));
     }
+
+    void jsonArrayCame(JSONArray jsonArray){  //JSONArray
+        this.i = 0;
+        try{
+            for(int i = 0; i < jsonArray.length(); i++) {   //送られてくるJSONArrayの長さは指定以上にならない
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                jsonCame(jsonObject);
+            }
+        }catch (JSONException e){}
+
+        mapView.invalidate();
+    }
+
 
     void setAction(){
         for(int i = 0; i < memberViews.size(); i++){
@@ -107,7 +133,8 @@ public class ReceptionActivity extends ActionBarActivity {
         gotoGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(i != memberViews.size()){
+                Log.d("おちょ" + i, "" + memberViews.size());
+                if(i != gameData.getPlayerNum()){
                     /*Player[] players = new Player[i];
                     for(int j = 0; j < i; j++){
                         players[j] = gameData.getPlayer(j);
@@ -135,6 +162,9 @@ public class ReceptionActivity extends ActionBarActivity {
                     linearLayout.addView(m1);
                     i++;
                     mapView.invalidate();
+                    if(i == gameData.getPlayerNum()){
+                        gotoGame.setEnabled(true);
+                    }
                 }
             }
         });
