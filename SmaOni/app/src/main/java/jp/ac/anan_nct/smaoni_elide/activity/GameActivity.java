@@ -4,21 +4,17 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.TextView;
 
 import java.util.Random;
 
 import jp.ac.anan_nct.smaoni_elide.R;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.SubThread;
-import jp.ac.anan_nct.smaoni_elide.view.MapView;
 
 public class GameActivity extends GPS {
 
 
     public static GameData gameData;
-    public static MapView mapView;
-    public static TextView txLng, txLat;
 
     SubThread[] subThread;
 
@@ -29,9 +25,6 @@ public class GameActivity extends GPS {
         gameData = ReceptionActivity.gameData;
 
         setContentView(R.layout.activity_game);
-
-
-
 
         subThread = new SubThread[gameData.getPlayerNum()-1];
         for(int i = 0, p = gameData.getPlayerNum()-1;i < p; i++) {
@@ -62,11 +55,8 @@ public class GameActivity extends GPS {
 
         gameData.getPlayer(0).setPos(location);
 
-        mapView.invalidate();
         Log.d("GPS","working");
 
-       // txLat.setText("latitude:" + location.getLatitude());
-       // txLng.setText("longitude:" + location.getLongitude());
     }
 
     @Override

@@ -16,18 +16,22 @@ public class Player {
     private Status status;
     private boolean visiblity;
     private int color;
+    private int score;
 
     public Player(){
-        this(0, "", new Position(0, 0), Status.RUNNER);
+        this(0, "", new Position(0, 0), Status.RUNNER, Color.BLUE);
         name = makeName();
         color = Color.BLUE;
+        score = 100;
     }
-    public Player(int id, String name, Position position, Status status){
+    public Player(int id, String name, Position position, Status status, int color){
         this.id = id;
         this.name = name;
         myPos = position;
         this.status = status;
         visiblity = true;
+        score = 0;
+        this.color = color;
     }
     public Player(Player player){
         id = player.getId();
@@ -93,6 +97,15 @@ public class Player {
     }
     public int getColor(){
         return color;
+    }
+
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getScore() {
+        return score;
     }
 }
 

@@ -24,6 +24,7 @@ public class MemberView extends View {
     }
     public MemberView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        player = new Player();
     }
 
 
@@ -31,7 +32,7 @@ public class MemberView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        setMeasuredDimension(900,300);
+        setMeasuredDimension(900,150);
     }
 
     public void setInfo(int i, Player player){
@@ -60,7 +61,7 @@ public class MemberView extends View {
 
 
         paint.setStyle(Paint.Style.STROKE);
-        canvas.drawRect(0,0,900,300, paint);
+        canvas.drawRect(0,0,900,150, paint);
 
     }
 }

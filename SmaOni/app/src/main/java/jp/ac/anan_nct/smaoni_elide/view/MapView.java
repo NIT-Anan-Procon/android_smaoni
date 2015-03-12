@@ -11,12 +11,11 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import jp.ac.anan_nct.smaoni_elide.activity.GameActivity;
+import jp.ac.anan_nct.smaoni_elide.activity.SelectActivity;
 import jp.ac.anan_nct.smaoni_elide.model.Colors;
 import jp.ac.anan_nct.smaoni_elide.model.Condition;
+import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.Position;
-
-
-//import android.util.Log;
 
 /**
  * Created by skriulle on 2015/03/02.
@@ -24,6 +23,9 @@ import jp.ac.anan_nct.smaoni_elide.model.Position;
 
 public class MapView extends View {
 
+    GameData gameData;
+
+    boolean touchable;
     boolean first = false;
 
     Condition[][] conditions;
@@ -53,12 +55,16 @@ public class MapView extends View {
     public MapView(Context context, AttributeSet attrs){
         super(context, attrs);
 
-        num = GameActivity.gameData.getGridNum();
+        gameData = SelectActivity.gameData;
+
+        touchable = true;
+
+        num = gameData.getGridNum();
         conditions = new Condition[num][num];
 
         colors = Colors.colors;
 
-        playerNum = GameActivity.gameData.getPlayerNum();
+        playerNum = gameData.getPlayerNum();
 
         for(int j = 0; j < num; j++){
             for(int i = 0; i < num; i++){
@@ -80,36 +86,41 @@ public class MapView extends View {
         oniPaint.setStrokeWidth(4f);
     }
 
-
+    public void setTouchable(boolean boo){
+        touchable = boo;
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent e){
+        if (touchable){
 ////////////////////////////////////////////////////////////////for TEST
-        me = e;
-        w = getWidth();
-        x = (int)(((e.getRawX()-50)/(getWidth()-100))*num); //タッチしたx座標
-        y = (int)((e.getRawY()-330)/(getWidth()-100)*num);  //タッチしたy座標
-        GameActivity.gameData.getPlayer(0).setPos(new Position(x, y));
-        if(e.getRawY()<50)y=-1;
-        rawX = e.getRawX();
-        rawY = e.getRawY();
-        if(e.getAction() == MotionEvent.ACTION_DOWN) isTouched = true;
-        else if(e.getAction() == MotionEvent.ACTION_UP) isTouched = false;
-        invalidate();                                         ////タッチするたび更新
+            me = e;
+            w = getWidth();
+            x = (int) (((e.getRawX() - 50) / (getWidth() - 100)) * num); //タッチしたx座標
+            y = (int) ((e.getRawY() - 330) / (getWidth() - 100) * num);  //タッチしたy座標
+            GameActivity.gameData.getPlayer(0).setPos(new Position(x, y));
+            if (e.getRawY() < 50) y = -1;
+            rawX = e.getRawX();
+            rawY = e.getRawY();
+            if (e.getAction() == MotionEvent.ACTION_DOWN) isTouched = true;
+            else if (e.getAction() == MotionEvent.ACTION_UP) isTouched = false;
+            invalidate();
+////////////////////////////////////////////////////////////////for TEST
+        }                                    ////タッチするたび更新
         return true;
-////////////////////////////////////////////////////////////////for TEST
     }
 
     @Override
     public void invalidate(){
 
-        colorsss = GameActivity.gameData.getColorsss();
+        colorsss = gameData.getColorsss();
+
 
         super.invalidate();
     }
 
     private Rect[] makeCell(int[] colors, Rect rect0, int num){
-        if(colors[0] == GameActivity.gameData.getColors()[0] && colors[1] != -1){
+        if(colors[0] == gameData.getColors()[0] && colors[1] != -1){
             return makeCell2(colors, rect0, num);
         }else {
             Rect[] rects = new Rect[num];
@@ -211,11 +222,11 @@ public class MapView extends View {
                     }
                 }
 
-                if(GameActivity.gameData.oniWhere().getX() == i && GameActivity.gameData.oniWhere().getY() == j){
+                if(gameData.oniWhere().getX() == i && gameData.oniWhere().getY() == j){
                     Rect oniRect = new Rect(rect);
                     canvas.drawRect(oniRect, oniPaint);
-
                 }
+
                 rect.offset(width / num, 0);
             }
 
@@ -227,7 +238,5 @@ public class MapView extends View {
             paint.setColor(Color.GREEN);
             canvas.drawRect(me.getRawX() - 50, me.getRawY() - 350, me.getRawX() + 50, me.getRawY() - 250, paint);
         }
-
     }
-
 }

@@ -7,8 +7,4 @@ public class GridData {
 
     private int gridnum;
 
-
-
-
-
 }

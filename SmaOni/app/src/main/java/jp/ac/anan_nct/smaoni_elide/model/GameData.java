@@ -1,7 +1,7 @@
 package jp.ac.anan_nct.smaoni_elide.model;
 
-import android.graphics.Color;
 import android.util.Log;
+
 
 /**
  * Created by skriulle on 2015/03/02.
@@ -11,9 +11,8 @@ public class GameData{
     private Field field;
     private Player[] players;
     private int me;
-    private int[] colors= {Color.BLUE, Color.RED,Color.YELLOW, Color.parseColor("#ff99ff"),Color.parseColor("#007000"), Color.BLACK,Color.CYAN,Color.DKGRAY};
+    private int[] colors;
     private Position oniPosition;
-    private int oniIs;
 
     public GameData() {
         gridNum = 8;
@@ -25,8 +24,8 @@ public class GameData{
             p = new Player();
         }
         me = 0;
-        oniPosition = new Position();
-        oniIs = 0;
+        oniPosition = new Position(-1, -1);
+        colors = Colors.colors;
     }
 
     public GameData(int gridNum, int playerNum, int runnerNum, Field field, Player[] players, int me) {
@@ -131,19 +130,20 @@ public class GameData{
                 int k = 0, l = 0;
                 //k->indicate how many people are in the cell
                 //l->id number
-                for(Player p : players){
-                    if(p.getPos().getX() == i && p.getPos().getY() == j){
-                        colorsss[j][i][k] = l;
-                        Log.d("l is", l+"");
-                        values[k] = l;
-                        if(players[l].getStatus() == Status.ONI){
-                            oniPosition = players[l].getPos();
-                            oniIs = k;
+                try {
+                    for (Player p : players) {
+                        if (p.getPos().getX() == i && p.getPos().getY() == j) {
+                            colorsss[j][i][k] = l;
+                            Log.d("l is", l + "");
+                            values[k] = l;
+                            if (players[l].getStatus() == Status.ONI) {
+                                oniPosition = players[l].getPos();
+                            }
+                            k++;
                         }
-                        k++;
+                        l++;
                     }
-                    l++;
-                }
+                }catch (Exception e){}
                 /*
                 if(k > 1 && oniIs != -1) {
                     Random r = new Random();
