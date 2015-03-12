@@ -21,7 +21,6 @@ public class Player {
     public Player(){
         this(0, "", new Position(0, 0), Status.RUNNER, Color.BLUE);
         name = makeName();
-        color = Color.BLUE;
         score = 100;
     }
     public Player(int id, String name, Position position, Status status, int color){
