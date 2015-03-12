@@ -62,23 +62,8 @@ public class ReceptionActivity extends ActionBarActivity {
 
         JSONObject jsonObject = new JSONObject();
         try{
-            jsonObject.put("name", "太郎");
+            jsonObject.put("name", p.getName());
             jsonObject.put("id",p.getId());
-            jsonObject.put("posX", p.getPos().getX());
-            jsonObject.put("posY", p.getPos().getY());
-            int a;
-            switch(p.getStatus()){
-                case ONI:
-                    a = 1;
-                    break;
-                case RUNNER:
-                    a = 0;
-                    break;
-                default: //case INVISIBLE:
-                    a = 2;
-                    break;
-            }
-            jsonObject.put("status", a);
 
             Log.d("json", jsonObject.toString());
             /////////////送る
@@ -102,22 +87,12 @@ public class ReceptionActivity extends ActionBarActivity {
             p.setPos(new Position(jsonObject.getInt("posX"), jsonObject.getInt("posY")));
             p.setId(jsonObject.getInt("id"));
             p.setName(jsonObject.getString("name"));
-            int s = jsonObject.getInt("status");
-            switch(s){
-                case 0:
-                    p.setStatus(Status.RUNNER);
-                    break;
-                case 1:
-                    p.setStatus(Status.ONI);
-                    break;
-                default:
-                    p.setStatus(Status.INVISIBLE);
-                    break;
-            }
         }catch(JSONException e) {
         }catch(Exception e){}
 
-        Log.d("player", p.getName() + " " + p.getScore() + " " + p.getStatus());
+        Log.d("player", p.getName() + " " + p.getId());
+
+        ////pをプレイヤーの配列に追加
     }
 
     void setAction(){
