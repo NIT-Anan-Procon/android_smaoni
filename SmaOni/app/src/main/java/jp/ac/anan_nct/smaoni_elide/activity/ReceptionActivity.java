@@ -16,7 +16,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.LinkedList;
-import java.util.Random;
 
 import jp.ac.anan_nct.smaoni_elide.R;
 import jp.ac.anan_nct.smaoni_elide.model.Colors;
@@ -56,6 +55,8 @@ public class ReceptionActivity extends ActionBarActivity {
         linearLayout = (LinearLayout) findViewById(R.id.linear1);
         memberViews = new LinkedList<MemberView>();
 
+        jsonArray = new JSONArray();
+
         Player p = new Player(3, "aさん", new Position(0, 0), Status.RUNNER, Color.BLUE);
         //本来なら自分のIDと名前
 /**
@@ -67,15 +68,7 @@ public class ReceptionActivity extends ActionBarActivity {
         i = 1;
 */
         i = 0;
-        JSONObject jsonObject = new JSONObject();
-        try{
-            jsonObject.put("name", p.getName());
-            jsonObject.put("id",p.getId());
-
-            Log.d("json", jsonObject.toString());
-            /////////////送る
-
-        }catch (JSONException e){}
+        addJSONObject(p);
 
         gotoGame = (Button) findViewById(R.id.button6);
         addMember = (Button) findViewById(R.id.button7);
@@ -84,10 +77,23 @@ public class ReceptionActivity extends ActionBarActivity {
 
         setAction();
 
-        jsonCame(jsonObject);
+        jsonArrayCame(jsonArray);
 
         mapView.invalidate();
 
+    }
+
+    void addJSONObject(Player p){
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("name", p.getName());
+            jsonObject.put("id",p.getId());
+
+            Log.d("json", jsonObject.toString());
+            /////////////送る
+
+            jsonArray.put(jsonObject);
+        }catch (JSONException e){}
     }
 
     void jsonCame(JSONObject jsonObject){//JSONObject
@@ -109,6 +115,11 @@ public class ReceptionActivity extends ActionBarActivity {
     }
 
     void jsonArrayCame(JSONArray jsonArray){  //JSONArray
+        //配列をclear
+        gameData.setPlayerNum(gameData.getPlayerNum());
+        memberViews.clear();
+        linearLayout.removeAllViews();
+
         this.i = 0;
         try{
             for(int i = 0; i < jsonArray.length(); i++) {   //送られてくるJSONArrayの長さは指定以上にならない
@@ -122,47 +133,20 @@ public class ReceptionActivity extends ActionBarActivity {
 
 
     void setAction(){
-        for(int i = 0; i < memberViews.size(); i++){
-            final int j = i;
-         /*   memberViews[4].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                }
-            });*/
-        }
         gotoGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("おちょ" + i, "" + memberViews.size());
-                if(i != gameData.getPlayerNum()){
-                    /*Player[] players = new Player[i];
-                    for(int j = 0; j < i; j++){
-                        players[j] = gameData.getPlayer(j);
-                    }
-                    gameData.setPlayerNum(i);*/
-                }else {
-                    startActivity(new Intent(ReceptionActivity.this, OniGokkoActivity.class));
-                }
+                startActivity(new Intent(ReceptionActivity.this, OniGokkoActivity.class));
             }
         });
         addMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(i < gameData.getPlayerNum()) {
-                    int index = memberViews.size();
+                if(jsonArray.length() < gameData.getPlayerNum()) {
                     Player p = new Player();
-                    Random r = new Random();
-                    int a = r.nextInt(gameData.getGridNum()), b = r.nextInt(gameData.getGridNum());
-                    p.setPos(new Position(a, b));
-                    p.setColor(Colors.colors[index]);
-                    gameData.resetPlayer(i, p);
-                    MemberView m1 = new MemberView(ReceptionActivity.this, null);
-                    m1.setInfo(i, p);
-                    memberViews.add(m1);
-                    linearLayout.addView(m1);
-                    i++;
-                    mapView.invalidate();
-                    if(i == gameData.getPlayerNum()){
+                    addJSONObject(p);
+                    jsonArrayCame(jsonArray);
+                    if(jsonArray.length() == gameData.getPlayerNum()){
                         gotoGame.setEnabled(true);
                     }
                 }
