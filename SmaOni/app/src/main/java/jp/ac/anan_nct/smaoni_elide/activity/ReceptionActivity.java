@@ -1,15 +1,21 @@
 package jp.ac.anan_nct.smaoni_elide.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.LinkedList;
+import java.util.Random;
 
 import jp.ac.anan_nct.smaoni_elide.R;
 import jp.ac.anan_nct.smaoni_elide.model.Colors;
@@ -46,18 +52,72 @@ public class ReceptionActivity extends ActionBarActivity {
         linearLayout = (LinearLayout) findViewById(R.id.linear1);
         memberViews = new LinkedList<MemberView>();
 
+        Player p = new Player(3, "aさん", new Position(0, 0), Status.RUNNER, Color.BLUE);
         MemberView m1 = new MemberView(this, null);
-        gameData.resetPlayer(0, new Player(3, "aさん", new Position(0, 0), Status.RUNNER));
+        gameData.resetPlayer(0, p);
         m1.setInfo(0, gameData.getPlayer(0));
         memberViews.add(m1);
         linearLayout.addView(m1, new LinearLayout.LayoutParams(WC, WC));
         i = 1;
 
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("name", "太郎");
+            jsonObject.put("id",p.getId());
+            jsonObject.put("posX", p.getPos().getX());
+            jsonObject.put("posY", p.getPos().getY());
+            int a;
+            switch(p.getStatus()){
+                case ONI:
+                    a = 1;
+                    break;
+                case RUNNER:
+                    a = 0;
+                    break;
+                default: //case INVISIBLE:
+                    a = 2;
+                    break;
+            }
+            jsonObject.put("status", a);
+
+            Log.d("json", jsonObject.toString());
+            /////////////送る
+
+        }catch (JSONException e){}
+
         gotoGame = (Button) findViewById(R.id.button6);
         addMember = (Button) findViewById(R.id.button7);
 
+        mapView.invalidate();
+
         setAction();
 
+        jsonCame(jsonObject);
+
+    }
+
+    void jsonCame(JSONObject jsonObject){
+        Player p = new Player();
+        try {
+            p.setPos(new Position(jsonObject.getInt("posX"), jsonObject.getInt("posY")));
+            p.setId(jsonObject.getInt("id"));
+            p.setName(jsonObject.getString("name"));
+            int s = jsonObject.getInt("status");
+            switch(s){
+                case 0:
+                    p.setStatus(Status.RUNNER);
+                    break;
+                case 1:
+                    p.setStatus(Status.ONI);
+                    break;
+                default:
+                    p.setStatus(Status.INVISIBLE);
+                    break;
+            }
+        }catch(JSONException e) {
+        }catch(Exception e){}
+
+        Log.d("player", p.getName() + " " + p.getScore() + " " + p.getStatus());
     }
 
     void setAction(){
@@ -89,6 +149,9 @@ public class ReceptionActivity extends ActionBarActivity {
                 if(i < gameData.getPlayerNum()) {
                     int index = memberViews.size();
                     Player p = new Player();
+                    Random r = new Random();
+                    int a = r.nextInt(gameData.getGridNum()), b = r.nextInt(gameData.getGridNum());
+                    p.setPos(new Position(a, b));
                     p.setColor(Colors.colors[index]);
                     gameData.resetPlayer(i, p);
                     MemberView m1 = new MemberView(ReceptionActivity.this, null);
@@ -96,6 +159,7 @@ public class ReceptionActivity extends ActionBarActivity {
                     memberViews.add(m1);
                     linearLayout.addView(m1);
                     i++;
+                    mapView.invalidate();
                 }
             }
         });

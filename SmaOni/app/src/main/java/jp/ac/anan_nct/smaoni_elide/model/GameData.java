@@ -2,6 +2,7 @@ package jp.ac.anan_nct.smaoni_elide.model;
 
 import android.util.Log;
 
+
 /**
  * Created by skriulle on 2015/03/02.
  */
@@ -129,18 +130,20 @@ public class GameData{
                 int k = 0, l = 0;
                 //k->indicate how many people are in the cell
                 //l->id number
-                for(Player p : players){
-                    if(p.getPos().getX() == i && p.getPos().getY() == j){
-                        colorsss[j][i][k] = l;
-                        Log.d("l is", l+"");
-                        values[k] = l;
-                        if(players[l].getStatus() == Status.ONI){
-                            oniPosition = players[l].getPos();
+                try {
+                    for (Player p : players) {
+                        if (p.getPos().getX() == i && p.getPos().getY() == j) {
+                            colorsss[j][i][k] = l;
+                            Log.d("l is", l + "");
+                            values[k] = l;
+                            if (players[l].getStatus() == Status.ONI) {
+                                oniPosition = players[l].getPos();
+                            }
+                            k++;
                         }
-                        k++;
+                        l++;
                     }
-                    l++;
-                }
+                }catch (Exception e){}
                 /*
                 if(k > 1 && oniIs != -1) {
                     Random r = new Random();

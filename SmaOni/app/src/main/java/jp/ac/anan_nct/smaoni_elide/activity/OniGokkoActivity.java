@@ -2,7 +2,6 @@ package jp.ac.anan_nct.smaoni_elide.activity;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -43,7 +42,6 @@ public class OniGokkoActivity extends GameActivity {
             @Override
             public void onClick(View v) {
                 rankingView.invalidate();
-                Log.d("おした","");
             }
         });
     }

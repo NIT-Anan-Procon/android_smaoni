@@ -24,8 +24,6 @@ public class HomeActivity extends ActionBarActivity {
         bt2 = (Button)findViewById(R.id.button2);
         goToComment = (Button)findViewById(R.id.goComment);
 
-
-
         setAction();
     }
 
