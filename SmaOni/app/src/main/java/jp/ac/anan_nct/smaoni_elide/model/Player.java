@@ -17,11 +17,15 @@ public class Player {
     private boolean visiblity;
     private int color;
     private int score;
+    private String account;
+    private String password;
 
     public Player(){
         this(0, "", new Position(0, 0), Status.RUNNER, Color.BLUE);
         name = makeName();
         score = 100;
+        account = "aaaaaa";
+        password = "000";
     }
     public Player(int id, String name, Position position, Status status, int color){
         this.id = id;
@@ -102,9 +106,23 @@ public class Player {
     public void setScore(int score) {
         this.score = score;
     }
-
     public int getScore() {
         return score;
+    }
+
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+    public String getAccount() {
+        return account;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    public String getPassword() {
+        return password;
     }
 }
 

@@ -20,6 +20,8 @@ import java.util.LinkedList;
 import jp.ac.anan_nct.smaoni_elide.R;
 import jp.ac.anan_nct.smaoni_elide.model.Colors;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
+import jp.ac.anan_nct.smaoni_elide.model.JSONRequest;
+import jp.ac.anan_nct.smaoni_elide.model.JSONRequestEvent;
 import jp.ac.anan_nct.smaoni_elide.model.Player;
 import jp.ac.anan_nct.smaoni_elide.model.Position;
 import jp.ac.anan_nct.smaoni_elide.model.Status;
@@ -40,12 +42,27 @@ public class ReceptionActivity extends ActionBarActivity {
 
     JSONArray jsonArray;
 
+    JSONRequest jsonRequest;
+    JSONRequestEvent je;
+
     int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reception);
+
+        je = new JSONRequestEvent() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                Player p = new Player();
+                try {
+                    p.setName(jsonObject.getString("name"));
+                    Log.d("name", p.getName());
+                }catch (JSONException e){}
+            }
+        };
+        jsonRequest = new JSONRequest(je);
 
         mapView = (MapView)findViewById(R.id.mapRecieption);
         mapView.setTouchable(false);
@@ -59,7 +76,7 @@ public class ReceptionActivity extends ActionBarActivity {
 
         Player p = new Player(3, "aさん", new Position(0, 0), Status.RUNNER, Color.BLUE);
         //本来なら自分のIDと名前
-/**
+/*
         MemberView m1 = new MemberView(this, null);
         gameData.resetPlayer(0, p);
         m1.setInfo(0, gameData.getPlayer(0));
@@ -67,7 +84,6 @@ public class ReceptionActivity extends ActionBarActivity {
         linearLayout.addView(m1, new LinearLayout.LayoutParams(WC, WC));
         i = 1;
 */
-        i = 0;
         addJSONObject(p);
 
         gotoGame = (Button) findViewById(R.id.button6);
@@ -136,6 +152,7 @@ public class ReceptionActivity extends ActionBarActivity {
         gotoGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                jsonRequest.send(new JSONObject());
                 startActivity(new Intent(ReceptionActivity.this, OniGokkoActivity.class));
             }
         });
