@@ -2,8 +2,9 @@ package jp.ac.anan_nct.smaoni_elide.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,14 +23,18 @@ import java.util.LinkedList;
 
 import jp.ac.anan_nct.smaoni_elide.R;
 import jp.ac.anan_nct.smaoni_elide.model.Colors;
+import jp.ac.anan_nct.smaoni_elide.model.Communication;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
+import jp.ac.anan_nct.smaoni_elide.model.JSONRequest;
+import jp.ac.anan_nct.smaoni_elide.model.JSONRequestEvent;
+import jp.ac.anan_nct.smaoni_elide.model.LoginJsonBuilder;
 import jp.ac.anan_nct.smaoni_elide.model.Player;
 import jp.ac.anan_nct.smaoni_elide.model.Position;
 import jp.ac.anan_nct.smaoni_elide.model.Status;
 import jp.ac.anan_nct.smaoni_elide.view.MapView;
 import jp.ac.anan_nct.smaoni_elide.view.MemberView;
 
-public class ReceptionActivity extends ActionBarActivity {
+public class ReceptionActivity extends GPS{
 
     LinearLayout linearLayout;
     LinkedList<MemberView> memberViews;
@@ -40,12 +48,32 @@ public class ReceptionActivity extends ActionBarActivity {
 
     JSONArray jsonArray;
 
+    JSONRequest jsonRequest;
+    JSONRequestEvent je;
+
+    HttpPost post;
+    HttpClient httpClient;
+
+    Communication communication;
+
     int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reception);
+
+        je = new JSONRequestEvent() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                Player p = new Player();
+                try {
+                    p.setName(jsonObject.getString("name"));
+                    Log.d("name", p.getName());
+                }catch (JSONException e){}
+            }
+        };
+        jsonRequest = new JSONRequest(je);
 
         mapView = (MapView)findViewById(R.id.mapRecieption);
         mapView.setTouchable(false);
@@ -59,7 +87,7 @@ public class ReceptionActivity extends ActionBarActivity {
 
         Player p = new Player(3, "aさん", new Position(0, 0), Status.RUNNER, Color.BLUE);
         //本来なら自分のIDと名前
-/**
+/*
         MemberView m1 = new MemberView(this, null);
         gameData.resetPlayer(0, p);
         m1.setInfo(0, gameData.getPlayer(0));
@@ -67,7 +95,6 @@ public class ReceptionActivity extends ActionBarActivity {
         linearLayout.addView(m1, new LinearLayout.LayoutParams(WC, WC));
         i = 1;
 */
-        i = 0;
         addJSONObject(p);
 
         gotoGame = (Button) findViewById(R.id.button6);
@@ -81,7 +108,32 @@ public class ReceptionActivity extends ActionBarActivity {
 
         mapView.invalidate();
 
+        httpClient = new DefaultHttpClient();
+        Uri uri = Uri.parse("http://219.94.232.92:3000/api/post_comment");
+        post = new HttpPost(uri.toString());
+
+        communication = new Communication(gameData, mapView);
+
+        communication.execute();
     }
+
+
+    @Override
+    public void onLocationChanged(Location location) {
+        super.onLocationChanged(location);
+
+        gameData.getMe().setPos(location);
+
+        Position p = gameData.getMe().getPos();
+        Log.d("working", "" + p.getX() + " " + p.getY());
+        gameData.getPlayer(0).setPos(p);
+
+        mapView.invalidate();
+    }
+
+
+
+
 
     void addJSONObject(Player p){
         JSONObject jsonObject = new JSONObject();
@@ -90,10 +142,11 @@ public class ReceptionActivity extends ActionBarActivity {
             jsonObject.put("id",p.getId());
 
             Log.d("json", jsonObject.toString());
-            /////////////送る
 
             jsonArray.put(jsonObject);
-        }catch (JSONException e){}
+        }catch (Exception e){
+            Log.e("ERROR:RecieptionActivity", e.toString());
+        }
     }
 
     void jsonCame(JSONObject jsonObject){//JSONObject
@@ -102,7 +155,9 @@ public class ReceptionActivity extends ActionBarActivity {
             p.setId(jsonObject.getInt("id"));
             p.setName(jsonObject.getString("name"));
         }catch(JSONException e) {
-        }catch(Exception e){}
+        }catch(Exception e){
+            Log.e("ERROR:RecieptionActivity", e.toString());
+        }
 
         Log.d("player", p.getName() + " " + p.getId());
         p.setColor(Colors.colors[i]);
@@ -126,9 +181,10 @@ public class ReceptionActivity extends ActionBarActivity {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 jsonCame(jsonObject);
             }
-        }catch (JSONException e){}
+        }catch (Exception e){
+            Log.e("ERROR:RecieptionActivity", e.toString());
+        }
 
-        mapView.invalidate();
     }
 
 
@@ -136,6 +192,8 @@ public class ReceptionActivity extends ActionBarActivity {
         gotoGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                communication.setStart(true);
+                jsonRequest.send(new LoginJsonBuilder());
                 startActivity(new Intent(ReceptionActivity.this, OniGokkoActivity.class));
             }
         });

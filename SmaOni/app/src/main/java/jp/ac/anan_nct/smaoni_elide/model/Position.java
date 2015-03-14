@@ -2,7 +2,7 @@ package jp.ac.anan_nct.smaoni_elide.model;
 
 import android.location.Location;
 
-import jp.ac.anan_nct.smaoni_elide.activity.GameActivity;
+import jp.ac.anan_nct.smaoni_elide.activity.SelectActivity;
 
 /**
  * Created by skriulle on 2015/03/02.
@@ -42,8 +42,8 @@ public class Position {
     }
 
     protected void where(Location location){
-        int gridNum = GameActivity.gameData.getGridNum();
-        Field field = GameActivity.gameData.getField();
+        int gridNum = SelectActivity.gameData.getGridNum();
+        Field field = SelectActivity.gameData.getField();
 
         x = (int)(   (( location.getLongitude() - field.minLng) / (field.maxLng-field.minLng) ) * gridNum );
         y = (int)(   (( location.getLatitude()  - field.minLat) / (field.maxLat-field.minLat) ) * gridNum );
