@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import jp.ac.anan_nct.smaoni_elide.activity.ReceptionActivity;
 import jp.ac.anan_nct.smaoni_elide.view.MapView;
 
 /**
@@ -30,15 +31,14 @@ public class Communication extends AsyncTask {
     GameData gameData;
     private boolean start;
 
+
     MapView mapView;
 
 
     public Communication(GameData gameData, MapView mapView) {
         super();
-
-
         httpClient = new DefaultHttpClient();
-        Uri uri = Uri.parse("http://219.94.232.92:3000/api/post_comment");
+        Uri uri = Uri.parse(MyURL.PATH_COMMENT);
         post = new HttpPost(uri.toString());
         this.gameData = gameData;
         this.mapView = mapView;
@@ -87,8 +87,14 @@ public class Communication extends AsyncTask {
 
         mapView.invalidate();
 
-        Communication communication = new Communication(gameData, mapView);
-        communication.execute();
+        try {
+            if(ReceptionActivity.last) {
+                Communication communication = new Communication(gameData, mapView);
+                communication.execute();
+            }
+        }catch (Exception e){
+            Log.e("ERROR:communication_last", e.toString());
+        }
 
     }
 

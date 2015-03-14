@@ -28,6 +28,7 @@ import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.JSONRequest;
 import jp.ac.anan_nct.smaoni_elide.model.JSONRequestEvent;
 import jp.ac.anan_nct.smaoni_elide.model.LoginJsonBuilder;
+import jp.ac.anan_nct.smaoni_elide.model.MyURL;
 import jp.ac.anan_nct.smaoni_elide.model.Player;
 import jp.ac.anan_nct.smaoni_elide.model.Position;
 import jp.ac.anan_nct.smaoni_elide.model.Status;
@@ -55,6 +56,7 @@ public class ReceptionActivity extends GPS{
     HttpClient httpClient;
 
     Communication communication;
+    public static boolean last;
 
     int i;
 
@@ -109,11 +111,11 @@ public class ReceptionActivity extends GPS{
         mapView.invalidate();
 
         httpClient = new DefaultHttpClient();
-        Uri uri = Uri.parse("http://219.94.232.92:3000/api/post_comment");
+        Uri uri = Uri.parse(MyURL.PATH_RECEIPTION);
         post = new HttpPost(uri.toString());
 
+        last = true;
         communication = new Communication(gameData, mapView);
-
         communication.execute();
     }
 
@@ -205,6 +207,7 @@ public class ReceptionActivity extends GPS{
             @Override
             public void onClick(View v) {
                 communication.setStart(true);
+                last = false;
                 jsonRequest.send(new LoginJsonBuilder());
                 startActivity(new Intent(ReceptionActivity.this, OniGokkoActivity.class));
             }
