@@ -2,7 +2,6 @@ package jp.ac.anan_nct.smaoni_elide.model;
 
 import android.util.Log;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -25,7 +24,7 @@ public class LoginJsonBuilder implements JSONRequestParams{
             jsonObject.put("x", player.getPos().getX());
             jsonObject.put("y", player.getPos().getY());
 
-        }catch (JSONException e){
+        }catch (Exception e){
             Log.e("ERROR:LoginJsonBuilder", e.toString());
         }
 

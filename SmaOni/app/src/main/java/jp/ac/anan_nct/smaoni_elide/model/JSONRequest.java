@@ -20,7 +20,6 @@ public class JSONRequest {
         send(jrp.buildJSON(new Player()));
     }
     public void send(JSONObject jsonObject){
-        //jsonObjectを送る
 
         //行って帰ってきたJSONObjectのダミー
         JSONObject j = new JSONObject();

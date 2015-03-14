@@ -1,8 +1,12 @@
 package jp.ac.anan_nct.smaoni_elide.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,23 +55,37 @@ public class HomeActivity extends ActionBarActivity {
     }
 
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            showDialog(0);
+            return true;
+        }
+        return false;
+    }
 
+    @Override
+    public Dialog onCreateDialog(int id) {
+        switch (id) {
 
+            case 0:
+                return new AlertDialog.Builder(HomeActivity.this)
+                        .setMessage("「アプリ」を終了しますか?")
+                        .setCancelable(false)
+                        .setPositiveButton("終了する", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                HomeActivity.this.finish();
+                            }
+                        })
+                        .setNegativeButton("終了しない", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                            }
+                        })
+                        .create();
+        }
+        return null;
+    }
 
 
     @Override

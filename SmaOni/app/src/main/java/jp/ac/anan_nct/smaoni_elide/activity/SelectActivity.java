@@ -1,8 +1,12 @@
 package jp.ac.anan_nct.smaoni_elide.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -136,23 +140,44 @@ public class SelectActivity extends ActionBarActivity {
 
     }
 
+    // BACKボタンが押された時の処理
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            // アラートダイアログ
+            showDialog(0);
+            return true;
+        }
+        return false;
+    }
 
+    // アラートダイアログ
+    @Override
+    public Dialog onCreateDialog(int id) {
+        switch (id) {
 
+            case 0:
+                //ダイアログの作成(AlertDialog.Builder)
+                return new AlertDialog.Builder(SelectActivity.this)
+                        .setMessage("「アプリ」を終了しますか?")
+                        .setCancelable(false)
+                                // 「終了する」が押された時の処理
+                        .setPositiveButton("終了する", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // アクティビティ消去
+                                SelectActivity.this.finish();
+                            }
+                        })
+                                // 「終了しない」が押された時の処理
+                        .setNegativeButton("終了しない", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                            }
+                        })
+                        .create();
+        }
+        return null;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -12,6 +12,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import jp.ac.anan_nct.smaoni_elide.R;
+import jp.ac.anan_nct.smaoni_elide.model.Field;
+import jp.ac.anan_nct.smaoni_elide.model.GameData;
 
 public class FieldSetActivity extends GPS{
 
@@ -20,6 +22,7 @@ public class FieldSetActivity extends GPS{
 
     Button button, start;
     TextView test;
+    GameData gameData;
 
     ArrayList<Location> locations;
 
@@ -33,6 +36,8 @@ public class FieldSetActivity extends GPS{
         start = (Button)findViewById(R.id.set_start);
         test = (TextView)findViewById(R.id.test);
 
+        gameData = SelectActivity.gameData;
+
         setAction();
     }
 
@@ -41,8 +46,15 @@ public class FieldSetActivity extends GPS{
         super.onLocationChanged(location);
         if (setting) {
             locations.add(location);
+
+            Field f = gameData.getField();
+
+            if(location.getLatitude() > f.maxLat)       f.maxLat = location.getLatitude();
+            else if(location.getLatitude() < f.minLat)  f.minLat = location.getLatitude();
+            if(location.getLongitude() > f.maxLng)      f.maxLng = location.getLongitude();
+            else if(location.getLongitude() < f.minLng) f.minLng = location.getLongitude();
         }
-        test.setText("asfgsh");
+        test.setText("asfgsh"+setting);
     }
 
     void setAction(){
@@ -61,7 +73,6 @@ public class FieldSetActivity extends GPS{
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

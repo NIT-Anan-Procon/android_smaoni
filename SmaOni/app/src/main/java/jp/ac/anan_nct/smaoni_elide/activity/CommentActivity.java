@@ -18,7 +18,6 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -27,6 +26,7 @@ import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
 import jp.ac.anan_nct.smaoni_elide.R;
+import jp.ac.anan_nct.smaoni_elide.model.MyURL;
 
 public class CommentActivity extends ActionBarActivity {
 
@@ -34,7 +34,6 @@ public class CommentActivity extends ActionBarActivity {
     Button submit;
     HttpPost post;
     HttpClient httpClient;
-    JSONObject jsonObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +44,10 @@ public class CommentActivity extends ActionBarActivity {
         text1 = (EditText) findViewById(R.id.editText1);
         text2 = (EditText) findViewById(R.id.editText2);
 
+        text2.setText("テストです☆");
 
         httpClient = new DefaultHttpClient();
-        Uri uri = Uri.parse("http://219.94.232.92:3000/api/post_comment");
+        Uri uri = Uri.parse(MyURL.PATH_COMMENT);
         post = new HttpPost(uri.toString());
 
 
@@ -74,8 +74,8 @@ public class CommentActivity extends ActionBarActivity {
             protected Object doInBackground(Object[] p) {
                 ArrayList<NameValuePair> params = new ArrayList <NameValuePair>();
                 params.add( new BasicNameValuePair("comment", text2.getText().toString()));
-                params.add( new BasicNameValuePair("account", "kasssshi"));
-                params.add( new BasicNameValuePair("password", "12345"));
+                params.add( new BasicNameValuePair("account", "skriulle5@gmail.com"));
+                params.add( new BasicNameValuePair("password", "kashifuku"));
 
                 HttpResponse res = null;
 

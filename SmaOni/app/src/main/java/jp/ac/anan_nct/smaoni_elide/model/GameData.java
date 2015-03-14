@@ -128,7 +128,7 @@ public class GameData{
                         if (p.getPos().getX() == i && p.getPos().getY() == j) {
                             colorsss[j][i][k] = l;
                             values[k] = l;
-                            if (players[l].getStatus() == Status.ONI) {
+                            if (players[l].getOni()) {
                                 oniPosition = players[l].getPos();
                             }
                             k++;
