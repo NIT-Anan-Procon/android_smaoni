@@ -16,7 +16,9 @@ public class JSONRequest {
         this.jsonRecEv = jsonRecEv;
     }
 
-
+    public void send(JSONRequestParams jrp){
+        send(jrp.buildJSON(new Player()));
+    }
     public void send(JSONObject jsonObject){
         //jsonObjectを送る
 

@@ -7,8 +7,6 @@ import org.json.JSONObject;
  */
 public interface JSONRequestEvent {
 
-
-
     void onResponse(JSONObject jsonObject);
 
 }

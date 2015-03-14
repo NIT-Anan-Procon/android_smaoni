@@ -22,6 +22,7 @@ import jp.ac.anan_nct.smaoni_elide.model.Colors;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.JSONRequest;
 import jp.ac.anan_nct.smaoni_elide.model.JSONRequestEvent;
+import jp.ac.anan_nct.smaoni_elide.model.LoginJsonBuilder;
 import jp.ac.anan_nct.smaoni_elide.model.Player;
 import jp.ac.anan_nct.smaoni_elide.model.Position;
 import jp.ac.anan_nct.smaoni_elide.model.Status;
@@ -106,7 +107,6 @@ public class ReceptionActivity extends ActionBarActivity {
             jsonObject.put("id",p.getId());
 
             Log.d("json", jsonObject.toString());
-            /////////////送る
 
             jsonArray.put(jsonObject);
         }catch (JSONException e){}
@@ -152,7 +152,7 @@ public class ReceptionActivity extends ActionBarActivity {
         gotoGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jsonRequest.send(new JSONObject());
+                jsonRequest.send(new LoginJsonBuilder());
                 startActivity(new Intent(ReceptionActivity.this, OniGokkoActivity.class));
             }
         });
