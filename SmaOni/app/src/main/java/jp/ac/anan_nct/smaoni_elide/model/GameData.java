@@ -12,6 +12,7 @@ public class GameData{
     private int[] colors;
     private Position oniPosition;
     private Player me;
+    private int iAm;
 
     public GameData() {
         gridNum = 8;
@@ -25,6 +26,7 @@ public class GameData{
         oniPosition = new Position(-1, -1);
         colors = Colors.colors;
         me = new Player();
+        iAm = 0;
     }
 
     public GameData(int gridNum, int playerNum, int runnerNum, Field field, Player[] players, int me) {
@@ -138,35 +140,22 @@ public class GameData{
                 }catch (Exception e){
                     Log.e("ERROR:GameData", e.toString());
                 }
-                /*
-                if(k > 1 && oniIs != -1) {
-                    Random r = new Random();
-                    int next = r.nextInt(k - 1);
-                    next = (next >= oniIs) ? next + 1 : next;
-
-                    getPlayer(values[oniIs]).setStatus(Status.RUNNER);
-                    getPlayer(values[next]).setStatus(Status.ONI);
-                    OniGokkoActivity.txLng.setText("ONI is " + values[next]);
-                }
-                oniIs = -1;
-                */
             }
 
         }
-        /*
-        OniGokkoActivity.txLat.setText(oniPosition.getX()+" "+oniPosition.getY());
-        for(int o = 0; o < playerNum; o++){
-            if(getPlayer(o).getPos().getX() == oniPosition.getX() && getPlayer(o).getPos().getY() == oniPosition.getY()){
-                OniGokkoActivity.txLng.setText("ONI is " + o);
-            }
-        }
-*/
         return colorsss;
     }
 
 
     public int[] getColors() {
         return colors;
+    }
+
+    public void setIAm(int iAm) {
+        this.iAm = iAm;
+    }
+    public int getIAm() {
+        return iAm;
     }
 }
 

@@ -20,8 +20,8 @@ public class Player extends User{
     public Player(){
         super("skriulle5@gmail.com", "kashifuku", "もりりん");
         score = 100;
-        account = "aaaaaa";
-        password = "000";
+        account = "skriulle5@gmail.com";
+        password = "kashifuku";
         isOni = false;
         visiblity = true;
         myPos = new Position();

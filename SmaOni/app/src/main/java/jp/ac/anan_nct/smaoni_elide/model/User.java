@@ -23,7 +23,7 @@ public class User {
         this.account = account;
     }
     public String getAccount() {
-        return account;
+        return account+" ";
     }
 
     public void setName(String name) {

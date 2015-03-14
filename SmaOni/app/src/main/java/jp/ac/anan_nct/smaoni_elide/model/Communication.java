@@ -53,7 +53,7 @@ public class Communication extends AsyncTask {
     protected Object doInBackground(Object[] p) {
 
         try{
-            Thread.sleep(5000);
+            Thread.sleep(2000);
         }catch (Exception e){
             Log.e("ERROR:Communication", e.toString());
         }
@@ -90,6 +90,11 @@ public class Communication extends AsyncTask {
                 int x = playeR.getInt("x");
                 int y = playeR.getInt("y");
                 player.setPos(new Position(x, y));
+
+                if(player.getAccount().equals(gameData.getMe().getAccount())){
+                    Log.d(player.getAccount(), i+"");
+                    gameData.setIAm(i);
+                }
 
                 gameData.resetPlayer(i, player);
             }
