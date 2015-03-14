@@ -138,8 +138,12 @@ public class ReceptionActivity extends GPS{
     void addJSONObject(Player p){
         JSONObject jsonObject = new JSONObject();
         try{
-            jsonObject.put("name", p.getName());
+            jsonObject.put("account", p.getName());
             jsonObject.put("id",p.getId());
+            Position pos = p.getPos();
+            jsonObject.put("x", pos.getX());
+            jsonObject.put("y", pos.getY());
+
 
             Log.d("json", jsonObject.toString());
 
@@ -149,11 +153,15 @@ public class ReceptionActivity extends GPS{
         }
     }
 
-    void jsonCame(JSONObject jsonObject){//JSONObject
+    Player jsonCame(JSONObject jsonObject){//JSONObject
         Player p = new Player();
         try {
             p.setId(jsonObject.getInt("id"));
-            p.setName(jsonObject.getString("name"));
+            p.setName(jsonObject.getString("account"));
+            int x = jsonObject.getInt("x");
+            int y = jsonObject.getInt("y");
+            Log.d("x "+ x, "y " + y);
+            p.setPos(new Position(x, y));
         }catch(JSONException e) {
         }catch(Exception e){
             Log.e("ERROR:RecieptionActivity", e.toString());
@@ -167,6 +175,8 @@ public class ReceptionActivity extends GPS{
         memberView.setInfo(i++, p);
         memberViews.add(memberView);
         linearLayout.addView(memberView, new LinearLayout.LayoutParams(WC, WC));
+
+        return p;
     }
 
     void jsonArrayCame(JSONArray jsonArray){  //JSONArray
@@ -179,7 +189,9 @@ public class ReceptionActivity extends GPS{
         try{
             for(int i = 0; i < jsonArray.length(); i++) {   //送られてくるJSONArrayの長さは指定以上にならない
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                jsonCame(jsonObject);
+                Player p = jsonCame(jsonObject);
+                Log.d("眠すぎ", "わろた");
+                gameData.resetPlayer(i, p);
             }
         }catch (Exception e){
             Log.e("ERROR:RecieptionActivity", e.toString());
@@ -202,6 +214,10 @@ public class ReceptionActivity extends GPS{
             public void onClick(View v) {
                 if(jsonArray.length() < gameData.getPlayerNum()) {
                     Player p = new Player();
+                    int a = (int)(Math.random()*gameData.getGridNum());
+                    int b = (int)(Math.random()*gameData.getGridNum());
+                    p.setPos(new Position(a,b));
+
                     addJSONObject(p);
                     jsonArrayCame(jsonArray);
                     if(jsonArray.length() == gameData.getPlayerNum()){
