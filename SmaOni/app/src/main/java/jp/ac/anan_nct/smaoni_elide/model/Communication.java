@@ -76,7 +76,7 @@ public class Communication extends AsyncTask {
         }catch (Exception e){
             Log.e("ERROR:Communication", e.toString());
         }
-        
+
         return null;
     }
 

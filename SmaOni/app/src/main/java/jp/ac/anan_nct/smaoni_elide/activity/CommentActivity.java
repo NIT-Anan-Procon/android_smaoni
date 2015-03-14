@@ -1,5 +1,6 @@
 package jp.ac.anan_nct.smaoni_elide.activity;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -15,6 +16,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
@@ -44,6 +46,9 @@ public class CommentActivity extends ActionBarActivity {
         text2 = (EditText) findViewById(R.id.editText2);
 
 
+        httpClient = new DefaultHttpClient();
+        Uri uri = Uri.parse("http://219.94.232.92:3000/api/post_comment");
+        post = new HttpPost(uri.toString());
 
 
         setAction();
