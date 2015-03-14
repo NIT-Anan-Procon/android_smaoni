@@ -132,7 +132,6 @@ public class ReceptionActivity extends GPS{
         gameData.getMe().setPos(location);
 
         Position p = gameData.getMe().getPos();
-        Log.d("working", "" + p.getX() + " " + p.getY());
         gameData.getPlayer(0).setPos(p);
 
         mapView.invalidate();
@@ -150,8 +149,6 @@ public class ReceptionActivity extends GPS{
             jsonObject.put("x", pos.getX());
             jsonObject.put("y", pos.getY());
 
-
-            Log.d("json", jsonObject.toString());
 
             jsonArray.put(jsonObject);
         }catch (Exception e){
