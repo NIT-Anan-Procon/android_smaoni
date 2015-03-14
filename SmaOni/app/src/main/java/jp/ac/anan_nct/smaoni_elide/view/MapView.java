@@ -6,11 +6,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import jp.ac.anan_nct.smaoni_elide.activity.GameActivity;
 import jp.ac.anan_nct.smaoni_elide.activity.SelectActivity;
 import jp.ac.anan_nct.smaoni_elide.model.Colors;
 import jp.ac.anan_nct.smaoni_elide.model.Condition;
@@ -98,15 +96,15 @@ public class MapView extends View {
             w = getWidth();
             x = (int) (((e.getRawX() - 50) / (getWidth() - 100)) * num); //タッチしたx座標
             y = (int) ((e.getRawY() - 330) / (getWidth() - 100) * num);  //タッチしたy座標
-            GameActivity.gameData.getPlayer(0).setPos(new Position(x, y));
+            gameData.getPlayer(0).setPos(new Position(x, y));
             if (e.getRawY() < 50) y = -1;
             rawX = e.getRawX();
             rawY = e.getRawY();
             if (e.getAction() == MotionEvent.ACTION_DOWN) isTouched = true;
             else if (e.getAction() == MotionEvent.ACTION_UP) isTouched = false;
-            invalidate();
 ////////////////////////////////////////////////////////////////for TEST
         }                                    ////タッチするたび更新
+        invalidate();
         return true;
     }
 
@@ -211,11 +209,9 @@ public class MapView extends View {
                     Rect[] rects = makeCell(colorsss[j][i], rect, k);
                     for(Rect r : rects){
                         if(rects[m] == null){
-                            Log.d("rect" , "null");
                             break;
                         }
                         if(paints[m] == null){
-                            Log.d("paint" , "null");
                             break;
                         }
                         canvas.drawRect(r,paints[m++]);

@@ -2,7 +2,6 @@ package jp.ac.anan_nct.smaoni_elide.model;
 
 import android.util.Log;
 
-
 /**
  * Created by skriulle on 2015/03/02.
  */
@@ -10,9 +9,9 @@ public class GameData{
     private int gridNum, playerNum, oniNum;
     private Field field;
     private Player[] players;
-    private int me;
     private int[] colors;
     private Position oniPosition;
+    private Player me;
 
     public GameData() {
         gridNum = 8;
@@ -23,9 +22,9 @@ public class GameData{
         for(Player p : players){
             p = new Player();
         }
-        me = 0;
         oniPosition = new Position(-1, -1);
         colors = Colors.colors;
+        me = new Player();
     }
 
     public GameData(int gridNum, int playerNum, int runnerNum, Field field, Player[] players, int me) {
@@ -34,7 +33,6 @@ public class GameData{
         this.oniNum = oniNum;
         this.field = field;
         this.players = players;
-        this.me = me;
     }
 
     public GameData(GameData gd) {
@@ -43,7 +41,6 @@ public class GameData{
         oniNum = gd.oniNum;
         field = gd.field;
         players = gd.players;
-        me = gd.me;
     }
 
     public void setField(Field field) {
@@ -94,8 +91,12 @@ public class GameData{
     }
 
 
-
-
+    public Player getMe() {
+        return me;
+    }
+    public void setMe(Player me) {
+        this.me = me;
+    }
 
     public Player getPlayer(int i) {
         return players[i];
@@ -103,15 +104,6 @@ public class GameData{
     public Player[] getPlayer() {
         return players;
     }
-
-
-
-
-    public void setMe(int m){me = m;}
-    public int getMe(){
-        return me;
-    }
-
 
 
     public int[][][] getColorsss(){
@@ -132,9 +124,9 @@ public class GameData{
                 //l->id number
                 try {
                     for (Player p : players) {
+                        if(p == null) break;
                         if (p.getPos().getX() == i && p.getPos().getY() == j) {
                             colorsss[j][i][k] = l;
-                            Log.d("l is", l + "");
                             values[k] = l;
                             if (players[l].getStatus() == Status.ONI) {
                                 oniPosition = players[l].getPos();
@@ -143,7 +135,9 @@ public class GameData{
                         }
                         l++;
                     }
-                }catch (Exception e){}
+                }catch (Exception e){
+                    Log.e("ERROR:GameData", e.toString());
+                }
                 /*
                 if(k > 1 && oniIs != -1) {
                     Random r = new Random();

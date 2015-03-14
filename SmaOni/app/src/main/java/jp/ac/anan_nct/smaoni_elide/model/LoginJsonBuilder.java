@@ -26,7 +26,7 @@ public class LoginJsonBuilder implements JSONRequestParams{
             jsonObject.put("y", player.getPos().getY());
 
         }catch (JSONException e){
-            Log.e("ERROR", e.toString());
+            Log.e("ERROR:LoginJsonBuilder", e.toString());
         }
 
         return jsonObject;
