@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 
 import jp.ac.anan_nct.smaoni_elide.R;
-import jp.ac.anan_nct.smaoni_elide.model.Status;
 import jp.ac.anan_nct.smaoni_elide.view.MapView;
 import jp.ac.anan_nct.smaoni_elide.view.RankingView;
 
@@ -30,9 +29,10 @@ public class OniGokkoActivity extends GameActivity {
         button = (Button)findViewById(R.id.buttonRanking);
 
         for(int i = 0; i < gameData.getPlayerNum(); i++){
-            gameData.getPlayer(i).setStatus(Status.RUNNER);
+            gameData.getPlayer(i).setOni(false);
+            gameData.getPlayer(i).setVisiblity(true);
         }
-        gameData.getPlayer(0).setStatus(Status.ONI);
+        gameData.getPlayer(0).setOni(true);
 
         setAction();
     }

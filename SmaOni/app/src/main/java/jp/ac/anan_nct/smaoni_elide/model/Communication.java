@@ -38,7 +38,7 @@ public class Communication extends AsyncTask {
     public Communication(GameData gameData, MapView mapView) {
         super();
         httpClient = new DefaultHttpClient();
-        Uri uri = Uri.parse(MyURL.PATH_COMMENT);
+        Uri uri = Uri.parse(MyURL.PATH_RECEIPTION);
         post = new HttpPost(uri.toString());
         this.gameData = gameData;
         this.mapView = mapView;
@@ -50,15 +50,18 @@ public class Communication extends AsyncTask {
     protected Object doInBackground(Object[] p) {
 
 
-        ArrayList<NameValuePair> params = new ArrayList <NameValuePair>();
-        params.add( new BasicNameValuePair("account", "kasssshi"));
-        params.add( new BasicNameValuePair("password", "12345"));
-        params.add( new BasicNameValuePair("start", start + ""));
-        params.add( new BasicNameValuePair("x", gameData.getMe().getPos().getX()+""));
-        params.add( new BasicNameValuePair("y", gameData.getMe().getPos().getY()+""));
-
+        ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
         HttpResponse res = null;
-
+        try {
+           // params.add(new BasicNameValuePair("account", "skriulle5@gmail.com"));
+           // params.add(new BasicNameValuePair("password", "kashifuku"));
+            params.add(new BasicNameValuePair("account", "1122320@st.anan-nct.ac.jp"));
+            params.add(new BasicNameValuePair("password", "morikohki"));
+            params.add(new BasicNameValuePair("x", gameData.getMe().getPos().getX() + ""));
+            params.add(new BasicNameValuePair("y", gameData.getMe().getPos().getY() + ""));
+        }catch (Exception e){
+            Log.e("ERROR:Communication", e.toString());
+        }
         try {
             post.setEntity(new UrlEncodedFormEntity(params, "utf-8"));
             res = httpClient.execute(post);
