@@ -62,10 +62,8 @@ public class Communication extends AsyncTask {
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
         HttpResponse res = null;
         try {
-          //  params.add(new BasicNameValuePair("account", "skriulle5@gmail.com"));
-          //  params.add(new BasicNameValuePair("password", "kashifuku"));
-            params.add(new BasicNameValuePair("account", "1122320@st.anan-nct.ac.jp"));
-            params.add(new BasicNameValuePair("password", "morikohki"));
+            params.add(new BasicNameValuePair("account", gameData.getMe().getAccount()));
+            params.add(new BasicNameValuePair("password", gameData.getMe().getPassword()));
             params.add(new BasicNameValuePair("x", gameData.getMe().getPos().getX() + ""));
             params.add(new BasicNameValuePair("y", gameData.getMe().getPos().getY() + ""));
         }catch (Exception e){

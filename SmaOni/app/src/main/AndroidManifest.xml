@@ -6,8 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -53,6 +51,10 @@
         <activity
             android:name=".activity.ResultActivity"
             android:label="@string/title_activity_result" >
+        </activity>
+        <activity
+            android:name=".activity.AccountSelectActivity"
+            android:label="@string/title_activity_account_select" >
         </activity>
     </application>
 

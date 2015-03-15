@@ -13,11 +13,14 @@ import android.view.View;
 import android.widget.Button;
 
 import jp.ac.anan_nct.smaoni_elide.R;
+import jp.ac.anan_nct.smaoni_elide.model.User;
 
 
 public class HomeActivity extends ActionBarActivity {
 
-    Button bt1, bt2, goToComment;
+    Button bt1, bt2;
+    public static User me;
+    public static boolean hasSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,8 @@ public class HomeActivity extends ActionBarActivity {
 
         bt1 = (Button)findViewById(R.id.button1);
         bt2 = (Button)findViewById(R.id.button2);
-        goToComment = (Button)findViewById(R.id.goComment);
+        me = new User();
+        hasSet = false;
 
         setAction();
     }
@@ -44,12 +48,6 @@ public class HomeActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, FieldSetActivity.class));
-            }
-        });
-        goToComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, CommentActivity.class));
             }
         });
     }
@@ -70,14 +68,14 @@ public class HomeActivity extends ActionBarActivity {
 
             case 0:
                 return new AlertDialog.Builder(HomeActivity.this)
-                        .setMessage("「アプリ」を終了しますか?")
+                        .setMessage("現実に向き合いますか?")
                         .setCancelable(false)
-                        .setPositiveButton("終了する", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("現実に戻る", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 HomeActivity.this.finish();
                             }
                         })
-                        .setNegativeButton("終了しない", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("現実逃避する", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
                             }
@@ -90,23 +88,24 @@ public class HomeActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
+        menu.add(Menu.NONE, 0, Menu.NONE, "ログイン");
+        menu.add(Menu.NONE, 1, Menu.NONE, "運営へのメッセージ");
+
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public boolean onOptionsItemSelected(MenuItem item) {    // addしたときのIDで識別
+        switch (item.getItemId()) {
+            case 0:
+                startActivity(new Intent(HomeActivity.this, AccountSelectActivity.class));
+                return true;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            case 1:
+                startActivity(new Intent(HomeActivity.this, CommentActivity.class));
+                return true;
+
         }
-
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 }

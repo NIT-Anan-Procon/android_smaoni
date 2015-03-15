@@ -13,7 +13,6 @@ import jp.ac.anan_nct.smaoni_elide.view.RankingView;
 public class OniGokkoActivity extends GameActivity {
 
     public static MapView mapView;
-    //   public static TextView txLng, txLat;
     public static RankingView rankingView;
     public static Button button;
 
@@ -22,8 +21,6 @@ public class OniGokkoActivity extends GameActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-    //    txLng = (TextView)findViewById(R.id.txLng);
-    //    txLat = (TextView)findViewById(R.id.txLat);
         mapView = (MapView)findViewById(R.id.map1);
         rankingView = (RankingView)findViewById(R.id.gameRanking);
         button = (Button)findViewById(R.id.buttonRanking);
@@ -51,12 +48,8 @@ public class OniGokkoActivity extends GameActivity {
     public void onLocationChanged(Location location) {
         super.onLocationChanged(location);
 
-
         mapView.invalidate();
         rankingView.invalidate();
-        //おくる
-
-
     }
 
     @Override
