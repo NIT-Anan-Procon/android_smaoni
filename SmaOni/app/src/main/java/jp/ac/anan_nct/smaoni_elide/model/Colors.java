@@ -7,6 +7,12 @@ import android.graphics.Color;
  */
 public class Colors {
 
-    public static int[] colors = {Color.BLUE,Color.YELLOW, Color.parseColor("#ff99ff"),Color.parseColor("#007000"), Color.BLACK,Color.CYAN,Color.DKGRAY, Color.parseColor("#ffa500")};
+    public static int[] colors = {Color.YELLOW, Color.parseColor("#ff99ff"),Color.parseColor("#007000"), Color.BLACK,Color.CYAN,Color.DKGRAY, Color.parseColor("#ffa500"), 0};
 
+    public static void setMe(int me){
+        for(int i = colors.length-1; i > me; i--){
+            colors[i] = colors[i-1];
+        }
+        colors[me] = Color.BLUE;
+    }
 }
