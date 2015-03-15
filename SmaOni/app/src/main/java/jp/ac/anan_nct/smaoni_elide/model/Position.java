@@ -34,12 +34,14 @@ public class Position {
         setY(y);
     }
 
+
     public int getX(){
         return x;
     }
     public int getY(){
         return y;
     }
+
 
     protected void where(Location location){
         int gridNum = SelectActivity.gameData.getGridNum();

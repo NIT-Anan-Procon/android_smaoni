@@ -118,8 +118,16 @@ public class MapView extends View {
     }
 
     private Rect[] makeCell(int[] colors, Rect rect0, int num){
-        if(colors[0] == gameData.getColors()[0] && colors[1] != -1){
-            return makeCell2(colors, rect0, num);
+        int k;
+        boolean m2 = false;
+        for(k=0; k < num; k++){
+            if(colors[k]==gameData.getIAm()){
+                m2 = true;
+                break;
+            }
+        }
+        if(m2 && colors[1] != -1){
+            return makeCell2(colors, rect0, num, k);
         }else {
             Rect[] rects = new Rect[num];
             paints = new Paint[num];
@@ -149,7 +157,11 @@ public class MapView extends View {
     }
 
 
-    private Rect[] makeCell2(int[] colors, Rect rect0, int num) {
+    private Rect[] makeCell2(int[] colors, Rect rect0, int num, int k) {
+        for(int j = k; j > 0; k--){
+            colors[j] = colors[j-1];
+        }
+        colors[0] = gameData.getIAm();
         Rect[] rects = new Rect[num];
         paints = new Paint[num];
         num-=1;
