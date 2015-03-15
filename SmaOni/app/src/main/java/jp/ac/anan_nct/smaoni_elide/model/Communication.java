@@ -100,7 +100,7 @@ public class Communication extends AsyncTask {
 
                 gameData.resetPlayer(i, player);
             }
-
+            ReceptionActivity.communicating = true;
         } catch (Exception e) {
             Log.e("ERROR:Communication", e.toString());
         }

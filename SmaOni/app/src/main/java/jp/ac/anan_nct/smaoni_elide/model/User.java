@@ -16,6 +16,11 @@ public class User {
         this.password = password;
         this.name = name;
     }
+    public User(User user){
+        account = user.getAccount();
+        password = user.getPassword();
+        name = user.getName();
+    }
 
     public void setPassword(String password) {
         this.password = password;
