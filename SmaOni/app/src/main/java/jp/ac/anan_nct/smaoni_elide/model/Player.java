@@ -4,6 +4,8 @@ import android.location.Location;
 
 import java.util.Random;
 
+import jp.ac.anan_nct.smaoni_elide.activity.HomeActivity;
+
 /**
  * Created by skriulle on 2015/03/02.
  */
@@ -30,7 +32,7 @@ public class Player extends User{
         myPos = new Position();
     }
     public Player(String name, Position position, int color){
-        super("","","");
+        super(HomeActivity.me);
         myPos = position;
         isOni = false;
         visiblity = true;

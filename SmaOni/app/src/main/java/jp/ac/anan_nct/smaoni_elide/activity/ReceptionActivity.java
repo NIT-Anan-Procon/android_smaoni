@@ -47,8 +47,6 @@ public class ReceptionActivity extends GPS{
 
     public static GameData gameData;
 
-    JSONArray jsonArray;
-
     JSONRequest jsonRequest;
     JSONRequestEvent je;
 
@@ -87,10 +85,8 @@ public class ReceptionActivity extends GPS{
             linearLayout = (LinearLayout) findViewById(R.id.linear1);
             memberViews = new LinkedList<MemberView>();
 
-            jsonArray = new JSONArray();
 
-            Player p = new Player("aさん", new Position(0, 0), Color.BLUE);
-
+            Player p = new Player(gameData.getMe().name, new Position(-1, -1), Color.BLUE);
 /*
         MemberView m1 = new MemberView(this, null);
         gameData.resetPlayer(0, p);
@@ -107,7 +103,7 @@ public class ReceptionActivity extends GPS{
 
             setAction();
 
-            jsonArrayCame(jsonArray);
+
 
             mapView.invalidate();
 
@@ -143,28 +139,28 @@ public class ReceptionActivity extends GPS{
 
     void addJSONObject(Player p){
         JSONObject jsonObject = new JSONObject();
+        Log.d("accountだよ" , p.getAccount());
         try{
-            jsonObject.put("account", p.getName());
+            jsonObject.put("account", p.getAccount());
+            jsonObject.put("name", p.name);
             Position pos = p.getPos();
             jsonObject.put("x", pos.getX());
             jsonObject.put("y", pos.getY());
 
-
-            jsonArray.put(jsonObject);
         }catch (Exception e){
             Log.e("ERROR:RecieptionActivity", e.toString());
         }
+
+        jsonCame(jsonObject);
     }
 
     Player jsonCame(JSONObject jsonObject){//JSONObject
         Player p = new Player();
         try {
-            p.setName(jsonObject.getString("account"));
+            p.setName(jsonObject.getString("name"));
             int x = jsonObject.getInt("x");
             int y = jsonObject.getInt("y");
-            Log.d("x "+ x, "y " + y);
             p.setPos(new Position(x, y));
-        }catch(JSONException e) {
         }catch(Exception e){
             Log.e("ERROR:RecieptionActivity", e.toString());
         }
@@ -210,7 +206,7 @@ public class ReceptionActivity extends GPS{
                 startActivity(new Intent(ReceptionActivity.this, OniGokkoActivity.class));
             }
         });
-        addMember.setOnClickListener(new View.OnClickListener() {
+        /*addMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(jsonArray.length() < gameData.getPlayerNum()) {
@@ -226,7 +222,7 @@ public class ReceptionActivity extends GPS{
                     }
                 }
             }
-        });
+        });*/
     }
 
     @Override
