@@ -11,7 +11,6 @@ import android.view.View;
 
 import jp.ac.anan_nct.smaoni_elide.activity.SelectActivity;
 import jp.ac.anan_nct.smaoni_elide.model.Colors;
-import jp.ac.anan_nct.smaoni_elide.model.Condition;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.Position;
 
@@ -26,7 +25,6 @@ public class MapView extends View {
     boolean touchable;
     boolean first = false;
 
-    Condition[][] conditions;
     private int[][][] colorsss;
 
     int width;
@@ -58,17 +56,11 @@ public class MapView extends View {
         touchable = true;
 
         num = gameData.getGridNum();
-        conditions = new Condition[num][num];
 
         colors = Colors.colors;
 
         playerNum = gameData.getPlayerNum();
 
-        for(int j = 0; j < num; j++){
-            for(int i = 0; i < num; i++){
-                conditions[i][j] = new Condition();
-            }
-        }
         colorsss = new int[num][num][playerNum+1];
         for(int j = 0; j < num; j++){
             for(int i = 0; i < num; i++){
@@ -96,7 +88,7 @@ public class MapView extends View {
             w = getWidth();
             x = (int) (((e.getRawX() - 50) / (getWidth() - 100)) * num); //タッチしたx座標
             y = (int) ((e.getRawY() - 330) / (getWidth() - 100) * num);  //タッチしたy座標
-            gameData.getPlayer(0).setPos(new Position(x, y));
+            gameData.getMe().setPos(new Position(x, y));
             if (e.getRawY() < 50) y = -1;
             rawX = e.getRawX();
             rawY = e.getRawY();

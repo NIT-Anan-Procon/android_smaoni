@@ -104,7 +104,6 @@ public class ReceptionActivity extends GPS{
             gotoGame = (Button) findViewById(R.id.button6);
             addMember = (Button) findViewById(R.id.button7);
 
-            gotoGame.setEnabled(false);
 
             setAction();
 
