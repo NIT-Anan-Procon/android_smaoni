@@ -90,7 +90,7 @@ public class ReceptionActivity extends GPS{
             jsonArray = new JSONArray();
 
             Player p = new Player("aさん", new Position(0, 0), Color.BLUE);
-            //本来なら自分のIDと名前
+
 /*
         MemberView m1 = new MemberView(this, null);
         gameData.resetPlayer(0, p);

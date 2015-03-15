@@ -4,9 +4,14 @@ package jp.ac.anan_nct.smaoni_elide.model;
  * Created by skriulle on 2015/03/15.
  */
 public class User {
-    private String account, name, password;
+    public String account, name, password;
 
-    protected User(String account, String password, String name){
+    public User(){
+        account = "";
+        password = "";
+        name = "";
+    }
+    public User(String account, String password, String name){
         this.account = account;
         this.password = password;
         this.name = name;

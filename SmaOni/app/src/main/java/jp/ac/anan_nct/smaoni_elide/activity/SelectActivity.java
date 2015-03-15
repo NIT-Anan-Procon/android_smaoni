@@ -1,21 +1,19 @@
 package jp.ac.anan_nct.smaoni_elide.activity;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import jp.ac.anan_nct.smaoni_elide.R;
 import jp.ac.anan_nct.smaoni_elide.model.Field;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
+import jp.ac.anan_nct.smaoni_elide.model.Player;
 
 public class SelectActivity extends ActionBarActivity {
 
@@ -32,6 +30,7 @@ public class SelectActivity extends ActionBarActivity {
         setContentView(R.layout.activity_select);
 
         gameData = new GameData();
+        gameData.setMe(new Player(HomeActivity.me));
 
         btn1 = (Button)findViewById(R.id.button11);
         btn2 = (Button)findViewById(R.id.button12);
@@ -132,72 +131,37 @@ public class SelectActivity extends ActionBarActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SelectActivity.this, ReceptionActivity.class));
+                if (!HomeActivity.hasSet) {
+                    showToast();
+                } else {
+                    startActivity(new Intent(SelectActivity.this, ReceptionActivity.class));
+                }
             }
         });
 
-
-
     }
 
-    // BACKボタンが押された時の処理
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode==KeyEvent.KEYCODE_BACK){
-            // アラートダイアログ
-            showDialog(0);
-            return true;
-        }
-        return false;
+    void showToast(){
+        Toast.makeText(this, "アカウントを選択してください", Toast.LENGTH_SHORT).show();
     }
 
-    // アラートダイアログ
-    @Override
-    public Dialog onCreateDialog(int id) {
-        switch (id) {
 
-            case 0:
-                //ダイアログの作成(AlertDialog.Builder)
-                return new AlertDialog.Builder(SelectActivity.this)
-                        .setMessage("「アプリ」を終了しますか?")
-                        .setCancelable(false)
-                                // 「終了する」が押された時の処理
-                        .setPositiveButton("終了する", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // アクティビティ消去
-                                SelectActivity.this.finish();
-                            }
-                        })
-                                // 「終了しない」が押された時の処理
-                        .setNegativeButton("終了しない", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
 
-                            }
-                        })
-                        .create();
-        }
-        return null;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_select, menu);
+        menu.add(Menu.NONE, 0, Menu.NONE, "ログイン");
+
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    public boolean onOptionsItemSelected(MenuItem item) {    // addしたときのIDで識別
+        switch (item.getItemId()) {
+            case 0:
+                startActivity(new Intent(SelectActivity.this, AccountSelectActivity.class));
+                return true;
         }
-
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 }

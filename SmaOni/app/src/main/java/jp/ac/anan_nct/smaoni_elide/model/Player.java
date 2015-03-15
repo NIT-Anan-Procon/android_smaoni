@@ -14,20 +14,23 @@ public class Player extends User{
     private boolean visiblity;
     private int color;
     private int score;
-    private String account;
-    private String password;
 
     public Player(){
-        super("skriulle5@gmail.com", "kashifuku", "もりりん");
+        super("", "", "");
         score = 100;
-        account = "skriulle5@gmail.com";
-        password = "kashifuku";
+        isOni = false;
+        visiblity = true;
+        myPos = new Position();
+    }
+    public Player(User user){
+        super(user.getAccount(), user.getPassword(), user.getName());
+        score = 100;
         isOni = false;
         visiblity = true;
         myPos = new Position();
     }
     public Player(String name, Position position, int color){
-        super("skriulle5@gmail.com", "kashifuku", "もりりん");
+        super("","","");
         myPos = position;
         isOni = false;
         visiblity = true;

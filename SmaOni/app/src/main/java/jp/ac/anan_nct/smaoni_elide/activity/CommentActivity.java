@@ -27,6 +27,7 @@ import java.util.logging.LogRecord;
 
 import jp.ac.anan_nct.smaoni_elide.R;
 import jp.ac.anan_nct.smaoni_elide.model.MyURL;
+import jp.ac.anan_nct.smaoni_elide.model.User;
 
 public class CommentActivity extends ActionBarActivity {
 
@@ -34,17 +35,19 @@ public class CommentActivity extends ActionBarActivity {
     Button submit;
     HttpPost post;
     HttpClient httpClient;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
 
+        user = HomeActivity.me;
+
         submit = (Button) findViewById(R.id.submit);
         text1 = (EditText) findViewById(R.id.editText1);
         text2 = (EditText) findViewById(R.id.editText2);
 
-        text2.setText("テストです☆");
 
         httpClient = new DefaultHttpClient();
         Uri uri = Uri.parse(MyURL.PATH_COMMENT);
@@ -74,8 +77,8 @@ public class CommentActivity extends ActionBarActivity {
             protected Object doInBackground(Object[] p) {
                 ArrayList<NameValuePair> params = new ArrayList <NameValuePair>();
                 params.add( new BasicNameValuePair("comment", text2.getText().toString()));
-                params.add( new BasicNameValuePair("account", "skriulle5@gmail.com"));
-                params.add( new BasicNameValuePair("password", "kashifuku"));
+                params.add( new BasicNameValuePair("account", user.getAccount()));
+                params.add( new BasicNameValuePair("password", user.getPassword()));
 
                 HttpResponse res = null;
 
