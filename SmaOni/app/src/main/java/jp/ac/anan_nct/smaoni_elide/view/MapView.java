@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import jp.ac.anan_nct.smaoni_elide.activity.ReceptionActivity;
 import jp.ac.anan_nct.smaoni_elide.activity.SelectActivity;
 import jp.ac.anan_nct.smaoni_elide.model.Colors;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
@@ -209,16 +210,22 @@ public class MapView extends View {
                 if(k == 0){
                     canvas.drawRect(rect, paint);
                 }else{
-                    int m = 0;
-                    Rect[] rects = makeCell(colorsss[j][i], rect, k);
-                    for(Rect r : rects){
-                        if(rects[m] == null){
-                            break;
+                    if(!ReceptionActivity.communicating){
+                        Paint paint1 = new Paint();
+                        paint1.setColor(Color.BLUE);
+                        canvas.drawRect(rect, paint1);
+                    }else {
+                        int m = 0;
+                        Rect[] rects = makeCell(colorsss[j][i], rect, k);
+                        for (Rect r : rects) {
+                            if (rects[m] == null) {
+                                break;
+                            }
+                            if (paints[m] == null) {
+                                break;
+                            }
+                            canvas.drawRect(r, paints[m++]);
                         }
-                        if(paints[m] == null){
-                            break;
-                        }
-                        canvas.drawRect(r,paints[m++]);
                     }
                 }
 

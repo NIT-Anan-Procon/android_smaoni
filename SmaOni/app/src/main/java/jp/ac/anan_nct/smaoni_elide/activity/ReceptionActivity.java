@@ -54,7 +54,7 @@ public class ReceptionActivity extends GPS{
     HttpClient httpClient;
 
     Communication communication;
-    public static boolean last;
+    public static boolean last, communicating;
 
     int i;
 
@@ -112,6 +112,7 @@ public class ReceptionActivity extends GPS{
             post = new HttpPost(uri.toString());
 
             last = true;
+            communicating = false;
             communication = new Communication(gameData, mapView);
             communication.execute();
 
