@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
@@ -20,14 +21,12 @@ public class GameActivity extends GPS {
 
     SubThread[] subThread;
     Toast toast;
-    MediaPlayer mediaPlayer;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.meka_ge_keihou03);
+
         toast = Toast.makeText(getApplicationContext(), "onCreate", Toast.LENGTH_SHORT);
 
         gameData = ReceptionActivity.gameData;
