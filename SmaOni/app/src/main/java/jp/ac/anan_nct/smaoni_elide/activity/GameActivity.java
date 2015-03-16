@@ -1,6 +1,7 @@
 package jp.ac.anan_nct.smaoni_elide.activity;
 
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,10 +19,16 @@ public class GameActivity extends GPS {
     public static GameData gameData;
 
     SubThread[] subThread;
+    Toast toast;
+    MediaPlayer mediaPlayer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.meka_ge_keihou03);
+        toast = Toast.makeText(getApplicationContext(), "onCreate", Toast.LENGTH_SHORT);
 
         gameData = ReceptionActivity.gameData;
 
@@ -37,6 +44,13 @@ public class GameActivity extends GPS {
         Log.d("player", "" + gameData.getPlayerNum());
     }
 
+    void showToast(){
+        if(toast != null){
+            toast.cancel();
+        }
+        toast = Toast.makeText(getApplicationContext(), "フィールドから出ています！危ない！！！", Toast.LENGTH_SHORT);
+        toast.show();
+    }
 
     @Override
     protected void onPause() {
@@ -47,16 +61,15 @@ public class GameActivity extends GPS {
         }
     }
 
-
-    void showToast(){
-        Toast.makeText(this, "フィールドから出ています！危ない！！！", Toast.LENGTH_SHORT).show();
-    }
     @Override
     public void onLocationChanged(Location location) {
         super.onLocationChanged(location);
 
         if(gameData.getPlayer(0).setPos(location)){
             showToast();
+            if(!mediaPlayer.isPlaying()){
+                mediaPlayer.start();
+            }
         }
 
         Log.d("GPS","working");

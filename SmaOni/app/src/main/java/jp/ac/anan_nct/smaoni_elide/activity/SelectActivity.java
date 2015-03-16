@@ -13,7 +13,6 @@ import android.widget.Toast;
 import jp.ac.anan_nct.smaoni_elide.R;
 import jp.ac.anan_nct.smaoni_elide.model.Field;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
-import jp.ac.anan_nct.smaoni_elide.model.Player;
 
 public class SelectActivity extends ActionBarActivity {
 
@@ -30,7 +29,7 @@ public class SelectActivity extends ActionBarActivity {
         setContentView(R.layout.activity_select);
 
         gameData = new GameData();
-        gameData.setMe(new Player(HomeActivity.me));
+        gameData.setMe(HomeActivity.me);
 
         btn1 = (Button)findViewById(R.id.button11);
         btn2 = (Button)findViewById(R.id.button12);
@@ -138,7 +137,6 @@ public class SelectActivity extends ActionBarActivity {
                 }
             }
         });
-
     }
 
     void showToast(){

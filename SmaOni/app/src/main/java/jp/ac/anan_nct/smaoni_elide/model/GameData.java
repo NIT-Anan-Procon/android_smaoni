@@ -2,8 +2,6 @@ package jp.ac.anan_nct.smaoni_elide.model;
 
 import android.util.Log;
 
-import jp.ac.anan_nct.smaoni_elide.activity.HomeActivity;
-
 /**
  * Created by skriulle on 2015/03/02.
  */
@@ -27,7 +25,6 @@ public class GameData{
         }
         oniPosition = new Position(-1, -1);
         colors = Colors.colors;
-        me = new Player(HomeActivity.me);
         iAm = 0;
     }
 

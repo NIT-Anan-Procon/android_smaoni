@@ -55,6 +55,8 @@ public class ReceptionActivity extends GPS{
     HttpPost post;
     HttpClient httpClient;
 
+    Toast toast;
+
     Communication communication;
     public static boolean last, communicating;
     MediaPlayer mediaPlayer;
@@ -63,6 +65,8 @@ public class ReceptionActivity extends GPS{
     @Override
     protected void onCreate(Bundle savedInstanceState){
         mediaPlayer = MediaPlayer.create(this, R.raw.meka_ge_keihou03);
+        toast = Toast.makeText(getApplicationContext(), "onCreate", Toast.LENGTH_SHORT);
+
 
         try{
             super.onCreate(savedInstanceState);
@@ -127,7 +131,11 @@ public class ReceptionActivity extends GPS{
 
 
     void showToast(){
-        Toast.makeText(this, "フィールドから出ています！危ない！！！", Toast.LENGTH_SHORT).show();
+        if(toast != null){
+            toast.cancel();
+        }
+        toast = Toast.makeText(getApplicationContext(), "フィールドから出ています！危ない！！！", Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     @Override
@@ -232,6 +240,7 @@ public class ReceptionActivity extends GPS{
         /*addMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 if(jsonArray.length() < gameData.getPlayerNum()) {
                     Player p = new Player();
                     int a = (int)(Math.random()*gameData.getGridNum());
@@ -244,8 +253,9 @@ public class ReceptionActivity extends GPS{
                         gotoGame.setEnabled(true);
                     }
                 }
+
             }
-        });*/
+        });/*/
     }
 
     @Override

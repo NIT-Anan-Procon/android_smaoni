@@ -13,13 +13,13 @@ import android.view.View;
 import android.widget.Button;
 
 import jp.ac.anan_nct.smaoni_elide.R;
-import jp.ac.anan_nct.smaoni_elide.model.User;
+import jp.ac.anan_nct.smaoni_elide.model.Player;
 
 
 public class HomeActivity extends ActionBarActivity {
 
     Button bt1, bt2;
-    public static User me;
+    public static Player me;
     public static boolean hasSet;
 
     @Override
@@ -29,7 +29,7 @@ public class HomeActivity extends ActionBarActivity {
 
         bt1 = (Button)findViewById(R.id.button1);
         bt2 = (Button)findViewById(R.id.button2);
-        me = new User();
+        me = new Player();
         hasSet = false;
 
         setAction();
