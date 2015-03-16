@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import jp.ac.anan_nct.smaoni_elide.R;
-import jp.ac.anan_nct.smaoni_elide.model.User;
+import jp.ac.anan_nct.smaoni_elide.model.Player;
 
 public class AccountSelectActivity extends ActionBarActivity {
 
@@ -31,36 +31,38 @@ public class AccountSelectActivity extends ActionBarActivity {
         A.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeActivity.me = new User("skriulle5@gmail.com", "kashifuku", "かし");
-                HomeActivity.hasSet = true;
-                finish();
+                setMe("skriulle5@gmail.com", "kashifuku", "かし");
             }
         });
         B.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeActivity.me = new User("1122320@st.anan-nct.ac.jp", "morikohki", "もりりん");
-                HomeActivity.hasSet = true;
-                finish();
+                setMe("1122320@st.anan-nct.ac.jp", "morikohki", "もりりん");
             }
         });
         C.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeActivity.me = new User("happy_turn@yahoo.co.jp", "happyturn", "ひらっぴ");
-                HomeActivity.hasSet = true;
-                finish();
+                setMe("happy_turn@yahoo.co.jp", "happyturn", "ひらっぴ");
             }
         });
         D.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeActivity.me = new User("makko_kujira@docomo.ne.jp", "shironagasu", "GUCCI");
-                HomeActivity.hasSet = true;
-                finish();
+                setMe("makko_kujira@docomo.ne.jp", "shironagasu", "GUCCI");
             }
         });
 
+    }
+
+
+    void setMe(String account, String password, String name){
+        Player me = HomeActivity.me;
+        me.setAccount(account);
+        me.setPassword(password);
+        me.setName(name);
+        HomeActivity.hasSet = true;
+        finish();
     }
 
 

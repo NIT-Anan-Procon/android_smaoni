@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import jp.ac.anan_nct.smaoni_elide.activity.SelectActivity;
+import jp.ac.anan_nct.smaoni_elide.model.Colors;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.Player;
 
@@ -45,8 +46,8 @@ public class RankingView extends View {
 
     void sortRanking(){
         for(int i = 0; i < players.length; i++){
-            ranking[i][0] = players[i].getScore();
-            ranking[i][1] = i;
+            ranking[i][0] = players[i].getScore();  //score
+            ranking[i][1] = i;                      //index
         }
         for(int i =0; i < players.length; i++){
             for(int j = i + 1; j < players.length; j++){
@@ -78,6 +79,7 @@ public class RankingView extends View {
             Player p = players[ranking[i][1]];
             float dy = (float)(i*70+57);
             paint.setColor(p.getColor());
+            paint.setColor(Colors.colors[ranking[i][1]]);
             paint.setTextSize(60f);
             canvas.drawRect(rect, paint);
             paint.setColor(Color.BLACK);

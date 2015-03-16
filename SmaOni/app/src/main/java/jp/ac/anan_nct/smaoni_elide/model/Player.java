@@ -48,8 +48,8 @@ public class Player extends User{
     public void setPos(Position myPos) {
         this.myPos = myPos;
     }
-    public void setPos(Location location){
-        myPos.where(location);
+    public boolean setPos(Location location){
+        return myPos.where(location);
     }
     public Position getPos(){
         return myPos;

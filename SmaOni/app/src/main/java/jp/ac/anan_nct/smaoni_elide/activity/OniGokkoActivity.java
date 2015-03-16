@@ -1,12 +1,17 @@
 package jp.ac.anan_nct.smaoni_elide.activity;
 
+import android.content.Intent;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import jp.ac.anan_nct.smaoni_elide.R;
+import jp.ac.anan_nct.smaoni_elide.model.MyCountDownTimer;
 import jp.ac.anan_nct.smaoni_elide.view.MapView;
 import jp.ac.anan_nct.smaoni_elide.view.RankingView;
 
@@ -15,11 +20,16 @@ public class OniGokkoActivity extends GameActivity {
     public static MapView mapView;
     public static RankingView rankingView;
     public static Button button;
+    MyCountDownTimer myCountDownTimer;
+    MediaPlayer mediaPlayer;
+
+    TextView timerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        mediaPlayer = MediaPlayer.create(this, R.raw.meka_ge_keihou03);
 
         mapView = (MapView)findViewById(R.id.map1);
         rankingView = (RankingView)findViewById(R.id.gameRanking);
@@ -32,6 +42,26 @@ public class OniGokkoActivity extends GameActivity {
         gameData.getPlayer(0).setOni(true);
 
         setAction();
+
+        timerView = (TextView)findViewById(R.id.timerView);
+
+        myCountDownTimer = new MyCountDownTimer(100000000, 1000) {
+            @Override
+            public void onFinish() {
+                timerView.setText("0");
+                Toast.makeText(getApplicationContext(), "タイマー満了", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(OniGokkoActivity.this, ResultActivity.class));
+            }
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                String time = (((millisUntilFinished+1)/1000/60 >= 10) ? "" : "0" )+Long.toString((millisUntilFinished+1)/1000/60) + ":";
+                time += (((millisUntilFinished+1)/1000%60 >= 10) ? "" : "0" )+Long.toString((millisUntilFinished+1)/1000%60);
+                timerView.setText(time);
+            }
+        };
+
+        myCountDownTimer.start();
     }
 
     void setAction(){
@@ -47,6 +77,13 @@ public class OniGokkoActivity extends GameActivity {
     @Override
     public void onLocationChanged(Location location) {
         super.onLocationChanged(location);
+
+        if(gameData.getPlayer(0).setPos(location)){
+            showToast();
+            if(!mediaPlayer.isPlaying()){
+                mediaPlayer.start();
+            }
+        }
 
         mapView.invalidate();
         rankingView.invalidate();

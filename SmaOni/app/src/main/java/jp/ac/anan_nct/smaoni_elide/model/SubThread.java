@@ -78,7 +78,7 @@ public class SubThread extends Thread{
     }
 
     public void stopRunning(){
-        Log.d("stopped",""+ this);
+        Log.d("stopped", "" + this);
         running = false;
     }
 

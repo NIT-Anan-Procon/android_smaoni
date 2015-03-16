@@ -51,5 +51,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New"
+        android:id="@+id/timerView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/gameRanking"
+        android:layout_alignStart="@+id/gameRanking" />
+
 
 </RelativeLayout>

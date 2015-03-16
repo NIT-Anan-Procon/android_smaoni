@@ -43,19 +43,32 @@ public class Position {
     }
 
 
-    protected void where(Location location){
+    protected boolean where(Location location){
+        boolean notvalid = false;
         int gridNum = SelectActivity.gameData.getGridNum();
         Field field = SelectActivity.gameData.getField();
 
         x = (int)(   (( location.getLongitude() - field.minLng) / (field.maxLng-field.minLng) ) * gridNum );
         y = (int)(   (( location.getLatitude()  - field.minLat) / (field.maxLat-field.minLat) ) * gridNum );
 
-        if(x >= gridNum) x = gridNum-1;
-        else if(x < 0) x = 0;
-        if(y >= gridNum) y = gridNum-1;
-        else if(y < 0) y = 0;
+        if(x >= gridNum){
+            x = gridNum-1;
+            notvalid = true;
+        }else if(x < 0){
+            x = 0;
+            notvalid = true;
+        }
+        if(y >= gridNum) {
+            y = gridNum - 1;
+            notvalid = true;
+        }else if(y < 0){
+            y = 0;
+            notvalid = true;
+        }
 
         y = gridNum-1-y;
+
+        return notvalid;
     }
 
     public boolean equals(Position position) {

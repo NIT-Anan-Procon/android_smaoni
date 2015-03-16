@@ -62,6 +62,7 @@ public class Communication extends AsyncTask {
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
         HttpResponse res = null;
         try {
+            Log.d(gameData.getMe().getAccount(), gameData.getMe().getPassword());
             params.add(new BasicNameValuePair("account", gameData.getMe().getAccount()));
             params.add(new BasicNameValuePair("password", gameData.getMe().getPassword()));
             params.add(new BasicNameValuePair("x", gameData.getMe().getPos().getX() + ""));
@@ -72,9 +73,11 @@ public class Communication extends AsyncTask {
         try {
             post.setEntity(new UrlEncodedFormEntity(params, "utf-8"));
             res = httpClient.execute(post);
-            Log.d(res.getStatusLine().getStatusCode() + "", "");
+            Log.d("Message",
+                    res.getStatusLine().getStatusCode() + "");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(res.getEntity().getContent()));
             JSONObject j = new JSONObject(bufferedReader.readLine());
+            Log.d("Returncomment", j.toString());
             playerArray = j.getJSONArray("player");
             start = j.getBoolean("start");
 
