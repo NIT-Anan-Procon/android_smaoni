@@ -4,6 +4,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -47,13 +48,16 @@ public class GameActivity extends GPS {
     }
 
 
-
-
+    void showToast(){
+        Toast.makeText(this, "フィールドから出ています！危ない！！！", Toast.LENGTH_SHORT).show();
+    }
     @Override
     public void onLocationChanged(Location location) {
         super.onLocationChanged(location);
 
-        gameData.getPlayer(0).setPos(location);
+        if(gameData.getPlayer(0).setPos(location)){
+            showToast();
+        }
 
         Log.d("GPS","working");
 

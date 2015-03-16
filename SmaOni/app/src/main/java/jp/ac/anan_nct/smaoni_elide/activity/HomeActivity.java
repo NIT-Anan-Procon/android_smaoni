@@ -75,7 +75,7 @@ public class HomeActivity extends ActionBarActivity {
                                 HomeActivity.this.finish();
                             }
                         })
-                        .setNegativeButton("現実逃避する", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("現実逃避を続ける", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
                             }

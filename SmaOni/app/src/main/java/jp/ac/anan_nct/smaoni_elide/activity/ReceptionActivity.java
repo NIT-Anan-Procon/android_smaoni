@@ -3,6 +3,7 @@ package jp.ac.anan_nct.smaoni_elide.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -55,11 +57,13 @@ public class ReceptionActivity extends GPS{
 
     Communication communication;
     public static boolean last, communicating;
-
+    MediaPlayer mediaPlayer;
     int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        mediaPlayer = MediaPlayer.create(this, R.raw.meka_ge_keihou03);
+
         try{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_reception);
@@ -122,11 +126,21 @@ public class ReceptionActivity extends GPS{
     }
 
 
+    void showToast(){
+        Toast.makeText(this, "フィールドから出ています！危ない！！！", Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onLocationChanged(Location location) {
         super.onLocationChanged(location);
 
-        gameData.getMe().setPos(location);
+        if(gameData.getMe().setPos(location)){
+            showToast();
+            if(!mediaPlayer.isPlaying()){
+                mediaPlayer.start();
+            }
+        }
+
 
         Position p = gameData.getMe().getPos();
         gameData.getPlayer(0).setPos(p);
@@ -201,6 +215,14 @@ public class ReceptionActivity extends GPS{
         gotoGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                for(int i = 0; i < gameData.getPlayerNum(); i++){
+                    if(gameData.getPlayer(i) == null){
+                        gameData.resetPlayer(i, new Player());
+                    }
+                }
+
+
+
                 communication.setStart(true);
                 last = false;
                 jsonRequest.send(new LoginJsonBuilder());
