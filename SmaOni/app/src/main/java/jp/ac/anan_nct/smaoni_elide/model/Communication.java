@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 
 import jp.ac.anan_nct.smaoni_elide.activity.ReceptionActivity;
 import jp.ac.anan_nct.smaoni_elide.view.MapView;
@@ -32,15 +33,18 @@ public class Communication extends AsyncTask {
     HttpClient httpClient;
 
     GameData gameData;
-    private boolean start;
+    public static boolean start;
 
 
     MapView mapView;
     JSONArray playerArray;
 
+    public static Date startTime;
+
 
     public Communication(GameData gameData, MapView mapView) {
         super();
+        start = false;
         httpClient = new DefaultHttpClient();
         Uri uri = Uri.parse(MyURL.PATH_RECEIPTION);
         post = new HttpPost(uri.toString());
@@ -80,6 +84,9 @@ public class Communication extends AsyncTask {
             Log.d("Returncomment", j.toString());
             playerArray = j.getJSONArray("player");
             start = j.getBoolean("start");
+            if(start){
+                startTime = new Date(j.getLong("startTime"));
+            }
 
             Log.d(Boolean.toString(start), playerArray.toString());
 
@@ -119,9 +126,13 @@ public class Communication extends AsyncTask {
 
         try{
 
-            if(ReceptionActivity.last) {
+            if(!start){
                 Communication communication = new Communication(gameData, mapView);
                 communication.execute();
+            }else{
+
+                ReceptionActivity.startTime = startTime;
+
             }
         }catch (Exception e){
             Log.e("ERROR:communication_last", e.toString());

@@ -1,11 +1,9 @@
 package jp.ac.anan_nct.smaoni_elide.activity;
 
 import android.location.Location;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
@@ -64,12 +62,6 @@ public class GameActivity extends GPS {
     public void onLocationChanged(Location location) {
         super.onLocationChanged(location);
 
-        if(gameData.getPlayer(0).setPos(location)){
-            showToast();
-            if(!mediaPlayer.isPlaying()){
-                mediaPlayer.start();
-            }
-        }
 
         Log.d("GPS","working");
 
