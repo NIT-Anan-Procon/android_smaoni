@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import jp.ac.anan_nct.smaoni_elide.activity.ReceptionActivity;
 import jp.ac.anan_nct.smaoni_elide.activity.SelectActivity;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.Position;
@@ -209,11 +208,11 @@ public class MapView extends View {
                 if(k == 0){
                     canvas.drawRect(rect, paint);
                 }else{
-                    if(!ReceptionActivity.communicating){
+                  /*  if(!ReceptionActivity.communicating){
                         Paint paint1 = new Paint();
                         paint1.setColor(Color.BLUE);
                         canvas.drawRect(rect, paint1);
-                    }else {
+                    }else {*/
                         int m = 0;
                         Rect[] rects = makeCell(colorsss[j][i], rect, k);
                         for (Rect r : rects) {
@@ -225,7 +224,7 @@ public class MapView extends View {
                             }
                             canvas.drawRect(r, paints[m++]);
                         }
-                    }
+                 //   }
                 }
 
                 if(gameData.oniWhere().getX() == i && gameData.oniWhere().getY() == j){

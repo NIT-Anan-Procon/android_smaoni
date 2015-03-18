@@ -17,36 +17,32 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Date;
 
 import jp.ac.anan_nct.smaoni_elide.activity.ReceptionActivity;
 import jp.ac.anan_nct.smaoni_elide.view.MapView;
 
 /**
- * Created by skriulle on 2015/03/14.
+ * Created by skriulle on 2015/03/18.
  */
-public class Communication extends AsyncTask {
+public class Communication2 extends AsyncTask {
 
 
     HttpPost post;
     HttpClient httpClient;
 
     GameData gameData;
-    public static boolean start, last;
+    public static boolean conect;
 
 
     MapView mapView;
     JSONArray playerArray;
 
-    public static Date startTime;
 
-
-    public Communication(GameData gameData, MapView mapView) {
+    public Communication2(GameData gameData, MapView mapView) {
         super();
-        last = true;
-        start = false;
+        conect = false;
         httpClient = new DefaultHttpClient();
-        Uri uri = Uri.parse(MyURL.PATH_RECEIPTION);
+        Uri uri = Uri.parse(MyURL.PATH_ONIGOKKO);
         post = new HttpPost(uri.toString());
         this.gameData = gameData;
         this.mapView = mapView;
@@ -61,7 +57,6 @@ public class Communication extends AsyncTask {
         }catch (Exception e){
             Log.e("ERROR:Communication", e.toString());
         }
-
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
         HttpResponse res = null;
         try {
@@ -71,23 +66,19 @@ public class Communication extends AsyncTask {
             params.add(new BasicNameValuePair("x", gameData.getMe().getPos().getX() + ""));
             params.add(new BasicNameValuePair("y", gameData.getMe().getPos().getY() + ""));
         }catch (Exception e){
-            Log.e("ERROR:Communication", e.toString());
+            Log.e("ERROR:Communication2", e.toString());
         }
         try {
-            post.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+            post.setEntity(new UrlEncodedFormEntity(params, "utf-8"));
             res = httpClient.execute(post);
             Log.d("Message",
                     res.getStatusLine().getStatusCode() + "");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(res.getEntity().getContent()));
             JSONObject j = new JSONObject(bufferedReader.readLine());
             Log.d("Returncomment", j.toString());
-            start = j.getBoolean("start");
-            if(start){
-                startTime = new Date(j.getLong("start_at")*1000);
-            }
-
             playerArray = j.getJSONArray("player");
-            Log.d(Boolean.toString(start), playerArray.toString());
+
+            Log.d("game player", playerArray.toString());
 
 
             for(int i = 0; i < playerArray.length(); i++){
@@ -102,6 +93,7 @@ public class Communication extends AsyncTask {
                 if(player.getAccount().equals(gameData.getMe().getAccount())){
                     Log.d(player.getAccount(), i+"");
                     gameData.setIAm(i);
+
                 }
 
                 gameData.resetPlayer(i, player);
@@ -112,36 +104,16 @@ public class Communication extends AsyncTask {
         }
 
 
+
+
+
+
         return null;
     }
 
 
     @Override
     protected void onPostExecute(Object o) {
-        super.onPostExecute(o);
 
-        try{
-
-            if(last){
-                Communication communication = new Communication(gameData, mapView);
-                communication.execute();
-            }else{
-
-                ReceptionActivity.startTime = startTime;
-
-            }
-        }catch (Exception e){
-            Log.e("ERROR:communication_last", e.toString());
-        }
-
-
-        mapView.invalidate();
-    }
-
-    public static void setLast(boolean last) {
-        Communication.last = last;
-    }
-    public void setStart(boolean start) {
-        this.start = start;
     }
 }

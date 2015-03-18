@@ -78,17 +78,17 @@ public class ReceptionActivity extends GPS{
 
             @Override
             public void onTick(long millisUntilFinished) {
-                   if(Communication.start){
-                       boolean b = true;
-                       startTime = Communication.startTime;
-                       while(b){
-                           Date d = new Date();
-                           if(d.compareTo(startTime) >= 0){
-                               b = false;
-                               startActivity(new Intent(ReceptionActivity.this, GameActivity.class));
-                           }
+               if(Communication.start) {
+                   boolean b = true;
+                   startTime = Communication.startTime;
+                   while (b) {
+                       Date d = new Date();
+                       if (d.compareTo(startTime) >= 0) {
+                           b = false;
+                           startActivity(new Intent(ReceptionActivity.this, GameActivity.class));
                        }
                    }
+               }
             }
         };
 
@@ -231,6 +231,11 @@ public class ReceptionActivity extends GPS{
     }
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        communication.setLast(false);
+    }
 
     void setAction(){
         gotoGame.setOnClickListener(new View.OnClickListener() {

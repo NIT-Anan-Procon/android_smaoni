@@ -8,4 +8,5 @@ public class MyURL {
     public static final String PATH_RECEIPTION = HOST + "receiption";
     public static final String PATH_COMMENT = HOST + "post_comment";
     public static final String PATH_ONIGOKKO = HOST + "onigokko";
+    public static final String PATH_QUIT = HOST + "quitall";
 }

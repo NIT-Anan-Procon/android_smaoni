@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import jp.ac.anan_nct.smaoni_elide.R;
+import jp.ac.anan_nct.smaoni_elide.model.AllDelete;
 import jp.ac.anan_nct.smaoni_elide.model.Field;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
 
@@ -21,7 +22,7 @@ public class SelectActivity extends ActionBarActivity {
 
     Button btn1, btn2, btn3, btn4, btn5, btn6;
     TextView tx1, tx2, tx3;
-    Button button3, button4, button;
+    Button button3, button4, button, allDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,8 @@ public class SelectActivity extends ActionBarActivity {
         tx1 = (TextView)findViewById(R.id.text1);
         tx2 = (TextView)findViewById(R.id.text2);
         tx3 = (TextView)findViewById(R.id.text3);
+
+        allDelete = (Button)findViewById(R.id.allDelete);
 
         indicate();
 
@@ -135,6 +138,13 @@ public class SelectActivity extends ActionBarActivity {
                 } else {
                     startActivity(new Intent(SelectActivity.this, ReceptionActivity.class));
                 }
+            }
+        });
+        allDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AllDelete allDelete = new AllDelete();
+                allDelete.execute();
             }
         });
     }
