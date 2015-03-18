@@ -26,7 +26,6 @@ import java.util.Date;
 import java.util.LinkedList;
 
 import jp.ac.anan_nct.smaoni_elide.R;
-import jp.ac.anan_nct.smaoni_elide.model.Colors;
 import jp.ac.anan_nct.smaoni_elide.model.Communication;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.JSONRequest;
@@ -65,6 +64,7 @@ public class ReceptionActivity extends GPS{
     public static Date startTime;
     MediaPlayer mediaPlayer;
     int i;
+    private int[] colors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -95,6 +95,9 @@ public class ReceptionActivity extends GPS{
 
         myCountDownTimer.start();
 
+        gameData = SelectActivity.gameData;
+        gameData.setPlayerNum(gameData.getPlayerNum());
+        colors = gameData.getColors();
 
 
         try{
@@ -117,8 +120,6 @@ public class ReceptionActivity extends GPS{
             mapView = (MapView) findViewById(R.id.mapRecieption);
             mapView.setTouchable(false);
 
-            gameData = SelectActivity.gameData;
-            gameData.setPlayerNum(gameData.getPlayerNum());
             linearLayout = (LinearLayout) findViewById(R.id.linear1);
             memberViews = new LinkedList<MemberView>();
 
@@ -218,7 +219,7 @@ public class ReceptionActivity extends GPS{
             Log.e("ERROR:RecieptionActivity", e.toString());
         }
 
-        p.setColor(Colors.colors[i]);
+        p.setColor(colors[i]);
         gameData.resetPlayer(i, p);
 
         MemberView memberView = new MemberView(this, null);

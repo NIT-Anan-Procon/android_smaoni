@@ -11,7 +11,6 @@ import android.view.View;
 
 import jp.ac.anan_nct.smaoni_elide.activity.ReceptionActivity;
 import jp.ac.anan_nct.smaoni_elide.activity.SelectActivity;
-import jp.ac.anan_nct.smaoni_elide.model.Colors;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.Position;
 
@@ -58,7 +57,7 @@ public class MapView extends View {
 
         num = gameData.getGridNum();
 
-        colors = Colors.colors;
+        colors = gameData.getColors();
 
         playerNum = gameData.getPlayerNum();
 

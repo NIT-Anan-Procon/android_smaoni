@@ -1,6 +1,5 @@
 package jp.ac.anan_nct.smaoni_elide.model;
 
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -102,9 +101,6 @@ public class Communication extends AsyncTask {
 
                 if(player.getAccount().equals(gameData.getMe().getAccount())){
                     Log.d(player.getAccount(), i+"");
-                    if(Colors.colors[i] != Color.BLUE) {
-                        Colors.setMe(i);
-                    }
                     gameData.setIAm(i);
                 }
 
