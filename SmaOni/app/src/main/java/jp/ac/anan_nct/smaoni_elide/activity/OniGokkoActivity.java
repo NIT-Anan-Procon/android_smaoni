@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import jp.ac.anan_nct.smaoni_elide.R;
+import jp.ac.anan_nct.smaoni_elide.model.Communication2;
 import jp.ac.anan_nct.smaoni_elide.model.MyCountDownTimer;
 import jp.ac.anan_nct.smaoni_elide.view.MapView;
 import jp.ac.anan_nct.smaoni_elide.view.RankingView;
@@ -25,6 +26,8 @@ public class OniGokkoActivity extends GameActivity {
 
     TextView timerView;
 
+    Communication2 communication;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,9 @@ public class OniGokkoActivity extends GameActivity {
         mapView = (MapView)findViewById(R.id.map1);
         rankingView = (RankingView)findViewById(R.id.gameRanking);
         button = (Button)findViewById(R.id.buttonRanking);
+        communication = new Communication2(gameData, mapView);
+        communication.execute();
+
 
         for(int i = 0; i < gameData.getPlayerNum(); i++){
             gameData.getPlayer(i).setOni(false);
@@ -73,6 +79,12 @@ public class OniGokkoActivity extends GameActivity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Communication2.conect = false;
+    }
 
     @Override
     public void onLocationChanged(Location location) {

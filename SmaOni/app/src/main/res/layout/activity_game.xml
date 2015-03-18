@@ -11,26 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="328dp"/>
 
-    <!--TextView
-        android:id="@+id/indicateXY"
-        android:layout_below="@+id/map1"
-        android:layout_alignLeft="@+id/map1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/txLng"
-        android:layout_below="@+id/indicateXY"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="longitude:" />
-
-    <TextView
-        android:id="@+id/txLat"
-        android:layout_below="@+id/txLng"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="latitude:" /-->
 
     <jp.ac.anan_nct.smaoni_elide.view.RankingView
         android:layout_height="wrap_content"

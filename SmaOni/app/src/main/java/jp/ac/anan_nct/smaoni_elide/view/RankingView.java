@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import jp.ac.anan_nct.smaoni_elide.activity.SelectActivity;
+import jp.ac.anan_nct.smaoni_elide.model.Colors;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.Player;
 
@@ -36,7 +37,8 @@ public class RankingView extends View {
             ranking[i][0] = players[i].getScore();
             ranking[i][1] = i;
         }
-        colors = gameData.getColors();
+
+        colors = Colors.colors;
     }
 
     @Override

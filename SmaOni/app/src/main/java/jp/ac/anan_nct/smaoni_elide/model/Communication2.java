@@ -40,7 +40,7 @@ public class Communication2 extends AsyncTask {
 
     public Communication2(GameData gameData, MapView mapView) {
         super();
-        conect = false;
+        conect = true;
         httpClient = new DefaultHttpClient();
         Uri uri = Uri.parse(MyURL.PATH_ONIGOKKO);
         post = new HttpPost(uri.toString());
@@ -55,7 +55,7 @@ public class Communication2 extends AsyncTask {
         try{
             Thread.sleep(2000);
         }catch (Exception e){
-            Log.e("ERROR:Communication", e.toString());
+            Log.e("ERROR:Communication2", e.toString());
         }
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
         HttpResponse res = null;
@@ -71,7 +71,7 @@ public class Communication2 extends AsyncTask {
         try {
             post.setEntity(new UrlEncodedFormEntity(params, "utf-8"));
             res = httpClient.execute(post);
-            Log.d("Message",
+            Log.d("Message2",
                     res.getStatusLine().getStatusCode() + "");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(res.getEntity().getContent()));
             JSONObject j = new JSONObject(bufferedReader.readLine());
@@ -90,13 +90,7 @@ public class Communication2 extends AsyncTask {
                 int y = playeR.getInt("y");
                 player.setPos(new Position(x, y));
 
-                if(player.getAccount().equals(gameData.getMe().getAccount())){
-                    Log.d(player.getAccount(), i+"");
-                    gameData.setIAm(i);
-
-                }
-
-                gameData.resetPlayer(i, player);
+                gameData.resetPlayer(i+1, player);
             }
             ReceptionActivity.communicating = true;
         } catch (Exception e) {
@@ -114,6 +108,23 @@ public class Communication2 extends AsyncTask {
 
     @Override
     protected void onPostExecute(Object o) {
+        super.onPostExecute(o);
+
+        try{
+
+            if(conect){
+                Communication2 communication = new Communication2(gameData, mapView);
+                communication.execute();
+            }else{
+                // ReceptionActivity.startTime = startTime;
+
+            }
+        }catch (Exception e){
+            Log.e("ERROR:communication_last", e.toString());
+        }
+
+
+        mapView.invalidate();
 
     }
 }

@@ -30,7 +30,6 @@ import jp.ac.anan_nct.smaoni_elide.model.Communication;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.JSONRequest;
 import jp.ac.anan_nct.smaoni_elide.model.JSONRequestEvent;
-import jp.ac.anan_nct.smaoni_elide.model.LoginJsonBuilder;
 import jp.ac.anan_nct.smaoni_elide.model.MyCountDownTimer;
 import jp.ac.anan_nct.smaoni_elide.model.MyURL;
 import jp.ac.anan_nct.smaoni_elide.model.Player;
@@ -78,17 +77,14 @@ public class ReceptionActivity extends GPS{
 
             @Override
             public void onTick(long millisUntilFinished) {
-               if(Communication.start) {
-                   boolean b = true;
-                   startTime = Communication.startTime;
-                   while (b) {
-                       Date d = new Date();
-                       if (d.compareTo(startTime) >= 0) {
-                           b = false;
-                           startActivity(new Intent(ReceptionActivity.this, GameActivity.class));
-                       }
-                   }
-               }
+                Log.d("true??????", Communication.start + "");
+                if(Communication.start) {//Communication.startTime;
+                    Log.d("Receiption", "startGame");
+                    Intent intent = new Intent(ReceptionActivity.this, OniGokkoActivity.class);
+                    Log.d("intent", intent.toString());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
             }
         };
 
@@ -235,10 +231,11 @@ public class ReceptionActivity extends GPS{
     protected void onPause() {
         super.onPause();
         communication.setLast(false);
+        myCountDownTimer.cancel();
     }
 
     void setAction(){
-        gotoGame.setOnClickListener(new View.OnClickListener() {
+        /*gotoGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 myCountDownTimer.cancel();
@@ -248,14 +245,11 @@ public class ReceptionActivity extends GPS{
                     }
                 }
 
-
-
-                communication.setStart(true);
                 last = false;
                 jsonRequest.send(new LoginJsonBuilder());
                 startActivity(new Intent(ReceptionActivity.this, OniGokkoActivity.class));
             }
-        });
+        });*/
         addMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -263,22 +257,6 @@ public class ReceptionActivity extends GPS{
                 Date now = new Date();
                 Communication.startTime = new Date(now.getTime()+5000);
                 Communication.start = true;
-
-
-
-                /*
-                if(jsonArray.length() < gameData.getPlayerNum()) {
-                    Player p = new Player();
-                    int a = (int)(Math.random()*gameData.getGridNum());
-                    int b = (int)(Math.random()*gameData.getGridNum());
-                    p.setPos(new Position(a,b));
-
-                    addJSONObject(p);
-                    jsonArrayCame(jsonArray);
-                    if(jsonArray.length() == gameData.getPlayerNum()){
-                        gotoGame.setEnabled(true);
-                    }
-                }*/
 
             }
         });

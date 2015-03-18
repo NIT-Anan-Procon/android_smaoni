@@ -82,13 +82,17 @@ public class Communication extends AsyncTask {
             JSONObject j = new JSONObject(bufferedReader.readLine());
             Log.d("Returncomment", j.toString());
             start = j.getBoolean("start");
-            if(start){
-                startTime = new Date(j.getLong("start_at")*1000);
-            }
 
             playerArray = j.getJSONArray("player");
             Log.d(Boolean.toString(start), playerArray.toString());
 
+            JSONObject me = j.getJSONObject("me");
+            Player pME = new Player();
+            pME.setAccount(me.getString("account"));
+            int x1 = me.getInt("x");
+            int y1 = me.getInt("y");
+            pME.setPos(new Position(x1, y1));
+            gameData.resetPlayer(0,pME);
 
             for(int i = 0; i < playerArray.length(); i++){
                 Player player = new Player();
@@ -99,12 +103,8 @@ public class Communication extends AsyncTask {
                 int y = playeR.getInt("y");
                 player.setPos(new Position(x, y));
 
-                if(player.getAccount().equals(gameData.getMe().getAccount())){
-                    Log.d(player.getAccount(), i+"");
-                    gameData.setIAm(i);
-                }
 
-                gameData.resetPlayer(i, player);
+                gameData.resetPlayer(i+1, player);
             }
             ReceptionActivity.communicating = true;
         } catch (Exception e) {
@@ -122,12 +122,11 @@ public class Communication extends AsyncTask {
 
         try{
 
-            if(last){
+            if(!start){
                 Communication communication = new Communication(gameData, mapView);
                 communication.execute();
             }else{
-
-                ReceptionActivity.startTime = startTime;
+               // ReceptionActivity.startTime = startTime;
 
             }
         }catch (Exception e){
@@ -140,8 +139,5 @@ public class Communication extends AsyncTask {
 
     public static void setLast(boolean last) {
         Communication.last = last;
-    }
-    public void setStart(boolean start) {
-        this.start = start;
     }
 }

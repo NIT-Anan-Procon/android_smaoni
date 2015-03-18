@@ -4,8 +4,6 @@ import android.util.Log;
 
 import java.util.Random;
 
-import jp.ac.anan_nct.smaoni_elide.activity.SelectActivity;
-
 /**
  * Created by skriulle on 2015/03/04.
  */
@@ -16,7 +14,7 @@ public class SubThread extends Thread{
     GameData gameData;
     Player player;
     Position position;
-
+/*
 
     public SubThread(int time, int p){
         this.time = time;
@@ -26,7 +24,7 @@ public class SubThread extends Thread{
         player = gameData.getPlayer(p);
         position = player.getPos();
     }
-
+*/
     @Override
     public void run(){
 

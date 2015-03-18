@@ -136,6 +136,7 @@ public class SelectActivity extends ActionBarActivity {
                 if (!HomeActivity.hasSet) {
                     showToast();
                 } else {
+                    gameData.setPlayerNum(2);
                     startActivity(new Intent(SelectActivity.this, ReceptionActivity.class));
                 }
             }
