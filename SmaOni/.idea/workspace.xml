@@ -103,21 +103,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RankingView.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/view/RankingView.java">
+      <file leaf-file-name="MyCountDownTimer.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/MyCountDownTimer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1365">
-              <caret line="32" column="36" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SelectActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/activity/SelectActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1290" max-vertical-offset="2055">
-              <caret line="138" column="45" selection-start-line="138" selection-start-column="45" selection-end-line="138" selection-end-column="45" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
+              <caret line="10" column="57" selection-start-line="10" selection-start-column="57" selection-end-line="10" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -126,12 +116,22 @@
       <file leaf-file-name="Communication2.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/Communication2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0034662045" vertical-offset="1262" max-vertical-offset="2310">
-              <caret line="104" column="13" selection-start-line="104" selection-start-column="13" selection-end-line="104" selection-end-column="13" />
+            <state vertical-scroll-proportion="3.2054794" vertical-offset="1002" max-vertical-offset="2070">
+              <caret line="118" column="12" selection-start-line="118" selection-start-column="12" selection-end-line="118" selection-end-column="12" />
               <folding>
                 <element signature="e#1670#1685#0" expanded="true" />
-                <element signature="e#4577#4578#0" expanded="true" />
-                <element signature="e#4661#4662#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InvisibleManage.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/InvisibleManage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="810">
+              <caret line="45" column="50" selection-start-line="45" selection-start-column="50" selection-end-line="45" selection-end-column="50" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1133,7 +1133,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_oni_gokko.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/Condition.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/Status.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/ReceptionActivity.java" />
@@ -1183,6 +1182,7 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_account_select.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/Colors.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/view/MapView.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/InvisibleManage.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/Communication2.java" />
       </list>
     </option>
@@ -1974,7 +1974,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13649851" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.10237389" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.74183977" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21072507" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -2011,13 +2011,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/view/MapView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="479" max-vertical-offset="2145">
-          <caret line="65" column="38" selection-start-line="65" selection-start-column="38" selection-end-line="65" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/Player.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="1140">
@@ -2277,14 +2270,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/MyCountDownTimer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
-          <caret line="0" column="42" selection-start-line="0" selection-start-column="42" selection-end-line="0" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/SubThread.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="1320">
@@ -2404,14 +2389,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/Communication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="1905">
-          <caret line="71" column="91" selection-start-line="71" selection-start-column="91" selection-end-line="71" selection-end-column="91" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/view/MapView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1943" max-vertical-offset="3735">
@@ -2436,14 +2413,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/activity/FieldSelectActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1470">
-          <caret line="72" column="43" selection-start-line="72" selection-start-column="43" selection-end-line="72" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/activity/AccountSelectActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="574" max-vertical-offset="1140">
@@ -2452,14 +2421,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/activity/FieldSelectActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1470">
+          <caret line="72" column="43" selection-start-line="72" selection-start-column="43" selection-end-line="72" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/Communication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="1905">
+          <caret line="71" column="91" selection-start-line="71" selection-start-column="91" selection-end-line="71" selection-end-column="91" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/MyCountDownTimer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
+          <caret line="10" column="57" selection-start-line="10" selection-start-column="57" selection-end-line="10" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/InvisibleManage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="810">
+          <caret line="45" column="50" selection-start-line="45" selection-start-column="50" selection-end-line="45" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/ac/anan_nct/smaoni_elide/model/Communication2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0034662045" vertical-offset="1262" max-vertical-offset="2310">
-          <caret line="104" column="13" selection-start-line="104" selection-start-column="13" selection-end-line="104" selection-end-column="13" />
+        <state vertical-scroll-proportion="3.2054794" vertical-offset="1002" max-vertical-offset="2070">
+          <caret line="118" column="12" selection-start-line="118" selection-start-column="12" selection-end-line="118" selection-end-column="12" />
           <folding>
             <element signature="e#1670#1685#0" expanded="true" />
-            <element signature="e#4577#4578#0" expanded="true" />
-            <element signature="e#4661#4662#0" expanded="true" />
           </folding>
         </state>
       </provider>

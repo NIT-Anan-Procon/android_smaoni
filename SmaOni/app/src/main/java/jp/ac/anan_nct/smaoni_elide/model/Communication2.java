@@ -91,20 +91,12 @@ public class Communication2 extends AsyncTask {
 
             pME.setOni(me.getBoolean("is_oni"));
             pME.setInvisiblity(me.getBoolean("is_invisible"));
-            if (pME.getInvisiblity()) {
-/*                MyCountDownTimer myCountDownTimer = new MyCountDownTimer(5000,2500) {
-                    @Override
-                    public void onFinish() {
-                        pME.setInvisiblity();
-                    }
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                    }
-                };
-                myCountDownTimer.start();
-           */ }
 
             gameData.resetPlayer(0, pME);
+            if (gameData.getPlayer(0).getInvisiblity()) {
+                InvisibleManage im = new InvisibleManage(0);
+                im.execute();
+            }
 
 
             for (int i = 0; i < playerArray.length(); i++) {
@@ -118,24 +110,16 @@ public class Communication2 extends AsyncTask {
                 player.setPos(new Position(x, y));
                 player.setOni(playeR.getBoolean("is_oni"));
                 player.setInvisiblity(playeR.getBoolean("is_invisible"));
-                if (player.getInvisiblity()) {
-                    MyCountDownTimer myCountDownTimer1 = new MyCountDownTimer(5000, 2500) {
-                        @Override
-                        public void onFinish() {
-                            player.setInvisiblity(false);
-                        }
-                        @Override
-                        public void onTick(long millisUntilFinished) {
-                        }
-                    };
-                    myCountDownTimer1.start();
-                }
-
                 gameData.resetPlayer(i + 1, player);
+                if (player.getInvisiblity()) {
+                    InvisibleManage im = new InvisibleManage(i+1);
+                    im.execute();
+                }
             }
+            
             ReceptionActivity.communicating = true;
         } catch (Exception e) {
-            Log.e("ERROR:Communication", e.toString());
+            Log.e("ERROR:Communication2", e.toString());
         }
 
 
