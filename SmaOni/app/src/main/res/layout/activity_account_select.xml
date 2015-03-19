@@ -10,7 +10,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="skriulle5@..."
+        android:text="yahoo_love@..."
         android:id="@+id/buttonA"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -19,7 +19,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1122320@..."
+        android:text="hack_u_brilliant@..."
         android:id="@+id/buttonB"
         android:layout_below="@+id/buttonA"
         android:layout_centerHorizontal="true" />

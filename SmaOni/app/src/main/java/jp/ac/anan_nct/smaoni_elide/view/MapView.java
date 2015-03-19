@@ -70,7 +70,7 @@ public class MapView extends View {
         }
 
         oniPaint = new Paint();
-        oniPaint.setColor(Color.GREEN);
+        oniPaint.setColor(Color.RED);
         oniPaint.setStyle(Paint.Style.STROKE);
         oniPaint.setStrokeWidth(4f);
     }
@@ -109,8 +109,7 @@ public class MapView extends View {
     }
 
     private Rect[] makeCell(int[] colors, Rect rect0, int num){
-        boolean m2 = false;
-        if(m2 && colors[1] != -1){
+        if(colors[0] == 0 && colors[1] != -1){
             return makeCell2(colors, rect0, num);
         }else {
             Rect[] rects = new Rect[num];
@@ -141,9 +140,11 @@ public class MapView extends View {
     }
 
 
+
+
     private Rect[] makeCell2(int[] colors, Rect rect0, int num) {
-        Rect[] rects = new Rect[num];
-        paints = new Paint[num];
+        Rect[] rects = new Rect[num+1];
+        paints = new Paint[num+1];
         num-=1;
         int num_under= 0;
         int bottom = rect0.bottom;
@@ -169,7 +170,10 @@ public class MapView extends View {
         }
         rects[num+num_under] = new Rect(rect0.left+rect0.width()/5, rect0.top+rect0.height()/5, rect0.right-rect0.width()/5, rect0.bottom-rect0.height()/5);
         paints[num+num_under] = new Paint();
-        paints[num+num_under].setColor(this.colors[colors[0]]);
+        paints[num+num_under].setColor(Color.WHITE);
+        rects[num+num_under+1] = rects[num+num_under];
+        paints[num+num_under+1] = new Paint();
+        paints[num+num_under+1].setColor(this.colors[colors[0]]);
         return rects;
     }
 
