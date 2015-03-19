@@ -37,7 +37,6 @@ public class Communication2 extends AsyncTask {
 
     MapView mapView;
     RankingView rankingView;
-    JSONArray playerArray;
 
 
     public Communication2(GameData gameData, MapView mapView, RankingView rankingView) {
@@ -51,7 +50,7 @@ public class Communication2 extends AsyncTask {
         this.rankingView = rankingView;
     }
 
-  @Override
+    @Override
     protected Object doInBackground(Object[] p) {
 
         try {
@@ -67,7 +66,6 @@ public class Communication2 extends AsyncTask {
             params.add(new BasicNameValuePair("password", gameData.getMe().getPassword()));
             params.add(new BasicNameValuePair("x", gameData.getPlayer(0).getPos().getX() + ""));
             params.add(new BasicNameValuePair("y", gameData.getPlayer(0).getPos().getY() + ""));
-            Log.d("send data", ""+gameData.getPlayer(0).getPos().getX() + " " + gameData.getPlayer(0).getPos().getY());
         } catch (Exception e) {
             Log.e("ERROR:Communication2", e.toString());
         }
@@ -78,33 +76,39 @@ public class Communication2 extends AsyncTask {
                     res.getStatusLine().getStatusCode() + "");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(res.getEntity().getContent()));
             JSONObject j = new JSONObject(bufferedReader.readLine());
-            playerArray = j.getJSONArray("player");
 
-            Log.d("game player", playerArray.toString());
-
+            JSONArray playerArray = j.getJSONArray("player");
             JSONObject me = j.getJSONObject("me");
+
+            Log.d("game player", me.toString() + ":" + playerArray.toString());
+
             Player pME = new Player();
             pME.setAccount(me.getString("account"));
             pME.setName(me.getString("name"));
             int x1 = me.getInt("x");
             int y1 = me.getInt("y");
             pME.setPos(new Position(x1, y1));
-            try {
 
-                pME.setOni(me.getBoolean("is_oni"));
-                pME.setInvisiblity(me.getBoolean("is_invisible"));
-            } catch (Exception e) {
-                Log.e("Exception", "meだよ☆");
-            }
+            pME.setOni(me.getBoolean("is_oni"));
+            pME.setInvisiblity(me.getBoolean("is_invisible"));
             if (pME.getInvisiblity()) {
-                //pME.setInvisibleTime(new Date());
-            }
+/*                MyCountDownTimer myCountDownTimer = new MyCountDownTimer(5000,2500) {
+                    @Override
+                    public void onFinish() {
+                        pME.setInvisiblity();
+                    }
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                    }
+                };
+                myCountDownTimer.start();
+           */ }
 
             gameData.resetPlayer(0, pME);
 
 
             for (int i = 0; i < playerArray.length(); i++) {
-                Player player = new Player();
+                final Player player = new Player();
                 JSONObject playeR = playerArray.getJSONObject(i);
 
                 player.setAccount(playeR.getString("account"));
@@ -115,7 +119,16 @@ public class Communication2 extends AsyncTask {
                 player.setOni(playeR.getBoolean("is_oni"));
                 player.setInvisiblity(playeR.getBoolean("is_invisible"));
                 if (player.getInvisiblity()) {
-                    //pME.setInvisibleTime(new Date());
+                    MyCountDownTimer myCountDownTimer1 = new MyCountDownTimer(5000, 2500) {
+                        @Override
+                        public void onFinish() {
+                            player.setInvisiblity(false);
+                        }
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                        }
+                    };
+                    myCountDownTimer1.start();
                 }
 
                 gameData.resetPlayer(i + 1, player);

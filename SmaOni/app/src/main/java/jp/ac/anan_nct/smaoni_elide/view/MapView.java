@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -126,6 +127,7 @@ public class MapView extends View {
                 rects[i] = rect;
                 paints[i] = new Paint();
                 paints[i].setColor(this.colors[colors[i]]);
+                makeInvisible(colors[i], paints[i]);
             }
             if (over3) {
                 for (int i = num; i < num + num_under; i++) {
@@ -133,6 +135,7 @@ public class MapView extends View {
                     rects[i] = rect;
                     paints[i] = new Paint();
                     paints[i].setColor(this.colors[colors[i]]);
+                    makeInvisible(colors[i], paints[i]);
                 }
             }
             return rects;
@@ -159,6 +162,7 @@ public class MapView extends View {
             rects[i] = rect;
             paints[i] = new Paint();
             paints[i].setColor(this.colors[colors[i+1]]);
+            makeInvisible(colors[i+1], paints[i]);
         }
         if(over3){
             for(int i = num; i < num+num_under; i++){
@@ -166,15 +170,29 @@ public class MapView extends View {
                 rects[i] = rect;
                 paints[i] = new Paint();
                 paints[i].setColor(this.colors[colors[i+1]]);
+                makeInvisible(colors[i+1], paints[i]);
             }
         }
+        Log.d(num+ "", num_under+"");
         rects[num+num_under] = new Rect(rect0.left+rect0.width()/5, rect0.top+rect0.height()/5, rect0.right-rect0.width()/5, rect0.bottom-rect0.height()/5);
         paints[num+num_under] = new Paint();
         paints[num+num_under].setColor(Color.WHITE);
         rects[num+num_under+1] = rects[num+num_under];
         paints[num+num_under+1] = new Paint();
         paints[num+num_under+1].setColor(this.colors[colors[0]]);
+        makeInvisible(0, paints[num + num_under + 1]);
         return rects;
+    }
+
+
+
+    void makeInvisible(int i, Paint p){
+        Log.d("invisible?" , i + " "+ Boolean.toString(gameData.getPlayer(i).getInvisiblity()));
+        if(gameData.getPlayer(i).getInvisiblity()){
+            p.setAlpha(80);
+        }else{
+            p.setAlpha(255);
+        }
     }
 
     @Override
@@ -198,9 +216,10 @@ public class MapView extends View {
             for(int i = 0; i < num; i++) {      //x担当
                 int k;                          //セルにいる人数
                 for(k = 0;colorsss[j][i][k] != -1; k++);
-                if(k == 0){
-                    canvas.drawRect(rect, paint);
-                }else{
+
+                canvas.drawRect(rect, paint);
+
+                if(k != 0){
                   /*  if(!ReceptionActivity.communicating){
                         Paint paint1 = new Paint();
                         paint1.setColor(Color.BLUE);
