@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import jp.ac.anan_nct.smaoni_elide.activity.ReceptionActivity;
 import jp.ac.anan_nct.smaoni_elide.view.MapView;
+import jp.ac.anan_nct.smaoni_elide.view.RankingView;
 
 /**
  * Created by skriulle on 2015/03/18.
@@ -35,10 +36,11 @@ public class Communication2 extends AsyncTask {
 
 
     MapView mapView;
+    RankingView rankingView;
     JSONArray playerArray;
 
 
-    public Communication2(GameData gameData, MapView mapView) {
+    public Communication2(GameData gameData, MapView mapView, RankingView rankingView) {
         super();
         conect = true;
         httpClient = new DefaultHttpClient();
@@ -46,15 +48,15 @@ public class Communication2 extends AsyncTask {
         post = new HttpPost(uri.toString());
         this.gameData = gameData;
         this.mapView = mapView;
+        this.rankingView = rankingView;
     }
 
-
-    @Override
+  @Override
     protected Object doInBackground(Object[] p) {
 
-        try{
+        try {
             Thread.sleep(2000);
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("ERROR:Communication2", e.toString());
         }
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -63,9 +65,10 @@ public class Communication2 extends AsyncTask {
             Log.d(gameData.getMe().getAccount(), gameData.getMe().getPassword());
             params.add(new BasicNameValuePair("account", gameData.getMe().getAccount()));
             params.add(new BasicNameValuePair("password", gameData.getMe().getPassword()));
-            params.add(new BasicNameValuePair("x", gameData.getMe().getPos().getX() + ""));
-            params.add(new BasicNameValuePair("y", gameData.getMe().getPos().getY() + ""));
-        }catch (Exception e){
+            params.add(new BasicNameValuePair("x", gameData.getPlayer(0).getPos().getX() + ""));
+            params.add(new BasicNameValuePair("y", gameData.getPlayer(0).getPos().getY() + ""));
+            Log.d("send data", ""+gameData.getPlayer(0).getPos().getX() + " " + gameData.getPlayer(0).getPos().getY());
+        } catch (Exception e) {
             Log.e("ERROR:Communication2", e.toString());
         }
         try {
@@ -75,31 +78,52 @@ public class Communication2 extends AsyncTask {
                     res.getStatusLine().getStatusCode() + "");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(res.getEntity().getContent()));
             JSONObject j = new JSONObject(bufferedReader.readLine());
-            Log.d("Returncomment", j.toString());
             playerArray = j.getJSONArray("player");
 
             Log.d("game player", playerArray.toString());
 
+            JSONObject me = j.getJSONObject("me");
+            Player pME = new Player();
+            pME.setAccount(me.getString("account"));
+            pME.setName(me.getString("name"));
+            int x1 = me.getInt("x");
+            int y1 = me.getInt("y");
+            pME.setPos(new Position(x1, y1));
+            try {
 
-            for(int i = 0; i < playerArray.length(); i++){
+                pME.setOni(me.getBoolean("is_oni"));
+                pME.setInvisiblity(me.getBoolean("is_invisible"));
+            } catch (Exception e) {
+                Log.e("Exception", "meだよ☆");
+            }
+            if (pME.getInvisiblity()) {
+                //pME.setInvisibleTime(new Date());
+            }
+
+            gameData.resetPlayer(0, pME);
+
+
+            for (int i = 0; i < playerArray.length(); i++) {
                 Player player = new Player();
                 JSONObject playeR = playerArray.getJSONObject(i);
 
                 player.setAccount(playeR.getString("account"));
+                player.setName(playeR.getString("name"));
                 int x = playeR.getInt("x");
                 int y = playeR.getInt("y");
                 player.setPos(new Position(x, y));
+                player.setOni(playeR.getBoolean("is_oni"));
+                player.setInvisiblity(playeR.getBoolean("is_invisible"));
+                if (player.getInvisiblity()) {
+                    //pME.setInvisibleTime(new Date());
+                }
 
-                gameData.resetPlayer(i+1, player);
+                gameData.resetPlayer(i + 1, player);
             }
             ReceptionActivity.communicating = true;
         } catch (Exception e) {
             Log.e("ERROR:Communication", e.toString());
         }
-
-
-
-
 
 
         return null;
@@ -110,21 +134,22 @@ public class Communication2 extends AsyncTask {
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
 
-        try{
+        try {
 
-            if(conect){
-                Communication2 communication = new Communication2(gameData, mapView);
+            if (conect) {
+                Communication2 communication = new Communication2(gameData, mapView, rankingView);
                 communication.execute();
-            }else{
+            } else {
                 // ReceptionActivity.startTime = startTime;
 
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("ERROR:communication_last", e.toString());
         }
 
 
         mapView.invalidate();
+        rankingView.invalidate();
 
     }
 }

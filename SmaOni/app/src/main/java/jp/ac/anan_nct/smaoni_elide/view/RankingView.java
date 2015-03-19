@@ -6,9 +6,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
-import jp.ac.anan_nct.smaoni_elide.activity.SelectActivity;
+import jp.ac.anan_nct.smaoni_elide.activity.ReceptionActivity;
 import jp.ac.anan_nct.smaoni_elide.model.Colors;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.Player;
@@ -29,8 +30,9 @@ public class RankingView extends View {
 
     public RankingView(Context context, AttributeSet attrs){
         super(context, attrs);
-        gameData = SelectActivity.gameData;
+        gameData = ReceptionActivity.gameData;
         players = gameData.getPlayer();
+        Log.d("ranking name ", gameData.getPlayer(0).getName());
 
         ranking = new int[players.length][2];
         for(int i = 0; i < players.length; i++){
@@ -78,6 +80,9 @@ public class RankingView extends View {
 
         Rect rect = new Rect(0,0,500,70);
 
+        for(int i = 0; i < gameData.getPlayerNum(); i++){
+            Log.d("ranking", ""+ranking[i][1]);
+        }
         for(int i = 0; i < gameData.getPlayerNum(); i++) {
             Player p = players[ranking[i][1]];
             float dy = (float)(i*70+57);

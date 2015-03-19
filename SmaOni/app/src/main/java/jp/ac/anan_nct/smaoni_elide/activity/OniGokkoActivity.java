@@ -37,13 +37,13 @@ public class OniGokkoActivity extends GameActivity {
         mapView = (MapView)findViewById(R.id.map1);
         rankingView = (RankingView)findViewById(R.id.gameRanking);
         button = (Button)findViewById(R.id.buttonRanking);
-        communication = new Communication2(gameData, mapView);
+        communication = new Communication2(gameData, mapView, rankingView);
         communication.execute();
 
 
         for(int i = 0; i < gameData.getPlayerNum(); i++){
             gameData.getPlayer(i).setOni(false);
-            gameData.getPlayer(i).setVisiblity(true);
+            gameData.getPlayer(i).setInvisiblity(false);
         }
         gameData.getPlayer(0).setOni(true);
 
