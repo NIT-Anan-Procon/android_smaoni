@@ -31,13 +31,13 @@ public class AccountSelectActivity extends ActionBarActivity {
         A.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setMe("yahooLOVE@gmail.com", "kashifuku", "かし"); //skriulle5@gmail.com
+                setMe("yahoo_love@gmail.com", "kashifuku", "かし"); //skriulle5@gmail.com
             }
         });
         B.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setMe("HackU_Brilliant@st.anan-nct.ac.jp", "morikohki", "もりりん"); //1122320@st.anan-nct.ac.jp
+                setMe("hack_u_brilliant@st.anan-nct.ac.jp", "morikohki", "もりりん"); //1122320@st.anan-nct.ac.jp
             }
         });
         C.setOnClickListener(new View.OnClickListener() {
