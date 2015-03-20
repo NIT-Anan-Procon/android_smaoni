@@ -51,7 +51,7 @@ public class OniGokkoActivity extends GameActivity {
 
         timerView = (TextView)findViewById(R.id.timerView);
 
-        myCountDownTimer = new MyCountDownTimer(1000/*5 * 60 * 1000*/, 1000) {
+        myCountDownTimer = new MyCountDownTimer(5 * 60 * 1000, 1000) {
             @Override
             public void onFinish() {
                 mapView.gameOver();

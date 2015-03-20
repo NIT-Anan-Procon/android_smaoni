@@ -203,18 +203,18 @@ public class MapView extends View {
 
     @Override
     public void onDraw(Canvas canvas){
-/*
-        for(int i = 0; i < 100; i ++){
-            Log.d("color "+ i, "" + colorsss[0][0][i]);
-        }*/
+
+        //canvas.drawColor(Color.WHITE, PorterDuff.Mode.CLEAR);
         super.onDraw(canvas);
+
 
         Paint paint = new Paint();
 
         width = canvas.getWidth()-100;
 
         Rect rect = new Rect(55,55,width/num+45,width/num+45);
-        canvas.drawColor(Color.parseColor("#cccccc"));
+        //canvas.drawColor(Color.parseColor("#cccccc"));
+
         paint.setColor(Color.parseColor("#ffffff"));
 
 
