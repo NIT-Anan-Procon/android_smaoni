@@ -261,5 +261,30 @@ public class MapView extends View {
             paint.setColor(Color.GREEN);
             canvas.drawRect(me.getRawX() - 50, me.getRawY() - 350, me.getRawX() + 50, me.getRawY() - 250, paint);
         }
+
+
+        if(finish){
+            Rect finishRect = new Rect(0, 250, canvas.getWidth(), canvas.getHeight()-250);
+            Paint finishPaint = new Paint();
+            finishPaint.setColor(Color.WHITE);
+            canvas.drawRect(finishRect, finishPaint);
+            finishPaint = new Paint();
+            finishPaint.setColor(Color.GREEN);
+            finishPaint.setStyle(Paint.Style.STROKE);
+            finishPaint.setStrokeWidth(20f);
+            canvas.drawRect(finishRect, finishPaint);
+
+            Paint finishText = new Paint();
+            finishText.setColor(Color.RED);
+            finishText.setTextAlign(Paint.Align.CENTER);
+            finishText.setTextSize(150f);
+            canvas.drawText("ゲーム終了", canvas.getWidth()/2,canvas.getHeight()/2, finishText);
+
+
+
+
+
+
+        }
     }
 }

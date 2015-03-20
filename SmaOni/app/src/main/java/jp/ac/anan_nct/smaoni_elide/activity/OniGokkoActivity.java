@@ -54,6 +54,7 @@ public class OniGokkoActivity extends GameActivity {
         myCountDownTimer = new MyCountDownTimer(1000/*5 * 60 * 1000*/, 1000) {
             @Override
             public void onFinish() {
+                mapView.gameOver();
                 Toast.makeText(getApplicationContext(), "ゲーム終了", Toast.LENGTH_SHORT).show();
                 Communication2.conect = false;
                 myCountDownTimer1.start();
