@@ -29,6 +29,7 @@ public class MapView extends View {
 
     int width;
     boolean isTouched = false;
+    boolean finish;
 
     int x = -1, y = -1;
     float rawX, rawY;
@@ -51,6 +52,7 @@ public class MapView extends View {
     public MapView(Context context, AttributeSet attrs){
         super(context, attrs);
 
+        finish = false;
         gameData = SelectActivity.gameData;
 
         touchable = true;
@@ -184,6 +186,10 @@ public class MapView extends View {
         return rects;
     }
 
+    public void gameOver(){
+        finish = true;
+        invalidate();
+    }
 
 
     void makeInvisible(int i, Paint p){

@@ -21,7 +21,7 @@ public class OniGokkoActivity extends GameActivity {
     public static MapView mapView;
     public static RankingView rankingView;
     public static Button button;
-    MyCountDownTimer myCountDownTimer;
+    MyCountDownTimer myCountDownTimer, myCountDownTimer1;
     MediaPlayer mediaPlayer;
 
     TextView timerView;
@@ -51,12 +51,12 @@ public class OniGokkoActivity extends GameActivity {
 
         timerView = (TextView)findViewById(R.id.timerView);
 
-        myCountDownTimer = new MyCountDownTimer(100000000, 1000) {
+        myCountDownTimer = new MyCountDownTimer(1000/*5 * 60 * 1000*/, 1000) {
             @Override
             public void onFinish() {
-                timerView.setText("0");
-                Toast.makeText(getApplicationContext(), "タイマー満了", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(OniGokkoActivity.this, ResultActivity.class));
+                Toast.makeText(getApplicationContext(), "ゲーム終了", Toast.LENGTH_SHORT).show();
+                Communication2.conect = false;
+                myCountDownTimer1.start();
             }
 
             @Override
@@ -64,6 +64,15 @@ public class OniGokkoActivity extends GameActivity {
                 String time = (((millisUntilFinished+1)/1000/60 >= 10) ? "" : "0" )+Long.toString((millisUntilFinished+1)/1000/60) + ":";
                 time += (((millisUntilFinished+1)/1000%60 >= 10) ? "" : "0" )+Long.toString((millisUntilFinished+1)/1000%60);
                 timerView.setText(time);
+            }
+        };
+        myCountDownTimer1 = new MyCountDownTimer(1000, 500) {
+            @Override
+            public void onFinish() {
+                startActivity(new Intent(OniGokkoActivity.this, ResultActivity.class));
+            }
+            @Override
+            public void onTick(long millisUntilFinished) {
             }
         };
 

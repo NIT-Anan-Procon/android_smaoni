@@ -116,7 +116,7 @@ public class Communication2 extends AsyncTask {
                     im.execute();
                 }
             }
-            
+
             ReceptionActivity.communicating = true;
         } catch (Exception e) {
             Log.e("ERROR:Communication2", e.toString());
