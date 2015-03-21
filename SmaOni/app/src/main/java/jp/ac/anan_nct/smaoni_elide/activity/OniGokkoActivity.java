@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import jp.ac.anan_nct.smaoni_elide.R;
+import jp.ac.anan_nct.smaoni_elide.model.Communication2;
 import jp.ac.anan_nct.smaoni_elide.model.MyCountDownTimer;
 import jp.ac.anan_nct.smaoni_elide.view.MapView;
 import jp.ac.anan_nct.smaoni_elide.view.RankingView;
@@ -20,10 +22,12 @@ public class OniGokkoActivity extends GameActivity {
     public static MapView mapView;
     public static RankingView rankingView;
     public static Button button;
-    MyCountDownTimer myCountDownTimer;
+    MyCountDownTimer myCountDownTimer, myCountDownTimer1;
     MediaPlayer mediaPlayer;
 
     TextView timerView;
+
+    Communication2 communication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +35,17 @@ public class OniGokkoActivity extends GameActivity {
         setContentView(R.layout.activity_game);
         mediaPlayer = MediaPlayer.create(this, R.raw.meka_ge_keihou03);
 
+
         mapView = (MapView)findViewById(R.id.map1);
         rankingView = (RankingView)findViewById(R.id.gameRanking);
         button = (Button)findViewById(R.id.buttonRanking);
+        communication = new Communication2(gameData, mapView, rankingView);
+        communication.execute();
+
 
         for(int i = 0; i < gameData.getPlayerNum(); i++){
             gameData.getPlayer(i).setOni(false);
-            gameData.getPlayer(i).setVisiblity(true);
+            gameData.getPlayer(i).setInvisiblity(false);
         }
         gameData.getPlayer(0).setOni(true);
 
@@ -45,12 +53,13 @@ public class OniGokkoActivity extends GameActivity {
 
         timerView = (TextView)findViewById(R.id.timerView);
 
-        myCountDownTimer = new MyCountDownTimer(100000000, 1000) {
+        myCountDownTimer = new MyCountDownTimer(5 * 60 * 1000, 1000) {
             @Override
             public void onFinish() {
-                timerView.setText("0");
-                Toast.makeText(getApplicationContext(), "タイマー満了", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(OniGokkoActivity.this, ResultActivity.class));
+                mapView.gameOver();
+                Toast.makeText(getApplicationContext(), "ゲーム終了", Toast.LENGTH_SHORT).show();
+                Communication2.conect = false;
+                myCountDownTimer1.start();
             }
 
             @Override
@@ -58,6 +67,15 @@ public class OniGokkoActivity extends GameActivity {
                 String time = (((millisUntilFinished+1)/1000/60 >= 10) ? "" : "0" )+Long.toString((millisUntilFinished+1)/1000/60) + ":";
                 time += (((millisUntilFinished+1)/1000%60 >= 10) ? "" : "0" )+Long.toString((millisUntilFinished+1)/1000%60);
                 timerView.setText(time);
+            }
+        };
+        myCountDownTimer1 = new MyCountDownTimer(1000, 500) {
+            @Override
+            public void onFinish() {
+                startActivity(new Intent(OniGokkoActivity.this, ResultActivity.class));
+            }
+            @Override
+            public void onTick(long millisUntilFinished) {
             }
         };
 
@@ -73,6 +91,12 @@ public class OniGokkoActivity extends GameActivity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Communication2.conect = false;
+    }
 
     @Override
     public void onLocationChanged(Location location) {
@@ -83,7 +107,11 @@ public class OniGokkoActivity extends GameActivity {
             if(!mediaPlayer.isPlaying()){
                 mediaPlayer.start();
             }
+            Vibrator vibrator;
+            vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+            vibrator.vibrate(100000);
         }
+
 
         mapView.invalidate();
         rankingView.invalidate();

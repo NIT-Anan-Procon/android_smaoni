@@ -22,15 +22,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.LinkedList;
 
 import jp.ac.anan_nct.smaoni_elide.R;
-import jp.ac.anan_nct.smaoni_elide.model.Colors;
 import jp.ac.anan_nct.smaoni_elide.model.Communication;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.JSONRequest;
 import jp.ac.anan_nct.smaoni_elide.model.JSONRequestEvent;
-import jp.ac.anan_nct.smaoni_elide.model.LoginJsonBuilder;
+import jp.ac.anan_nct.smaoni_elide.model.MyCountDownTimer;
 import jp.ac.anan_nct.smaoni_elide.model.MyURL;
 import jp.ac.anan_nct.smaoni_elide.model.Player;
 import jp.ac.anan_nct.smaoni_elide.model.Position;
@@ -56,16 +56,44 @@ public class ReceptionActivity extends GPS{
     HttpClient httpClient;
 
     Toast toast;
+    MyCountDownTimer myCountDownTimer;
 
     Communication communication;
     public static boolean last, communicating;
+    public static Date startTime;
     MediaPlayer mediaPlayer;
     int i;
+    private int[] colors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         mediaPlayer = MediaPlayer.create(this, R.raw.meka_ge_keihou03);
         toast = Toast.makeText(getApplicationContext(), "onCreate", Toast.LENGTH_SHORT);
+        myCountDownTimer = new MyCountDownTimer(100000000, 1000) {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.d("true??????", Communication.start + "");
+                if(Communication.start) {//Communication.startTime;
+                    Log.d("Receiption", "startGame");
+                    Intent intent = new Intent(ReceptionActivity.this, OniGokkoActivity.class);
+                    Log.d("intent", intent.toString());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            }
+        };
+
+
+        myCountDownTimer.start();
+
+        gameData = SelectActivity.gameData;
+        gameData.setPlayerNum(gameData.getPlayerNum());
+        colors = gameData.getColors();
 
 
         try{
@@ -88,8 +116,6 @@ public class ReceptionActivity extends GPS{
             mapView = (MapView) findViewById(R.id.mapRecieption);
             mapView.setTouchable(false);
 
-            gameData = SelectActivity.gameData;
-            gameData.setPlayerNum(gameData.getPlayerNum());
             linearLayout = (LinearLayout) findViewById(R.id.linear1);
             memberViews = new LinkedList<MemberView>();
 
@@ -109,7 +135,7 @@ public class ReceptionActivity extends GPS{
             addMember = (Button) findViewById(R.id.button7);
 
 
-            setAction();
+            /////setAction();
 
 
 
@@ -127,7 +153,10 @@ public class ReceptionActivity extends GPS{
         }catch(Exception e){
             Log.e("ERROR:ReceiptionActivity" , e.toString());
         }
+
+        startTime = new Date();
     }
+
 
 
     void showToast(){
@@ -155,8 +184,6 @@ public class ReceptionActivity extends GPS{
 
         mapView.invalidate();
     }
-
-
 
 
 
@@ -188,7 +215,7 @@ public class ReceptionActivity extends GPS{
             Log.e("ERROR:RecieptionActivity", e.toString());
         }
 
-        p.setColor(Colors.colors[i]);
+        p.setColor(colors[i]);
         gameData.resetPlayer(i, p);
 
         MemberView memberView = new MemberView(this, null);
@@ -199,63 +226,40 @@ public class ReceptionActivity extends GPS{
         return p;
     }
 
-    void jsonArrayCame(JSONArray jsonArray){  //JSONArray
-        //配列をclear
-        gameData.setPlayerNum(gameData.getPlayerNum());
-        memberViews.clear();
-        linearLayout.removeAllViews();
 
-        this.i = 0;
-        try{
-            for(int i = 0; i < jsonArray.length(); i++) {   //送られてくるJSONArrayの長さは指定以上にならない
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Player p = jsonCame(jsonObject);
-                gameData.resetPlayer(i, p);
-            }
-        }catch (Exception e){
-            Log.e("ERROR:RecieptionActivity", e.toString());
-        }
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        communication.setLast(false);
+        myCountDownTimer.cancel();
     }
 
-
     void setAction(){
-        gotoGame.setOnClickListener(new View.OnClickListener() {
+        /*gotoGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                myCountDownTimer.cancel();
                 for(int i = 0; i < gameData.getPlayerNum(); i++){
                     if(gameData.getPlayer(i) == null){
                         gameData.resetPlayer(i, new Player());
                     }
                 }
 
-
-
-                communication.setStart(true);
                 last = false;
                 jsonRequest.send(new LoginJsonBuilder());
                 startActivity(new Intent(ReceptionActivity.this, OniGokkoActivity.class));
             }
-        });
-        /*addMember.setOnClickListener(new View.OnClickListener() {
+        });*/
+        addMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                if(jsonArray.length() < gameData.getPlayerNum()) {
-                    Player p = new Player();
-                    int a = (int)(Math.random()*gameData.getGridNum());
-                    int b = (int)(Math.random()*gameData.getGridNum());
-                    p.setPos(new Position(a,b));
 
-                    addJSONObject(p);
-                    jsonArrayCame(jsonArray);
-                    if(jsonArray.length() == gameData.getPlayerNum()){
-                        gotoGame.setEnabled(true);
-                    }
-                }
+                Date now = new Date();
+                Communication.startTime = new Date(now.getTime()+5000);
+                Communication.start = true;
 
             }
-        });/*/
+        });
     }
 
     @Override
@@ -287,5 +291,27 @@ public class ReceptionActivity extends GPS{
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+
+    void jsonArrayCame(JSONArray jsonArray){  //JSONArray
+        //配列をclear
+        gameData.setPlayerNum(gameData.getPlayerNum());
+        memberViews.clear();
+        linearLayout.removeAllViews();
+
+        this.i = 0;
+        try{
+            for(int i = 0; i < jsonArray.length(); i++) {   //送られてくるJSONArrayの長さは指定以上にならない
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Player p = jsonCame(jsonObject);
+                gameData.resetPlayer(i, p);
+            }
+        }catch (Exception e){
+            Log.e("ERROR:RecieptionActivity", e.toString());
+        }
     }
 }

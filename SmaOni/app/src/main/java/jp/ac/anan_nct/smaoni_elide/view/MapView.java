@@ -6,12 +6,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import jp.ac.anan_nct.smaoni_elide.activity.ReceptionActivity;
 import jp.ac.anan_nct.smaoni_elide.activity.SelectActivity;
-import jp.ac.anan_nct.smaoni_elide.model.Colors;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.Position;
 
@@ -30,6 +29,7 @@ public class MapView extends View {
 
     int width;
     boolean isTouched = false;
+    boolean finish;
 
     int x = -1, y = -1;
     float rawX, rawY;
@@ -52,13 +52,14 @@ public class MapView extends View {
     public MapView(Context context, AttributeSet attrs){
         super(context, attrs);
 
+        finish = false;
         gameData = SelectActivity.gameData;
 
         touchable = true;
 
         num = gameData.getGridNum();
 
-        colors = Colors.colors;
+        colors = gameData.getColors();
 
         playerNum = gameData.getPlayerNum();
 
@@ -72,7 +73,7 @@ public class MapView extends View {
         }
 
         oniPaint = new Paint();
-        oniPaint.setColor(Color.GREEN);
+        oniPaint.setColor(Color.RED);
         oniPaint.setStyle(Paint.Style.STROKE);
         oniPaint.setStrokeWidth(4f);
     }
@@ -111,16 +112,8 @@ public class MapView extends View {
     }
 
     private Rect[] makeCell(int[] colors, Rect rect0, int num){
-        int k;
-        boolean m2 = false;
-        for(k=0; k < num; k++){
-            if(colors[k]==gameData.getIAm()){
-                m2 = true;
-                break;
-            }
-        }
-        if(m2 && colors[1] != -1){
-            return makeCell2(colors, rect0, num, k);
+        if(colors[0] == 0 && colors[1] != -1){
+            return makeCell2(colors, rect0, num);
         }else {
             Rect[] rects = new Rect[num];
             paints = new Paint[num];
@@ -136,6 +129,7 @@ public class MapView extends View {
                 rects[i] = rect;
                 paints[i] = new Paint();
                 paints[i].setColor(this.colors[colors[i]]);
+                makeInvisible(colors[i], paints[i]);
             }
             if (over3) {
                 for (int i = num; i < num + num_under; i++) {
@@ -143,6 +137,7 @@ public class MapView extends View {
                     rects[i] = rect;
                     paints[i] = new Paint();
                     paints[i].setColor(this.colors[colors[i]]);
+                    makeInvisible(colors[i], paints[i]);
                 }
             }
             return rects;
@@ -150,13 +145,11 @@ public class MapView extends View {
     }
 
 
-    private Rect[] makeCell2(int[] colors, Rect rect0, int num, int k) {
-        for(int j = k; j > 0; k--){
-            colors[j] = colors[j-1];
-        }
-        colors[0] = gameData.getIAm();
-        Rect[] rects = new Rect[num];
-        paints = new Paint[num];
+
+
+    private Rect[] makeCell2(int[] colors, Rect rect0, int num) {
+        Rect[] rects = new Rect[num+1];
+        paints = new Paint[num+1];
         num-=1;
         int num_under= 0;
         int bottom = rect0.bottom;
@@ -171,6 +164,7 @@ public class MapView extends View {
             rects[i] = rect;
             paints[i] = new Paint();
             paints[i].setColor(this.colors[colors[i+1]]);
+            makeInvisible(colors[i+1], paints[i]);
         }
         if(over3){
             for(int i = num; i < num+num_under; i++){
@@ -178,28 +172,49 @@ public class MapView extends View {
                 rects[i] = rect;
                 paints[i] = new Paint();
                 paints[i].setColor(this.colors[colors[i+1]]);
+                makeInvisible(colors[i+1], paints[i]);
             }
         }
+        Log.d(num+ "", num_under+"");
         rects[num+num_under] = new Rect(rect0.left+rect0.width()/5, rect0.top+rect0.height()/5, rect0.right-rect0.width()/5, rect0.bottom-rect0.height()/5);
         paints[num+num_under] = new Paint();
-        paints[num+num_under].setColor(this.colors[colors[0]]);
+        paints[num+num_under].setColor(Color.WHITE);
+        rects[num+num_under+1] = rects[num+num_under];
+        paints[num+num_under+1] = new Paint();
+        paints[num+num_under+1].setColor(this.colors[colors[0]]);
+        makeInvisible(0, paints[num + num_under + 1]);
         return rects;
+    }
+
+    public void gameOver(){
+        finish = true;
+        invalidate();
+    }
+
+
+    void makeInvisible(int i, Paint p){
+        Log.d("invisible?" , i + " "+ Boolean.toString(gameData.getPlayer(i).getInvisiblity()));
+        if(gameData.getPlayer(i).getInvisiblity()){
+            p.setAlpha(80);
+        }else{
+            p.setAlpha(255);
+        }
     }
 
     @Override
     public void onDraw(Canvas canvas){
-/*
-        for(int i = 0; i < 100; i ++){
-            Log.d("color "+ i, "" + colorsss[0][0][i]);
-        }*/
+
+        //canvas.drawColor(Color.WHITE, PorterDuff.Mode.CLEAR);
         super.onDraw(canvas);
+
 
         Paint paint = new Paint();
 
         width = canvas.getWidth()-100;
 
         Rect rect = new Rect(55,55,width/num+45,width/num+45);
-        canvas.drawColor(Color.parseColor("#cccccc"));
+        //canvas.drawColor(Color.parseColor("#cccccc"));
+
         paint.setColor(Color.parseColor("#ffffff"));
 
 
@@ -207,14 +222,15 @@ public class MapView extends View {
             for(int i = 0; i < num; i++) {      //x担当
                 int k;                          //セルにいる人数
                 for(k = 0;colorsss[j][i][k] != -1; k++);
-                if(k == 0){
-                    canvas.drawRect(rect, paint);
-                }else{
-                    if(!ReceptionActivity.communicating){
+
+                canvas.drawRect(rect, paint);
+
+                if(k != 0){
+                  /*  if(!ReceptionActivity.communicating){
                         Paint paint1 = new Paint();
                         paint1.setColor(Color.BLUE);
                         canvas.drawRect(rect, paint1);
-                    }else {
+                    }else {*/
                         int m = 0;
                         Rect[] rects = makeCell(colorsss[j][i], rect, k);
                         for (Rect r : rects) {
@@ -226,7 +242,7 @@ public class MapView extends View {
                             }
                             canvas.drawRect(r, paints[m++]);
                         }
-                    }
+                 //   }
                 }
 
                 if(gameData.oniWhere().getX() == i && gameData.oniWhere().getY() == j){
@@ -244,6 +260,31 @@ public class MapView extends View {
         if(isTouched){
             paint.setColor(Color.GREEN);
             canvas.drawRect(me.getRawX() - 50, me.getRawY() - 350, me.getRawX() + 50, me.getRawY() - 250, paint);
+        }
+
+
+        if(finish){
+            Rect finishRect = new Rect(0, 250, canvas.getWidth(), canvas.getHeight()-250);
+            Paint finishPaint = new Paint();
+            finishPaint.setColor(Color.WHITE);
+            canvas.drawRect(finishRect, finishPaint);
+            finishPaint = new Paint();
+            finishPaint.setColor(Color.GREEN);
+            finishPaint.setStyle(Paint.Style.STROKE);
+            finishPaint.setStrokeWidth(20f);
+            canvas.drawRect(finishRect, finishPaint);
+
+            Paint finishText = new Paint();
+            finishText.setColor(Color.RED);
+            finishText.setTextAlign(Paint.Align.CENTER);
+            finishText.setTextSize(150f);
+            canvas.drawText("ゲーム終了", canvas.getWidth()/2,canvas.getHeight()/2, finishText);
+
+
+
+
+
+
         }
     }
 }

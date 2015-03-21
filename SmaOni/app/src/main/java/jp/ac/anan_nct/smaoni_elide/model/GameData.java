@@ -12,8 +12,6 @@ public class GameData{
     private int[] colors;
     private Position oniPosition;
     private Player me;
-    private int iAm;
-
     public GameData() {
         gridNum = 8;
         playerNum = 4;
@@ -25,7 +23,6 @@ public class GameData{
         }
         oniPosition = new Position(-1, -1);
         colors = Colors.colors;
-        iAm = 0;
     }
 
     public GameData(int gridNum, int playerNum, int runnerNum, Field field, Player[] players, int me) {
@@ -150,11 +147,5 @@ public class GameData{
         return colors;
     }
 
-    public void setIAm(int iAm) {
-        this.iAm = iAm;
-    }
-    public int getIAm() {
-        return iAm;
-    }
 }
 

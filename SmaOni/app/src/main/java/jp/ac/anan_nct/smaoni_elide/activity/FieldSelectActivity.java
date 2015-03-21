@@ -46,6 +46,8 @@ public class FieldSelectActivity extends ActionBarActivity {
             fields[i] = new Field(11.1*i, 1.1*i, 11.1*i, 1.1*i);
         }
 
+        fields[5] = new Field(180, 0, 40, 20);
+        texts[5].setText("超広い");
         fields[6] = new Field(134.669498, 134.666591, 33.899804, 33.896349);
         texts[6].setText("阿南高専");
         fields[7] = new Field(134.669498, 134.666591, 33.898059, 33.896349);
