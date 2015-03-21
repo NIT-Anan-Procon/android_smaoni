@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +34,7 @@ public class OniGokkoActivity extends GameActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         mediaPlayer = MediaPlayer.create(this, R.raw.meka_ge_keihou03);
+
 
         mapView = (MapView)findViewById(R.id.map1);
         rankingView = (RankingView)findViewById(R.id.gameRanking);
@@ -105,7 +107,11 @@ public class OniGokkoActivity extends GameActivity {
             if(!mediaPlayer.isPlaying()){
                 mediaPlayer.start();
             }
+            Vibrator vibrator;
+            vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+            vibrator.vibrate(100000);
         }
+
 
         mapView.invalidate();
         rankingView.invalidate();

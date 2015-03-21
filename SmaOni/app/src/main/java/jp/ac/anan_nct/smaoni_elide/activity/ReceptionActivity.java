@@ -135,7 +135,7 @@ public class ReceptionActivity extends GPS{
             addMember = (Button) findViewById(R.id.button7);
 
 
-            setAction();
+            /////setAction();
 
 
 
