@@ -59,7 +59,7 @@ public class Communication2 extends AsyncTask {
             Log.e("ERROR:Communication2", e.toString());
         }
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-        HttpResponse res = null;
+        HttpResponse res;
         try {
             Log.d(gameData.getMe().getAccount(), gameData.getMe().getPassword());
             params.add(new BasicNameValuePair("account", gameData.getMe().getAccount()));
@@ -76,6 +76,7 @@ public class Communication2 extends AsyncTask {
                     res.getStatusLine().getStatusCode() + "");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(res.getEntity().getContent()));
             JSONObject j = new JSONObject(bufferedReader.readLine());
+            Log.d("ReturnComment", j.toString());
 
             JSONArray playerArray = j.getJSONArray("player");
             JSONObject me = j.getJSONObject("me");

@@ -2,7 +2,6 @@ package jp.ac.anan_nct.smaoni_elide.model;
 
 import android.location.Location;
 
-import java.util.Date;
 import java.util.Random;
 
 import jp.ac.anan_nct.smaoni_elide.activity.HomeActivity;
@@ -17,7 +16,6 @@ public class Player extends User{
     private boolean invisiblity;
     private int color;
     private int score;
-    private Date invisibleTime;
 
 
     public Player(){
@@ -101,13 +99,6 @@ public class Player extends User{
     }
     public String getPassword() {
         return password;
-    }
-
-    public void setInvisibleTime(Date invisibleTime) {
-        this.invisibleTime = invisibleTime;
-    }
-    public Date getInvisibleTime() {
-        return invisibleTime;
     }
 }
 

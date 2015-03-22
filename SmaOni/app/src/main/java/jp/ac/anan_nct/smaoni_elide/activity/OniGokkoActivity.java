@@ -6,8 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.Menu;
-import android.view.View;
-import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,9 +20,10 @@ public class OniGokkoActivity extends GameActivity {
 
     public static MapView mapView;
     public static RankingView rankingView;
-    public static Button button;
     MyCountDownTimer myCountDownTimer, myCountDownTimer1;
     MediaPlayer mediaPlayer;
+
+    RelativeLayout layout;
 
     TextView timerView;
 
@@ -36,9 +36,10 @@ public class OniGokkoActivity extends GameActivity {
         mediaPlayer = MediaPlayer.create(this, R.raw.meka_ge_keihou03);
 
 
+        layout = (RelativeLayout)findViewById(R.id.gamelayout);
+        layout.setBackgroundResource(R.drawable.schoolground);
         mapView = (MapView)findViewById(R.id.map1);
         rankingView = (RankingView)findViewById(R.id.gameRanking);
-        button = (Button)findViewById(R.id.buttonRanking);
         communication = new Communication2(gameData, mapView, rankingView);
         communication.execute();
 
@@ -49,14 +50,13 @@ public class OniGokkoActivity extends GameActivity {
         }
         gameData.getPlayer(0).setOni(true);
 
-        setAction();
-
         timerView = (TextView)findViewById(R.id.timerView);
 
         myCountDownTimer = new MyCountDownTimer(5 * 60 * 1000, 1000) {
             @Override
             public void onFinish() {
                 mapView.gameOver();
+                timerView.setText("00:00");
                 Toast.makeText(getApplicationContext(), "ゲーム終了", Toast.LENGTH_SHORT).show();
                 Communication2.conect = false;
                 myCountDownTimer1.start();
@@ -82,14 +82,6 @@ public class OniGokkoActivity extends GameActivity {
         myCountDownTimer.start();
     }
 
-    void setAction(){
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rankingView.invalidate();
-            }
-        });
-    }
 
     @Override
     protected void onPause() {
@@ -109,7 +101,7 @@ public class OniGokkoActivity extends GameActivity {
             }
             Vibrator vibrator;
             vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
-            vibrator.vibrate(100000);
+            vibrator.vibrate(100);
         }
 
 

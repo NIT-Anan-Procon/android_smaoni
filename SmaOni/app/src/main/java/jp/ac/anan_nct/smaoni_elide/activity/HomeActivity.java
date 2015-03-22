@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import jp.ac.anan_nct.smaoni_elide.R;
 import jp.ac.anan_nct.smaoni_elide.model.Player;
@@ -26,6 +27,9 @@ public class HomeActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        RelativeLayout layout = (RelativeLayout)findViewById(R.id.layout1);
+        layout.setBackgroundResource(R.drawable.ic_launcher);
 
         bt1 = (Button)findViewById(R.id.button1);
         bt2 = (Button)findViewById(R.id.button2);

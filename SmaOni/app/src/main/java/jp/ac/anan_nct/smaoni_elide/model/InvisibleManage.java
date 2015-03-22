@@ -24,10 +24,10 @@ public class InvisibleManage extends AsyncTask {
         try{
             for(int i = 0; i < 5; i++) {
                 Thread.sleep(1000);
-                Log.d("hogehoge", "true");
                 p.setInvisiblity(true);
             }
         }catch (Exception e){
+            Log.e("ERROR:invisibleManager", e.toString());
         }
 
 
@@ -40,9 +40,6 @@ public class InvisibleManage extends AsyncTask {
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
 
-
-
         p.setInvisiblity(false);
-        Log.d("hogehoge", "" + p.getInvisiblity());
     }
 }

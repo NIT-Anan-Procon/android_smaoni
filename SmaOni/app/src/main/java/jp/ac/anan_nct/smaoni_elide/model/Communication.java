@@ -80,7 +80,7 @@ public class Communication extends AsyncTask {
                     res.getStatusLine().getStatusCode() + "");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(res.getEntity().getContent()));
             JSONObject j = new JSONObject(bufferedReader.readLine());
-            Log.d("Returncomment", j.toString());
+            Log.d("ReturnComment", j.toString());
             start = j.getBoolean("start");
 
             playerArray = j.getJSONArray("player");

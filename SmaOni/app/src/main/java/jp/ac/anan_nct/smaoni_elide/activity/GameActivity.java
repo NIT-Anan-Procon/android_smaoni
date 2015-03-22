@@ -56,7 +56,18 @@ public class GameActivity extends GPS {
     //        st.stopRunning();
     //    }
     }
-
+/*
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction()==KeyEvent.ACTION_DOWN) {
+            switch (event.getKeyCode()) {
+                case KeyEvent.KEYCODE_BACK:
+                    return true;
+            }
+        }
+        return super.dispatchKeyEvent(event);
+    }
+*/
     @Override
     public void onLocationChanged(Location location) {
         super.onLocationChanged(location);

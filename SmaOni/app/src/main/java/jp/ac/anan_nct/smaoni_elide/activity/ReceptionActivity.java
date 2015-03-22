@@ -43,6 +43,7 @@ public class ReceptionActivity extends GPS{
     LinkedList<MemberView> memberViews;
     final int WC = LinearLayout.LayoutParams.WRAP_CONTENT;
     final int MP = LinearLayout.LayoutParams.MATCH_PARENT;
+    private static final int REQUEST_GALLERY = 0;
 
     Button gotoGame, addMember;
     MapView mapView;
@@ -150,11 +151,15 @@ public class ReceptionActivity extends GPS{
             communication = new Communication(gameData, mapView);
             communication.execute();
 
+
+
+
         }catch(Exception e){
             Log.e("ERROR:ReceiptionActivity" , e.toString());
         }
 
         startTime = new Date();
+
     }
 
 

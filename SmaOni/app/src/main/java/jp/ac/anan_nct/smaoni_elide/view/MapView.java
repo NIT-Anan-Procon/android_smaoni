@@ -1,6 +1,9 @@
 package jp.ac.anan_nct.smaoni_elide.view;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,6 +13,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import jp.ac.anan_nct.smaoni_elide.R;
 import jp.ac.anan_nct.smaoni_elide.activity.SelectActivity;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.Position;
@@ -42,6 +46,7 @@ public class MapView extends View {
 
     int[] colors;
     Paint[] paints;
+    Bitmap star;
 
     private Paint oniPaint;
 
@@ -72,6 +77,8 @@ public class MapView extends View {
             }
         }
 
+        Resources resources = this.getContext().getResources();
+        star = BitmapFactory.decodeResource(resources, R.drawable.star);
         oniPaint = new Paint();
         oniPaint.setColor(Color.RED);
         oniPaint.setStyle(Paint.Style.STROKE);
@@ -213,7 +220,8 @@ public class MapView extends View {
         width = canvas.getWidth()-100;
 
         Rect rect = new Rect(55,55,width/num+45,width/num+45);
-        //canvas.drawColor(Color.parseColor("#cccccc"));
+        star = Bitmap.createScaledBitmap(star, rect.width(), rect.height(), true);
+
 
         paint.setColor(Color.parseColor("#ffffff"));
 
@@ -223,7 +231,10 @@ public class MapView extends View {
                 int k;                          //セルにいる人数
                 for(k = 0;colorsss[j][i][k] != -1; k++);
 
-                canvas.drawRect(rect, paint);
+                paint.setAlpha((k == 0) ? (touchable) ? 130 : 255 : 255);   //誰もいないグリッドでは半透明
+                canvas.drawRect(rect, paint);   //ベースの白いグリッド
+
+                canvas.drawBitmap(star, rect.left, rect.top, new Paint());
 
                 if(k != 0){
                   /*  if(!ReceptionActivity.communicating){
@@ -249,6 +260,7 @@ public class MapView extends View {
                     Rect oniRect = new Rect(rect);
                     canvas.drawRect(oniRect, oniPaint);
                 }
+
 
                 rect.offset(width / num, 0);
             }
