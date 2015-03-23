@@ -225,6 +225,7 @@ public class MapView extends View {
 
         paint.setColor(Color.parseColor("#ffffff"));
 
+        Position itemPos = gameData.getItemPosition();
 
         for(int j = 0; j < num; j++){           //y担当
             for(int i = 0; i < num; i++) {      //x担当
@@ -234,27 +235,28 @@ public class MapView extends View {
                 paint.setAlpha((k == 0) ? (touchable) ? 130 : 255 : 255);   //誰もいないグリッドでは半透明
                 canvas.drawRect(rect, paint);   //ベースの白いグリッド
 
-                canvas.drawBitmap(star, rect.left, rect.top, new Paint());
-
-                if(k != 0){
-                  /*  if(!ReceptionActivity.communicating){
-                        Paint paint1 = new Paint();
-                        paint1.setColor(Color.BLUE);
-                        canvas.drawRect(rect, paint1);
-                    }else {*/
-                        int m = 0;
-                        Rect[] rects = makeCell(colorsss[j][i], rect, k);
-                        for (Rect r : rects) {
-                            if (rects[m] == null) {
-                                break;
-                            }
-                            if (paints[m] == null) {
-                                break;
-                            }
-                            canvas.drawRect(r, paints[m++]);
-                        }
-                 //   }
+                try {
+                    if (itemPos.getX() == i && itemPos.getY() == j) {
+                        canvas.drawBitmap(star, rect.left, rect.top, new Paint());
+                        Log.d("☆", "★");
+                    }
+                }catch (Exception e){
+                    Log.e("ERROR:MapView#ItemView", e.toString());
                 }
+                if(k != 0) {
+                    int m = 0;
+                    Rect[] rects = makeCell(colorsss[j][i], rect, k);
+                    for (Rect r : rects) {
+                        if (rects[m] == null) {
+                            break;
+                        }
+                        if (paints[m] == null) {
+                            break;
+                        }
+                        canvas.drawRect(r, paints[m++]);
+                    }
+                }
+
 
                 if(gameData.oniWhere().getX() == i && gameData.oniWhere().getY() == j){
                     Rect oniRect = new Rect(rect);

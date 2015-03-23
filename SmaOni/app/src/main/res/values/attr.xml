@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <declare-styleable name="MapView">
         <attr name="mapViewStyle" format="reference" />
     </declare-styleable>
@@ -12,4 +13,9 @@
     <declare-styleable name="RankingView">
         <attr name="rankingViewStyle" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="ResultView">
+        <attr name="resultViewStyle" format="reference" />
+    </declare-styleable>
+
 </resources>

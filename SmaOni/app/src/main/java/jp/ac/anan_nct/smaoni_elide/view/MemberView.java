@@ -16,17 +16,12 @@ import jp.ac.anan_nct.smaoni_elide.model.Player;
 public class MemberView extends View {
 
     Player player;
-    String color;
     int num;
 
-    public MemberView(Context context){
-        super(context);
-    }
     public MemberView(Context context, AttributeSet attrs) {
         super(context, attrs);
         player = new Player();
     }
-
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {

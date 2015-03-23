@@ -6,8 +6,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import jp.ac.anan_nct.smaoni_elide.R;
+import jp.ac.anan_nct.smaoni_elide.view.ResultView;
 
 public class ResultActivity extends ActionBarActivity {
+
+    ResultView resultView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +19,7 @@ public class ResultActivity extends ActionBarActivity {
 
 
 
+        resultView = (ResultView)findViewById(R.id.result1);
 
 
 

@@ -52,7 +52,7 @@ public class OniGokkoActivity extends GameActivity {
 
         timerView = (TextView)findViewById(R.id.timerView);
 
-        myCountDownTimer = new MyCountDownTimer(5 * 60 * 1000, 1000) {
+        myCountDownTimer = new MyCountDownTimer(10000, 1000) {
             @Override
             public void onFinish() {
                 mapView.gameOver();
@@ -79,6 +79,9 @@ public class OniGokkoActivity extends GameActivity {
             }
         };
 
+        mapView.invalidate();
+        rankingView.invalidate();
+
         myCountDownTimer.start();
     }
 
@@ -88,6 +91,7 @@ public class OniGokkoActivity extends GameActivity {
         super.onPause();
 
         Communication2.conect = false;
+        finish();
     }
 
     @Override

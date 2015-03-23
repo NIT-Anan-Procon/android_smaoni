@@ -78,7 +78,6 @@ public class ReceptionActivity extends GPS{
 
             @Override
             public void onTick(long millisUntilFinished) {
-                Log.d("true??????", Communication.start + "");
                 if(Communication.start) {//Communication.startTime;
                     Log.d("Receiption", "startGame");
                     Intent intent = new Intent(ReceptionActivity.this, OniGokkoActivity.class);
@@ -97,6 +96,7 @@ public class ReceptionActivity extends GPS{
         colors = gameData.getColors();
 
 
+
         try{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_reception);
@@ -107,14 +107,14 @@ public class ReceptionActivity extends GPS{
                     Player p = new Player();
                     try {
                         p.setName(jsonObject.getString("name"));
-                        Log.d("name", p.getName());
                     } catch (JSONException e) {
+                        Log.e("ERROR:ReceiptionActivity", e.toString());
                     }
                 }
             };
             jsonRequest = new JSONRequest(je);
 
-            mapView = (MapView) findViewById(R.id.mapRecieption);
+            mapView = (MapView)findViewById(R.id.mapRecieption);
             mapView.setTouchable(false);
 
             linearLayout = (LinearLayout) findViewById(R.id.linear1);
@@ -122,6 +122,7 @@ public class ReceptionActivity extends GPS{
 
 
             Player p = new Player(gameData.getMe().name, new Position(-1, -1), Color.BLUE);
+            gameData.resetPlayer(0, p);
 /*
         MemberView m1 = new MemberView(this, null);
         gameData.resetPlayer(0, p);
@@ -134,10 +135,6 @@ public class ReceptionActivity extends GPS{
 
             gotoGame = (Button) findViewById(R.id.button6);
             addMember = (Button) findViewById(R.id.button7);
-
-
-            /////setAction();
-
 
 
             mapView.invalidate();
@@ -237,6 +234,7 @@ public class ReceptionActivity extends GPS{
         super.onPause();
         communication.setLast(false);
         myCountDownTimer.cancel();
+        finish();
     }
 
     void setAction(){

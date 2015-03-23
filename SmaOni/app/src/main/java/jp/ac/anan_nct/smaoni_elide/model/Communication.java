@@ -89,6 +89,7 @@ public class Communication extends AsyncTask {
             JSONObject me = j.getJSONObject("me");
             Player pME = new Player();
             pME.setAccount(me.getString("account"));
+            pME.setName(me.getString("name"));
             int x1 = me.getInt("x");
             int y1 = me.getInt("y");
             pME.setPos(new Position(x1, y1));
@@ -99,6 +100,7 @@ public class Communication extends AsyncTask {
                 JSONObject playeR = playerArray.getJSONObject(i);
 
                 player.setAccount(playeR.getString("account"));
+                player.setName(playeR.getString("name"));
                 int x = playeR.getInt("x");
                 int y = playeR.getInt("y");
                 player.setPos(new Position(x, y));

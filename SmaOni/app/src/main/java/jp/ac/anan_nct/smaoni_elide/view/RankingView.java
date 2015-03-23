@@ -21,7 +21,7 @@ public class RankingView extends View {
 
     Player[] players;
     GameData gameData;
-    int[][] ranking;
+    static int[][] ranking;
     int[] colors;
 
     public RankingView(Context context){
@@ -91,8 +91,11 @@ public class RankingView extends View {
             paint.setTextSize(60f);
             canvas.drawRect(rect, paint);
             paint.setColor(Color.BLACK);
+            paint.setColor((ranking[i][1] == 0) ? Color.WHITE : Color.BLACK);
+            paint.setTextAlign(Paint.Align.LEFT);
             canvas.drawText(p.getName(), 20, dy, paint);
-            canvas.drawText(p.getScore()+"", 250, dy, paint);
+            paint.setTextAlign(Paint.Align.RIGHT);
+            canvas.drawText(p.getScore()+"", 450, dy, paint);
             rect.offset(0, 70);
         }
     }

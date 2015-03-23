@@ -12,6 +12,9 @@ public class GameData{
     private int[] colors;
     private Position oniPosition;
     private Player me;
+    private boolean isItem;
+    private Position itemPosition;
+
     public GameData() {
         gridNum = 8;
         playerNum = 4;
@@ -23,6 +26,7 @@ public class GameData{
         }
         oniPosition = new Position(-1, -1);
         colors = Colors.colors;
+        isItem = false;
     }
 
     public GameData(int gridNum, int playerNum, int runnerNum, Field field, Player[] players, int me) {
@@ -31,6 +35,8 @@ public class GameData{
         this.oniNum = oniNum;
         this.field = field;
         this.players = players;
+        isItem = false;
+        itemPosition = new Position(-1, -1);
     }
 
     public GameData(GameData gd) {
@@ -147,5 +153,16 @@ public class GameData{
         return colors;
     }
 
+    public boolean getIsItem(){
+        return isItem;
+    }
+
+    public void setItemPosition(int x, int y){
+        itemPosition = new Position(x, y);
+        isItem = (x >= 0 && x < gridNum && y >= 0 && y < gridNum);
+    }
+    public Position getItemPosition() {
+        return itemPosition;
+    }
 }
 

@@ -117,6 +117,11 @@ public class Communication2 extends AsyncTask {
                     im.execute();
                 }
             }
+            JSONObject item = j.getJSONArray("items").getJSONObject(0);
+            int x = item.getInt("x");
+            int y = item.getInt("y");
+            gameData.setItemPosition(x, y);
+
 
             ReceptionActivity.communicating = true;
         } catch (Exception e) {
