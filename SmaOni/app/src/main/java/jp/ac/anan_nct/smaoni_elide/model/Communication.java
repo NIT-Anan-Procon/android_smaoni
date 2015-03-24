@@ -21,6 +21,7 @@ import java.util.Date;
 
 import jp.ac.anan_nct.smaoni_elide.activity.ReceptionActivity;
 import jp.ac.anan_nct.smaoni_elide.view.MapView;
+import jp.ac.anan_nct.smaoni_elide.view.MemberView;
 
 /**
  * Created by skriulle on 2015/03/14.
@@ -36,12 +37,13 @@ public class Communication extends AsyncTask {
 
 
     MapView mapView;
+    MemberView memberView;
     JSONArray playerArray;
 
     public static Date startTime;
 
 
-    public Communication(GameData gameData, MapView mapView) {
+    public Communication(GameData gameData, MapView mapView, MemberView memberView) {
         super();
         last = true;
         start = false;
@@ -50,6 +52,7 @@ public class Communication extends AsyncTask {
         post = new HttpPost(uri.toString());
         this.gameData = gameData;
         this.mapView = mapView;
+        this.memberView = memberView;
     }
 
 
@@ -70,6 +73,7 @@ public class Communication extends AsyncTask {
             params.add(new BasicNameValuePair("password", gameData.getMe().getPassword()));
             params.add(new BasicNameValuePair("x", gameData.getMe().getPos().getX() + ""));
             params.add(new BasicNameValuePair("y", gameData.getMe().getPos().getY() + ""));
+            Log.d("position",  gameData.getMe().getPos().getX() + " " + gameData.getMe().getPos().getY());
         }catch (Exception e){
             Log.e("ERROR:Communication", e.toString());
         }
@@ -95,6 +99,9 @@ public class Communication extends AsyncTask {
             pME.setPos(new Position(x1, y1));
             gameData.resetPlayer(0,pME);
 
+            Player[] players = new Player[gameData.getPlayerNum()];
+            players[0] = pME;
+
             for(int i = 0; i < playerArray.length(); i++){
                 Player player = new Player();
                 JSONObject playeR = playerArray.getJSONObject(i);
@@ -109,6 +116,7 @@ public class Communication extends AsyncTask {
                 gameData.resetPlayer(i+1, player);
             }
             ReceptionActivity.communicating = true;
+
         } catch (Exception e) {
             Log.e("ERROR:Communication", e.toString());
         }
@@ -122,10 +130,13 @@ public class Communication extends AsyncTask {
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
 
+        memberView.invalidate();
+        mapView.invalidate();
+
         try{
 
             if(!start){
-                Communication communication = new Communication(gameData, mapView);
+                Communication communication = new Communication(gameData, mapView, memberView);
                 communication.execute();
             }else{
                // ReceptionActivity.startTime = startTime;
@@ -136,7 +147,6 @@ public class Communication extends AsyncTask {
         }
 
 
-        mapView.invalidate();
     }
 
     public static void setLast(boolean last) {

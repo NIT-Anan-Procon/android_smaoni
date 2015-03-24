@@ -36,7 +36,7 @@ public class RankingView extends View {
 
         ranking = new int[players.length][2];
         for(int i = 0; i < players.length; i++){
-            ranking[i][0] = players[i].getScore();
+            ranking[i][0] = 0;
             ranking[i][1] = i;
         }
 

@@ -208,6 +208,14 @@ public class MapView extends View {
         }
     }
 
+    private boolean isItem(Position[] items, int x, int y){
+        for(int i = 0; i < items.length; i++){
+            Position pos = items[i];
+            if(pos.getX() == x && pos.getY() == y) return true;
+        }
+        return false;
+    }
+
     @Override
     public void onDraw(Canvas canvas){
 
@@ -225,7 +233,7 @@ public class MapView extends View {
 
         paint.setColor(Color.parseColor("#ffffff"));
 
-        Position itemPos = gameData.getItemPosition();
+        Position[] itemPos = gameData.getItemPositions();
 
         for(int j = 0; j < num; j++){           //y担当
             for(int i = 0; i < num; i++) {      //x担当
@@ -236,9 +244,8 @@ public class MapView extends View {
                 canvas.drawRect(rect, paint);   //ベースの白いグリッド
 
                 try {
-                    if (itemPos.getX() == i && itemPos.getY() == j) {
+                    if (isItem(itemPos, i, j)) {
                         canvas.drawBitmap(star, rect.left, rect.top, new Paint());
-                        Log.d("☆", "★");
                     }
                 }catch (Exception e){
                     Log.e("ERROR:MapView#ItemView", e.toString());

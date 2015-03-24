@@ -138,6 +138,7 @@ public class SelectActivity extends ActionBarActivity {
                     showToast();
                 } else {
                     gameData.setPlayerNum(3);
+                    gameData.setGridNum(10);
                     startActivity(new Intent(SelectActivity.this, ReceptionActivity.class));
                 }
             }

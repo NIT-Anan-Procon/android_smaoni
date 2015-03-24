@@ -40,6 +40,8 @@ public class HomeActivity extends ActionBarActivity {
     }
 
 
+
+
     private void setAction(){
         bt1.setOnClickListener(new View.OnClickListener() {
             @Override

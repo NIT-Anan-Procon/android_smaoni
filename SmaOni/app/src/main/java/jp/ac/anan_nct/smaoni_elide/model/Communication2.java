@@ -88,16 +88,13 @@ public class Communication2 extends AsyncTask {
             pME.setName(me.getString("name"));
             int x1 = me.getInt("x");
             int y1 = me.getInt("y");
+            pME.setScore(me.getInt("score"));
             pME.setPos(new Position(x1, y1));
 
             pME.setOni(me.getBoolean("is_oni"));
             pME.setInvisiblity(me.getBoolean("is_invisible"));
 
             gameData.resetPlayer(0, pME);
-            if (gameData.getPlayer(0).getInvisiblity()) {
-                InvisibleManage im = new InvisibleManage(0);
-                im.execute();
-            }
 
 
             for (int i = 0; i < playerArray.length(); i++) {
@@ -111,16 +108,18 @@ public class Communication2 extends AsyncTask {
                 player.setPos(new Position(x, y));
                 player.setOni(playeR.getBoolean("is_oni"));
                 player.setInvisiblity(playeR.getBoolean("is_invisible"));
+                player.setScore(playeR.getInt("score"));
                 gameData.resetPlayer(i + 1, player);
-                if (player.getInvisiblity()) {
-                    InvisibleManage im = new InvisibleManage(i+1);
-                    im.execute();
-                }
             }
-            JSONObject item = j.getJSONArray("items").getJSONObject(0);
-            int x = item.getInt("x");
-            int y = item.getInt("y");
-            gameData.setItemPosition(x, y);
+            JSONArray items = j.getJSONArray("items");
+            Position[] itemPositions = new Position[items.length()];
+            for(int i = 0; i < items.length(); i ++) {
+                JSONObject ip = items.getJSONObject(i);
+                int x = ip.getInt("x");
+                int y = ip.getInt("y");
+                itemPositions[i] = new Position(x, y);
+            }
+            gameData.setItemPositions(itemPositions);
 
 
             ReceptionActivity.communicating = true;
@@ -153,6 +152,5 @@ public class Communication2 extends AsyncTask {
 
         mapView.invalidate();
         rankingView.invalidate();
-
     }
 }

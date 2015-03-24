@@ -2,8 +2,6 @@ package jp.ac.anan_nct.smaoni_elide.model;
 
 import android.location.Location;
 
-import java.util.Random;
-
 import jp.ac.anan_nct.smaoni_elide.activity.HomeActivity;
 
 /**
@@ -20,17 +18,17 @@ public class Player extends User{
 
     public Player(){
         super("", "", "");
-        score = 100;
+        score = 0;
         isOni = false;
         invisiblity = false;
-        myPos = new Position();
+        myPos = new Position(0,0);
     }
     public Player(User user){
         super(user.getAccount(), user.getPassword(), user.getName());
-        score = 100;
+        score = 0;
         isOni = false;
         invisiblity = false;
-        myPos = new Position();
+        myPos = new Position(0,0);
     }
     public Player(String name, Position position, int color){
         super(HomeActivity.me);
@@ -39,11 +37,6 @@ public class Player extends User{
         invisiblity = false;
         score = 0;
         this.color = color;
-    }
-
-    String makeName(){
-        Random r = new Random();
-        return (char)('b' + r.nextInt(25))+"さん";
     }
 
     public void setPos(Position myPos) {

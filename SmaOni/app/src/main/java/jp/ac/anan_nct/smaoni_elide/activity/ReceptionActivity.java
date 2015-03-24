@@ -10,20 +10,16 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
-import java.util.LinkedList;
 
 import jp.ac.anan_nct.smaoni_elide.R;
 import jp.ac.anan_nct.smaoni_elide.model.Communication;
@@ -39,14 +35,12 @@ import jp.ac.anan_nct.smaoni_elide.view.MemberView;
 
 public class ReceptionActivity extends GPS{
 
-    LinearLayout linearLayout;
-    LinkedList<MemberView> memberViews;
     final int WC = LinearLayout.LayoutParams.WRAP_CONTENT;
     final int MP = LinearLayout.LayoutParams.MATCH_PARENT;
     private static final int REQUEST_GALLERY = 0;
 
-    Button gotoGame, addMember;
     MapView mapView;
+    MemberView memberView;
 
     public static GameData gameData;
 
@@ -116,28 +110,18 @@ public class ReceptionActivity extends GPS{
 
             mapView = (MapView)findViewById(R.id.mapRecieption);
             mapView.setTouchable(false);
+            memberView = (MemberView)findViewById(R.id.member);
 
-            linearLayout = (LinearLayout) findViewById(R.id.linear1);
-            memberViews = new LinkedList<MemberView>();
 
 
             Player p = new Player(gameData.getMe().name, new Position(-1, -1), Color.BLUE);
             gameData.resetPlayer(0, p);
-/*
-        MemberView m1 = new MemberView(this, null);
-        gameData.resetPlayer(0, p);
-        m1.setInfo(0, gameData.getPlayer(0));
-        memberViews.add(m1);
-        linearLayout.addView(m1, new LinearLayout.LayoutParams(WC, WC));
-        i = 1;
-*/
-            addJSONObject(p);
 
-            gotoGame = (Button) findViewById(R.id.button6);
-            addMember = (Button) findViewById(R.id.button7);
+            addJSONObject(p);
 
 
             mapView.invalidate();
+            memberView.invalidate();
 
             httpClient = new DefaultHttpClient();
             Uri uri = Uri.parse(MyURL.PATH_RECEIPTION);
@@ -145,7 +129,7 @@ public class ReceptionActivity extends GPS{
 
             last = true;
             communicating = false;
-            communication = new Communication(gameData, mapView);
+            communication = new Communication(gameData, mapView, memberView);
             communication.execute();
 
 
@@ -222,8 +206,6 @@ public class ReceptionActivity extends GPS{
 
         MemberView memberView = new MemberView(this, null);
         memberView.setInfo(i++, p);
-        memberViews.add(memberView);
-        linearLayout.addView(memberView, new LinearLayout.LayoutParams(WC, WC));
 
         return p;
     }
@@ -237,33 +219,6 @@ public class ReceptionActivity extends GPS{
         finish();
     }
 
-    void setAction(){
-        /*gotoGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myCountDownTimer.cancel();
-                for(int i = 0; i < gameData.getPlayerNum(); i++){
-                    if(gameData.getPlayer(i) == null){
-                        gameData.resetPlayer(i, new Player());
-                    }
-                }
-
-                last = false;
-                jsonRequest.send(new LoginJsonBuilder());
-                startActivity(new Intent(ReceptionActivity.this, OniGokkoActivity.class));
-            }
-        });*/
-        addMember.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Date now = new Date();
-                Communication.startTime = new Date(now.getTime()+5000);
-                Communication.start = true;
-
-            }
-        });
-    }
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent e) {
@@ -296,25 +251,4 @@ public class ReceptionActivity extends GPS{
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
-
-    void jsonArrayCame(JSONArray jsonArray){  //JSONArray
-        //配列をclear
-        gameData.setPlayerNum(gameData.getPlayerNum());
-        memberViews.clear();
-        linearLayout.removeAllViews();
-
-        this.i = 0;
-        try{
-            for(int i = 0; i < jsonArray.length(); i++) {   //送られてくるJSONArrayの長さは指定以上にならない
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Player p = jsonCame(jsonObject);
-                gameData.resetPlayer(i, p);
-            }
-        }catch (Exception e){
-            Log.e("ERROR:RecieptionActivity", e.toString());
-        }
-    }
 }
