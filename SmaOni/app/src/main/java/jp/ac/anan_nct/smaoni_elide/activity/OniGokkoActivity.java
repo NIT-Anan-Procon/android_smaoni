@@ -5,7 +5,6 @@ import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.Menu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,17 +37,18 @@ public class OniGokkoActivity extends GameActivity {
 
 
         layout = (RelativeLayout)findViewById(R.id.gamelayout);
-        layout.setBackgroundResource(R.drawable.schoolground);
+        layout.setBackgroundResource(R.drawable.shootingstar);
         mapView = (MapView)findViewById(R.id.map1);
         rankingView = (RankingView)findViewById(R.id.gameRanking);
         communication = new Communication2(gameData, mapView, rankingView);
         communication.execute();
 
 
-        for(int i = 0; i < gameData.getPlayerNum(); i++){
-            Log.d("Log地獄", i + "" + (gameData.getPlayer(i) == null));
-            gameData.getPlayer(i).setOni(false);
-            gameData.getPlayer(i).setInvisiblity(false);
+        for(int i = 0; i < gameData.getPlayerNum(); i++) {
+            try {
+                gameData.getPlayer(i).setOni(false);
+                gameData.getPlayer(i).setInvisiblity(false);
+            }catch (Exception e){}
         }
         gameData.getPlayer(0).setOni(true);
 

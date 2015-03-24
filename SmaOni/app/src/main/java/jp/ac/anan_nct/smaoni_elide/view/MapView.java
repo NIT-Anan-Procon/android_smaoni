@@ -46,7 +46,7 @@ public class MapView extends View {
 
     int[] colors;
     Paint[] paints;
-    Bitmap star;
+    Bitmap star, oni;
 
     private Paint oniPaint;
 
@@ -79,6 +79,7 @@ public class MapView extends View {
 
         Resources resources = this.getContext().getResources();
         star = BitmapFactory.decodeResource(resources, R.drawable.star);
+        oni = BitmapFactory.decodeResource(resources, R.drawable.oni1);
         oniPaint = new Paint();
         oniPaint.setColor(Color.RED);
         oniPaint.setStyle(Paint.Style.STROKE);
@@ -229,6 +230,7 @@ public class MapView extends View {
 
         Rect rect = new Rect(55,55,width/num+45,width/num+45);
         star = Bitmap.createScaledBitmap(star, rect.width(), rect.height(), true);
+        oni = Bitmap.createScaledBitmap(oni, rect.width()*6/7, rect.height()*6/7, true);
 
 
         paint.setColor(Color.parseColor("#ffffff"));
@@ -266,8 +268,9 @@ public class MapView extends View {
 
 
                 if(gameData.oniWhere().getX() == i && gameData.oniWhere().getY() == j){
-                    Rect oniRect = new Rect(rect);
-                    canvas.drawRect(oniRect, oniPaint);
+                   // Rect oniRect = new Rect(rect);
+                   // canvas.drawRect(oniRect, oniPaint);
+                    canvas.drawBitmap(oni, rect.left + + rect.width()*1/14, rect.top + rect.height()*1/14, new Paint());
                 }
 
 

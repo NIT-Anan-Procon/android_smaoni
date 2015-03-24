@@ -29,7 +29,7 @@ public class HomeActivity extends ActionBarActivity {
         setContentView(R.layout.activity_home);
 
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.layout1);
-        layout.setBackgroundResource(R.drawable.ic_launcher);
+        layout.setBackgroundResource(R.drawable.aaac);
 
         bt1 = (Button)findViewById(R.id.button1);
         bt2 = (Button)findViewById(R.id.button2);

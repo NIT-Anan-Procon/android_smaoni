@@ -99,7 +99,7 @@ public class Communication extends AsyncTask {
             pME.setPos(new Position(x1, y1));
             gameData.resetPlayer(0,pME);
 
-            Player[] players = new Player[gameData.getPlayerNum()];
+            Player[] players = new Player[playerArray.length()+1];
             players[0] = pME;
 
             for(int i = 0; i < playerArray.length(); i++){
