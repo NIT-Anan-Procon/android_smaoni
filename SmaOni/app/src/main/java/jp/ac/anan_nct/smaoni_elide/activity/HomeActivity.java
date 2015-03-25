@@ -19,7 +19,7 @@ import jp.ac.anan_nct.smaoni_elide.model.Player;
 
 public class HomeActivity extends ActionBarActivity {
 
-    Button bt1, bt2;
+    Button bt1;
     public static Player me;
     public static boolean hasSet;
 
@@ -32,7 +32,6 @@ public class HomeActivity extends ActionBarActivity {
         layout.setBackgroundResource(R.drawable.aaac);
 
         bt1 = (Button)findViewById(R.id.button1);
-        bt2 = (Button)findViewById(R.id.button2);
         me = new Player();
         hasSet = false;
 
@@ -47,13 +46,6 @@ public class HomeActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, SelectActivity.class));
-            }
-        });
-
-        bt2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, FieldSetActivity.class));
             }
         });
     }
@@ -74,14 +66,14 @@ public class HomeActivity extends ActionBarActivity {
 
             case 0:
                 return new AlertDialog.Builder(HomeActivity.this)
-                        .setMessage("現実に向き合いますか?")
+                        .setMessage("ゲームを終了しますか?")
                         .setCancelable(false)
-                        .setPositiveButton("現実に戻る", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("ゲームを終了する", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 HomeActivity.this.finish();
                             }
                         })
-                        .setNegativeButton("現実逃避を続ける", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("ゲームを続ける", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
                             }

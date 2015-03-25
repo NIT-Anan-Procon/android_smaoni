@@ -8,7 +8,7 @@
     <string name="title_activity_game">GameActivity</string>
     <string name="title_activity_field_select">FieldSelectActivity</string>
     <string name="title_activity_reception">ReceptionActivity</string>
-    <string name="title_activity_oni_gokko">OniGokko</string>
+    <string name="title_activity_oni_gokko"></string>
     <string name="title_activity_comment">CommentActivity</string>
     <string name="title_activity_result">ResultActivity</string>
     <string name="title_activity_account_select">AccountSelectActivity</string>

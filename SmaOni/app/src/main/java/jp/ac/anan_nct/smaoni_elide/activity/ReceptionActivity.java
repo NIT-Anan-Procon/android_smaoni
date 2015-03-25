@@ -89,8 +89,6 @@ public class ReceptionActivity extends GPS{
         gameData.setPlayerNum(gameData.getPlayerNum());
         colors = gameData.getColors();
 
-
-
         try{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_reception);

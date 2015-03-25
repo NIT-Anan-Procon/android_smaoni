@@ -37,7 +37,7 @@ public class OniGokkoActivity extends GameActivity {
 
 
         layout = (RelativeLayout)findViewById(R.id.gamelayout);
-        layout.setBackgroundResource(R.drawable.shootingstar);
+        layout.setBackgroundResource(R.drawable.shootingstar2);
         mapView = (MapView)findViewById(R.id.map1);
         rankingView = (RankingView)findViewById(R.id.gameRanking);
         communication = new Communication2(gameData, mapView, rankingView);
@@ -54,7 +54,7 @@ public class OniGokkoActivity extends GameActivity {
 
         timerView = (TextView)findViewById(R.id.timerView);
 
-        myCountDownTimer = new MyCountDownTimer(100000, 1000) {
+        myCountDownTimer = new MyCountDownTimer(100000*60*5, 1000) {
             @Override
             public void onFinish() {
                 mapView.gameOver();
