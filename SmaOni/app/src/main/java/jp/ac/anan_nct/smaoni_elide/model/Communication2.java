@@ -59,7 +59,7 @@ public class Communication2 extends AsyncTask {
             Log.e("ERROR:Communication2", e.toString());
         }
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-        HttpResponse res = null;
+        HttpResponse res;
         try {
             Log.d(gameData.getMe().getAccount(), gameData.getMe().getPassword());
             params.add(new BasicNameValuePair("account", gameData.getMe().getAccount()));
@@ -76,6 +76,7 @@ public class Communication2 extends AsyncTask {
                     res.getStatusLine().getStatusCode() + "");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(res.getEntity().getContent()));
             JSONObject j = new JSONObject(bufferedReader.readLine());
+            Log.d("ReturnComment", j.toString());
 
             JSONArray playerArray = j.getJSONArray("player");
             JSONObject me = j.getJSONObject("me");
@@ -87,16 +88,13 @@ public class Communication2 extends AsyncTask {
             pME.setName(me.getString("name"));
             int x1 = me.getInt("x");
             int y1 = me.getInt("y");
+            pME.setScore(me.getInt("score"));
             pME.setPos(new Position(x1, y1));
 
             pME.setOni(me.getBoolean("is_oni"));
             pME.setInvisiblity(me.getBoolean("is_invisible"));
 
             gameData.resetPlayer(0, pME);
-            if (gameData.getPlayer(0).getInvisiblity()) {
-                InvisibleManage im = new InvisibleManage(0);
-                im.execute();
-            }
 
 
             for (int i = 0; i < playerArray.length(); i++) {
@@ -110,12 +108,19 @@ public class Communication2 extends AsyncTask {
                 player.setPos(new Position(x, y));
                 player.setOni(playeR.getBoolean("is_oni"));
                 player.setInvisiblity(playeR.getBoolean("is_invisible"));
+                player.setScore(playeR.getInt("score"));
                 gameData.resetPlayer(i + 1, player);
-                if (player.getInvisiblity()) {
-                    InvisibleManage im = new InvisibleManage(i+1);
-                    im.execute();
-                }
             }
+            JSONArray items = j.getJSONArray("items");
+            Position[] itemPositions = new Position[items.length()];
+            for(int i = 0; i < items.length(); i ++) {
+                JSONObject ip = items.getJSONObject(i);
+                int x = ip.getInt("x");
+                int y = ip.getInt("y");
+                itemPositions[i] = new Position(x, y);
+            }
+            gameData.setItemPositions(itemPositions);
+
 
             ReceptionActivity.communicating = true;
         } catch (Exception e) {
@@ -147,6 +152,5 @@ public class Communication2 extends AsyncTask {
 
         mapView.invalidate();
         rankingView.invalidate();
-
     }
 }

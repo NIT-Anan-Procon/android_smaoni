@@ -3,6 +3,7 @@ package jp.ac.anan_nct.smaoni_elide.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -136,7 +137,8 @@ public class SelectActivity extends ActionBarActivity {
                 if (!HomeActivity.hasSet) {
                     showToast();
                 } else {
-                    gameData.setPlayerNum(2);
+                    gameData.setPlayerNum(3);
+                    gameData.setGridNum(10);
                     startActivity(new Intent(SelectActivity.this, ReceptionActivity.class));
                 }
             }
@@ -154,8 +156,15 @@ public class SelectActivity extends ActionBarActivity {
         Toast.makeText(this, "アカウントを選択してください", Toast.LENGTH_SHORT).show();
     }
 
-
-
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        try{
+            if(gameData.getPlayer(1) != null)   finish();
+        }catch (Exception e){
+            Log.d("ERROR:SelectActivity#onRestart", e.toString());
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -1,6 +1,9 @@
 package jp.ac.anan_nct.smaoni_elide.view;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,6 +13,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import jp.ac.anan_nct.smaoni_elide.R;
 import jp.ac.anan_nct.smaoni_elide.activity.SelectActivity;
 import jp.ac.anan_nct.smaoni_elide.model.GameData;
 import jp.ac.anan_nct.smaoni_elide.model.Position;
@@ -42,6 +46,7 @@ public class MapView extends View {
 
     int[] colors;
     Paint[] paints;
+    Bitmap star, oni;
 
     private Paint oniPaint;
 
@@ -72,6 +77,9 @@ public class MapView extends View {
             }
         }
 
+        Resources resources = this.getContext().getResources();
+        star = BitmapFactory.decodeResource(resources, R.drawable.star);
+        oni = BitmapFactory.decodeResource(resources, R.drawable.oni1);
         oniPaint = new Paint();
         oniPaint.setColor(Color.RED);
         oniPaint.setStyle(Paint.Style.STROKE);
@@ -201,6 +209,14 @@ public class MapView extends View {
         }
     }
 
+    private boolean isItem(Position[] items, int x, int y){
+        for(int i = 0; i < items.length; i++){
+            Position pos = items[i];
+            if(pos.getX() == x && pos.getY() == y) return true;
+        }
+        return false;
+    }
+
     @Override
     public void onDraw(Canvas canvas){
 
@@ -213,42 +229,50 @@ public class MapView extends View {
         width = canvas.getWidth()-100;
 
         Rect rect = new Rect(55,55,width/num+45,width/num+45);
-        //canvas.drawColor(Color.parseColor("#cccccc"));
+        star = Bitmap.createScaledBitmap(star, rect.width(), rect.height(), true);
+        oni = Bitmap.createScaledBitmap(oni, rect.width()*6/7, rect.height()*6/7, true);
+
 
         paint.setColor(Color.parseColor("#ffffff"));
 
+        Position[] itemPos = gameData.getItemPositions();
 
         for(int j = 0; j < num; j++){           //y担当
             for(int i = 0; i < num; i++) {      //x担当
                 int k;                          //セルにいる人数
                 for(k = 0;colorsss[j][i][k] != -1; k++);
 
-                canvas.drawRect(rect, paint);
+                paint.setAlpha((k == 0) ? (touchable) ? 130 : 255 : 255);   //誰もいないグリッドでは半透明
+                canvas.drawRect(rect, paint);   //ベースの白いグリッド
 
-                if(k != 0){
-                  /*  if(!ReceptionActivity.communicating){
-                        Paint paint1 = new Paint();
-                        paint1.setColor(Color.BLUE);
-                        canvas.drawRect(rect, paint1);
-                    }else {*/
-                        int m = 0;
-                        Rect[] rects = makeCell(colorsss[j][i], rect, k);
-                        for (Rect r : rects) {
-                            if (rects[m] == null) {
-                                break;
-                            }
-                            if (paints[m] == null) {
-                                break;
-                            }
-                            canvas.drawRect(r, paints[m++]);
-                        }
-                 //   }
+                try {
+                    if (isItem(itemPos, i, j)) {
+                        canvas.drawBitmap(star, rect.left, rect.top, new Paint());
+                    }
+                }catch (Exception e){
+                    Log.e("ERROR:MapView#ItemView", e.toString());
                 }
+                if(k != 0) {
+                    int m = 0;
+                    Rect[] rects = makeCell(colorsss[j][i], rect, k);
+                    for (Rect r : rects) {
+                        if (rects[m] == null) {
+                            break;
+                        }
+                        if (paints[m] == null) {
+                            break;
+                        }
+                        canvas.drawRect(r, paints[m++]);
+                    }
+                }
+
 
                 if(gameData.oniWhere().getX() == i && gameData.oniWhere().getY() == j){
-                    Rect oniRect = new Rect(rect);
-                    canvas.drawRect(oniRect, oniPaint);
+                   // Rect oniRect = new Rect(rect);
+                   // canvas.drawRect(oniRect, oniPaint);
+                    canvas.drawBitmap(oni, rect.left + + rect.width()*1/14, rect.top + rect.height()*1/14, new Paint());
                 }
+
 
                 rect.offset(width / num, 0);
             }

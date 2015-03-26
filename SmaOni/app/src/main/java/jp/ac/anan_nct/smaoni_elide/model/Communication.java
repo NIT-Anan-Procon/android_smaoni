@@ -21,6 +21,7 @@ import java.util.Date;
 
 import jp.ac.anan_nct.smaoni_elide.activity.ReceptionActivity;
 import jp.ac.anan_nct.smaoni_elide.view.MapView;
+import jp.ac.anan_nct.smaoni_elide.view.MemberView;
 
 /**
  * Created by skriulle on 2015/03/14.
@@ -36,12 +37,13 @@ public class Communication extends AsyncTask {
 
 
     MapView mapView;
+    MemberView memberView;
     JSONArray playerArray;
 
     public static Date startTime;
 
 
-    public Communication(GameData gameData, MapView mapView) {
+    public Communication(GameData gameData, MapView mapView, MemberView memberView) {
         super();
         last = true;
         start = false;
@@ -50,6 +52,7 @@ public class Communication extends AsyncTask {
         post = new HttpPost(uri.toString());
         this.gameData = gameData;
         this.mapView = mapView;
+        this.memberView = memberView;
     }
 
 
@@ -70,6 +73,7 @@ public class Communication extends AsyncTask {
             params.add(new BasicNameValuePair("password", gameData.getMe().getPassword()));
             params.add(new BasicNameValuePair("x", gameData.getMe().getPos().getX() + ""));
             params.add(new BasicNameValuePair("y", gameData.getMe().getPos().getY() + ""));
+            Log.d("position",  gameData.getMe().getPos().getX() + " " + gameData.getMe().getPos().getY());
         }catch (Exception e){
             Log.e("ERROR:Communication", e.toString());
         }
@@ -80,7 +84,7 @@ public class Communication extends AsyncTask {
                     res.getStatusLine().getStatusCode() + "");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(res.getEntity().getContent()));
             JSONObject j = new JSONObject(bufferedReader.readLine());
-            Log.d("Returncomment", j.toString());
+            Log.d("ReturnComment", j.toString());
             start = j.getBoolean("start");
 
             playerArray = j.getJSONArray("player");
@@ -89,16 +93,21 @@ public class Communication extends AsyncTask {
             JSONObject me = j.getJSONObject("me");
             Player pME = new Player();
             pME.setAccount(me.getString("account"));
+            pME.setName(me.getString("name"));
             int x1 = me.getInt("x");
             int y1 = me.getInt("y");
             pME.setPos(new Position(x1, y1));
             gameData.resetPlayer(0,pME);
+
+            Player[] players = new Player[playerArray.length()+1];
+            players[0] = pME;
 
             for(int i = 0; i < playerArray.length(); i++){
                 Player player = new Player();
                 JSONObject playeR = playerArray.getJSONObject(i);
 
                 player.setAccount(playeR.getString("account"));
+                player.setName(playeR.getString("name"));
                 int x = playeR.getInt("x");
                 int y = playeR.getInt("y");
                 player.setPos(new Position(x, y));
@@ -107,6 +116,7 @@ public class Communication extends AsyncTask {
                 gameData.resetPlayer(i+1, player);
             }
             ReceptionActivity.communicating = true;
+
         } catch (Exception e) {
             Log.e("ERROR:Communication", e.toString());
         }
@@ -120,10 +130,13 @@ public class Communication extends AsyncTask {
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
 
+        memberView.invalidate();
+        mapView.invalidate();
+
         try{
 
             if(!start){
-                Communication communication = new Communication(gameData, mapView);
+                Communication communication = new Communication(gameData, mapView, memberView);
                 communication.execute();
             }else{
                // ReceptionActivity.startTime = startTime;
@@ -134,7 +147,6 @@ public class Communication extends AsyncTask {
         }
 
 
-        mapView.invalidate();
     }
 
     public static void setLast(boolean last) {

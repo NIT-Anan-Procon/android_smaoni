@@ -21,7 +21,7 @@ public class RankingView extends View {
 
     Player[] players;
     GameData gameData;
-    int[][] ranking;
+    static int[][] ranking;
     int[] colors;
 
     public RankingView(Context context){
@@ -36,7 +36,7 @@ public class RankingView extends View {
 
         ranking = new int[players.length][2];
         for(int i = 0; i < players.length; i++){
-            ranking[i][0] = players[i].getScore();
+            ranking[i][0] = 0;
             ranking[i][1] = i;
         }
 
@@ -51,7 +51,9 @@ public class RankingView extends View {
 
     void sortRanking(){
         for(int i = 0; i < players.length; i++){
-            ranking[i][0] = players[i].getScore();  //score
+            try {
+                ranking[i][0] = players[i].getScore();  //score
+            }catch (Exception e){}
             ranking[i][1] = i;                      //index
         }
         for(int i =0; i < players.length; i++){
@@ -86,13 +88,24 @@ public class RankingView extends View {
         for(int i = 0; i < gameData.getPlayerNum(); i++) {
             Player p = players[ranking[i][1]];
             float dy = (float)(i*70+57);
-            paint.setColor(p.getColor());
+            try {
+                paint.setColor(p.getColor());
+            }catch (Exception e){
+                paint.setColor(Colors.colors[i]);
+            }
             paint.setColor(colors[ranking[i][1]]);
             paint.setTextSize(60f);
             canvas.drawRect(rect, paint);
             paint.setColor(Color.BLACK);
-            canvas.drawText(p.getName(), 20, dy, paint);
-            canvas.drawText(p.getScore()+"", 250, dy, paint);
+            paint.setColor((ranking[i][1] == 0) ? Color.WHITE : Color.BLACK);
+            paint.setTextAlign(Paint.Align.LEFT);
+            try {
+                canvas.drawText(p.getName(), 20, dy, paint);
+            }catch (Exception e){}
+            paint.setTextAlign(Paint.Align.RIGHT);
+            try {
+                canvas.drawText(p.getScore() + "", 450, dy, paint);
+            }catch (Exception e){}
             rect.offset(0, 70);
         }
     }

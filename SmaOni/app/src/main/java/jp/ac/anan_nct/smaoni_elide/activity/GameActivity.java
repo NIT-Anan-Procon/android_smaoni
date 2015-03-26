@@ -30,11 +30,8 @@ public class GameActivity extends GPS {
 
         setContentView(R.layout.activity_game);
 
-   //     subThread = new SubThread[gameData.getPlayerNum()-1];
         for(int i = 0, p = gameData.getPlayerNum()-1;i < p; i++) {
             Random r = new Random();
-   //         subThread[i] = new SubThread(r.nextInt(1500)+500, i+1);
-   //         subThread[i].start();
         }
 
         Log.d("player", "" + gameData.getPlayerNum());
@@ -52,11 +49,19 @@ public class GameActivity extends GPS {
     protected void onPause() {
         super.onPause();
 
-    //    for(SubThread st : subThread){
-    //        st.stopRunning();
-    //    }
     }
-
+/*
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction()==KeyEvent.ACTION_DOWN) {
+            switch (event.getKeyCode()) {
+                case KeyEvent.KEYCODE_BACK:
+                    return true;
+            }
+        }
+        return super.dispatchKeyEvent(event);
+    }
+*/
     @Override
     public void onLocationChanged(Location location) {
         super.onLocationChanged(location);

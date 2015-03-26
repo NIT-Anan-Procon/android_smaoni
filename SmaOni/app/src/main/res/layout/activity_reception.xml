@@ -12,40 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="328dp"/>
 
-    <ScrollView
-        android:id="@+id/ScrollView"
+    <jp.ac.anan_nct.smaoni_elide.view.MemberView
+        android:id="@+id/member"
         android:layout_below="@+id/mapRecieption"
         android:layout_height="wrap_content"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="0dp"
-        android:layout_marginBottom="50dp"
-        >
-        <LinearLayout
-            android:id="@+id/linear1"
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"></LinearLayout>
-    </ScrollView>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button6"
-        android:layout_alignTop="@+id/button7"
-        android:layout_alignLeft="@+id/ScrollView"
-        android:layout_alignStart="@+id/ScrollView" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button7"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/ScrollView"
-        android:layout_alignEnd="@+id/ScrollView" />
+        android:background="#ff99ffcc"
+    />
 
 </RelativeLayout>
