@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -56,6 +56,10 @@
         <activity
             android:name=".activity.AccountSelectActivity"
             android:label="@string/title_activity_account_select" >
+        </activity>
+        <activity
+            android:name=".activity.Vibrator"
+            android:label="@string/title_activity_vibrator" >
         </activity>
     </application>
 

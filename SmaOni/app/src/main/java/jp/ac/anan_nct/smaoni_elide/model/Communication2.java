@@ -27,6 +27,7 @@ import jp.ac.anan_nct.smaoni_elide.view.RankingView;
  */
 public class Communication2 extends AsyncTask {
 
+    VibrationEvent vibrationEvent;
 
     HttpPost post;
     HttpClient httpClient;
@@ -39,7 +40,7 @@ public class Communication2 extends AsyncTask {
     RankingView rankingView;
 
 
-    public Communication2(GameData gameData, MapView mapView, RankingView rankingView) {
+    public Communication2(GameData gameData, MapView mapView, RankingView rankingView, VibrationEvent vibrationEvent) {
         super();
         conect = true;
         httpClient = new DefaultHttpClient();
@@ -48,6 +49,7 @@ public class Communication2 extends AsyncTask {
         this.gameData = gameData;
         this.mapView = mapView;
         this.rankingView = rankingView;
+        this.vibrationEvent = vibrationEvent;
     }
 
     @Override
@@ -137,17 +139,18 @@ public class Communication2 extends AsyncTask {
         super.onPostExecute(o);
 
         try {
-
             if (conect) {
-                Communication2 communication = new Communication2(gameData, mapView, rankingView);
+                Communication2 communication = new Communication2(gameData, mapView, rankingView, vibrationEvent);
                 communication.execute();
             } else {
                 // ReceptionActivity.startTime = startTime;
-
             }
         } catch (Exception e) {
             Log.e("ERROR:communication_last", e.toString());
         }
+
+        vibrationEvent.onResponse();
+
 
 
         mapView.invalidate();

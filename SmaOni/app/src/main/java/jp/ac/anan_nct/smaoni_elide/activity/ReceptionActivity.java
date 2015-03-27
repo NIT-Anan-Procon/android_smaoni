@@ -225,6 +225,7 @@ public class ReceptionActivity extends GPS{
         if(e.getKeyCode() == KeyEvent.KEYCODE_BACK) {
             last = false;
         }
+
         return super.dispatchKeyEvent(e);
     }
     @Override

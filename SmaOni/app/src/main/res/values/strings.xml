@@ -12,5 +12,7 @@
     <string name="title_activity_comment">CommentActivity</string>
     <string name="title_activity_result">ResultActivity</string>
     <string name="title_activity_account_select">AccountSelectActivity</string>
+    <string name="title_activity_vibrator">Vibrator</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
