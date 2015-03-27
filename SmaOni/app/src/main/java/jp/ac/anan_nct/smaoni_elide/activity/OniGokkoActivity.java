@@ -13,11 +13,13 @@ import android.widget.Toast;
 import jp.ac.anan_nct.smaoni_elide.R;
 import jp.ac.anan_nct.smaoni_elide.model.Communication2;
 import jp.ac.anan_nct.smaoni_elide.model.MyCountDownTimer;
+import jp.ac.anan_nct.smaoni_elide.model.VibrationEvent;
 import jp.ac.anan_nct.smaoni_elide.view.MapView;
 import jp.ac.anan_nct.smaoni_elide.view.RankingView;
 
 public class OniGokkoActivity extends GameActivity {
 
+    VibrationEvent vibrationEvent;
     public static MapView mapView;
     public static RankingView rankingView;
     MyCountDownTimer myCountDownTimer, myCountDownTimer1;
@@ -35,12 +37,22 @@ public class OniGokkoActivity extends GameActivity {
         setContentView(R.layout.activity_game);
         mediaPlayer = MediaPlayer.create(this, R.raw.meka_ge_keihou03);
 
+        vibrationEvent = new VibrationEvent() {
+            @Override
+            public void onResponse() {
+                android.os.Vibrator vibrator;
+                vibrator = (android.os.Vibrator)getSystemService(VIBRATOR_SERVICE);
+                vibrator.vibrate(80);
+                vibrator.cancel();
+            }
+        };
+
 
         layout = (RelativeLayout)findViewById(R.id.gamelayout);
         layout.setBackgroundResource(R.drawable.shootingstar2);
         mapView = (MapView)findViewById(R.id.map1);
         rankingView = (RankingView)findViewById(R.id.gameRanking);
-        communication = new Communication2(gameData, mapView, rankingView);
+        communication = new Communication2(gameData, mapView, rankingView, vibrationEvent);
         communication.execute();
 
 
@@ -54,7 +66,7 @@ public class OniGokkoActivity extends GameActivity {
 
         timerView = (TextView)findViewById(R.id.timerView);
 
-        myCountDownTimer = new MyCountDownTimer(100000*60*5, 1000) {
+        myCountDownTimer = new MyCountDownTimer(1000*60*5, 1000) {
             @Override
             public void onFinish() {
                 mapView.gameOver();
